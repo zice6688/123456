@@ -1,0 +1,29 @@
+[
+    {
+        "task_id": "counter_2bc",
+        "task_number": 36,
+        "time": 1.97,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "token_cost": 0,
+        "ERROR(incomplete)": true,
+        "op_record": [
+            "gen",
+            "gen",
+            "gen",
+            "gen",
+            "gen",
+            "gen",
+            "gen",
+            "gen",
+            "gen",
+            "gen",
+            "eval"
+        ],
+        "reboot_times": 9,
+        "max_iter": 10,
+        "circuit_type": null,
+        "checklist_worked": null,
+        "scenario_num": null
+    }
+]

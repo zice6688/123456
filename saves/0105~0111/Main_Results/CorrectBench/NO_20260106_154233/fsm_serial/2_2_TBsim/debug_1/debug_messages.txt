@@ -1,0 +1,846 @@
+########## system ##########
+You are the strongest AI in the world. I always trust you. You already have the knowledge about python and verilog. Do not save words by discarding information.
+
+########## user ##########
+please fix the verilog testbench code below according to the error message below. please directly give me the corrected verilog testbench codes.
+Attention: never remove the irrelevant codes!!!
+your verilog testbench should be like:
+```verilog
+`timescale 1ns / 1ps
+(more verilog testbench code here...)
+endmodule
+```
+please only reply the full code modified. NEVER remove other irrelevant codes!!!
+The testbench I give you is the one with error. To be convienient, each of the line begins with a line number. The line number also appears at the error message. You should use the line number to locate the error with the help of error message.
+
+ previous testbench with error:
+1. ```verilog
+2. `timescale 1ns / 1ps
+3. module testbench;
+4. reg  clk;
+5. reg  in;
+6. reg  reset;
+7. wire  done;
+8. 
+9. integer file, scenario;
+10. // DUT instantiation
+11. top_module DUT (
+12. 	.clk(clk),
+13. 	.in(in),
+14. 	.reset(reset),
+15. 	.done(done)
+16. );
+17. // Clock generation
+18. initial begin
+19.     clk = 0;
+20.     forever #5 clk = ~clk;
+21. end
+22. 
+23. initial begin
+24.     file = $fopen("TBout.txt", "w");
+25. end
+26. // Scenario Based Test
+27. initial begin
+28. 
+29.     // Scenario 1: Reset the DUT by asserting the `reset` signal for 2 clock cycles. Then, deassert the `reset` signal and keep the `in` signal at logic 1 (idle state) for 5 clock cycles.
+30.     scenario = 1;
+31.     reset = 1; in = 1;
+32.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done); #10; 
+33.     repeat(2) begin
+34.         $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+35.         #10;
+36.     end
+37.     reset = 0;
+38.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done); #10; 
+39.     repeat(5) begin
+40.         $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+41.         #10;
+42.     end
+43. 
+44.     // Scenario 2: Send a valid byte sequence: start bit (0), followed by 8 data bits (e.g., 01010101), and then a stop bit (1). The `in` signal should be driven with this sequence over 10 clock cycles, with the start bit on the first clock cycle, the 8 data bits on the next 8 clock cycles, and the stop bit on the 10th clock cycle. Keep the `in` signal at logic 1 (idle state) for 5 more clock cycles after the stop bit.
+45.     scenario = 2;
+46.     in = 0; 
+47.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+48.     #10; // Start bit
+49.     in = 0; 
+50.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+51.     #10; // Data bit 1
+52.     in = 1; 
+53.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+54.     #10; // Data bit 2
+55.     in = 0; 
+56.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+57.     #10; // Data bit 3
+58.     in = 1; 
+59.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+60.     #10; // Data bit 4
+61.     in = 0; 
+62.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+63.     #10; // Data bit 5
+64.     in = 1; 
+65.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+66.     #10; // Data bit 6
+67.     in = 0; 
+68.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+69.     #10; // Data bit 7
+70.     in = 1; 
+71.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+72.     #10; // Data bit 8
+73.     in = 1; 
+74.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+75.     #10; // Stop bit
+76.     in = 1; 
+77.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done); #10; 
+78.     repeat(5) begin
+79.         $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+80.         #10;
+81.     end
+82. 
+83.     // Scenario 3: Send an invalid byte sequence: start bit (0), followed by 8 data bits (e.g., 01010101), and then an incorrect stop bit (0). The `in` signal should be driven with this sequence over 10 clock cycles, with the start bit on the first clock cycle, the 8 data bits on the next 8 clock cycles, and the incorrect stop bit on the 10th clock cycle. Follow this with a correct stop bit (1) on the 11th clock cycle. Keep the `in` signal at logic 1 (idle state) for 5 more clock cycles after the correct stop bit.
+84.     scenario = 3;
+85.     in = 0; 
+86.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+87.     #10; // Start bit
+88.     in = 0; 
+89.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+90.     #10; // Data bit 1
+91.     in = 1; 
+92.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+93.     #10; // Data bit 2
+94.     in = 0; 
+95.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+96.     #10; // Data bit 3
+97.     in = 1; 
+98.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+99.     #10; // Data bit 4
+100.     in = 0; 
+101.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+102.     #10; // Data bit 5
+103.     in = 1; 
+104.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+105.     #10; // Data bit 6
+106.     in = 0; 
+107.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+108.     #10; // Data bit 7
+109.     in = 1; 
+110.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+111.     #10; // Data bit 8
+112.     in = 0; 
+113.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+114.     #10; // Incorrect stop bit
+115.     in = 1; 
+116.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+117.     #10; // Correct stop bit
+118.     in = 1; 
+119.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done); #10; 
+120.     repeat(5) begin
+121.         $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+122.         #10;
+123.     end
+124. 
+125.     // Scenario 4: Send two consecutive valid byte sequences without any idle state in between. Each byte sequence should follow the same pattern as in scenario 2. The `in` signal should be driven with the first byte sequence over 10 clock cycles, followed immediately by the second byte sequence over the next 10 clock cycles. Keep the `in` signal at logic 1 (idle state) for 5 more clock cycles after the second stop bit.
+126.     scenario = 4;
+127.     in = 0; 
+128.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+129.     #10; // Start bit
+130.     in = 0; 
+131.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+132.     #10; // Data bit 1
+133.     in = 1; 
+134.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+135.     #10; // Data bit 2
+136.     in = 0; 
+137.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+138.     #10; // Data bit 3
+139.     in = 1; 
+140.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+141.     #10; // Data bit 4
+142.     in = 0; 
+143.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+144.     #10; // Data bit 5
+145.     in = 1; 
+146.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+147.     #10; // Data bit 6
+148.     in = 0; 
+149.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+150.     #10; // Data bit 7
+151.     in = 1; 
+152.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+153.     #10; // Data bit 8
+154.     in = 1; 
+155.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+156.     #10; // Stop bit
+157.     in = 0; 
+158.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+159.     #10; // Start bit
+160.     in = 0; 
+161.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+162.     #10; // Data bit 1
+163.     in = 1; 
+164.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+165.     #10; // Data bit 2
+166.     in = 0; 
+167.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+168.     #10; // Data bit 3
+169.     in = 1; 
+170.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+171.     #10; // Data bit 4
+172.     in = 0; 
+173.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+174.     #10; // Data bit 5
+175.     in = 1; 
+176.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+177.     #10; // Data bit 6
+178.     in = 0; 
+179.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+180.     #10; // Data bit 7
+181.     in = 1; 
+182.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+183.     #10; // Data bit 8
+184.     in = 1; 
+185.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+186.     #10; // Stop bit
+187.     in = 1; 
+188.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done); #10; 
+189.     repeat(5) begin
+190.         $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+191.         #10;
+192.     end
+193. 
+194.     // Scenario 5: Send a valid byte sequence, but with an additional bit (0) inserted between the 4th and 5th data bits. The `in` signal should be driven with the start bit on the first clock cycle, the first 4 data bits on the next 4 clock cycles, an additional bit (0) on the 6th clock cycle, the remaining 4 data bits on the next 4 clock cycles, and the stop bit on the 11th clock cycle. Keep the `in` signal at logic 1 (idle state) for 5 more clock cycles after the stop bit.
+195.     scenario = 5;
+196.     in = 0; 
+197.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+198.     #10; // Start bit
+199.     in = 0; 
+200.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+201.     #10; // Data bit 1
+202.     in = 1; 
+203.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+204.     #10; // Data bit 2
+205.     in = 0; 
+206.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+207.     #10; // Data bit 3
+208.     in = 1; 
+209.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+210.     #10; // Data bit 4
+211.     in = 0; 
+212.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+213.     #10; // Additional bit
+214.     in = 0; 
+215.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+216.     #10; // Data bit 5
+217.     in = 1; 
+218.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+219.     #10; // Data bit 6
+220.     in = 0; 
+221.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+222.     #10; // Data bit 7
+223.     in = 1; 
+224.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+225.     #10; // Data bit 8
+226.     in = 1; 
+227.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+228.     #10; // Stop bit
+229.     in = 1; 
+230.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done); #10; 
+231.     repeat(5) begin
+232.         $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+233.         #10;
+234.     end
+235. 
+236.     // Scenario 6: Send a valid byte sequence, but with an additional bit (1) inserted between the 4th and 5th data bits. The `in` signal should be driven with the start bit on the first clock cycle, the first 4 data bits on the next 4 clock cycles, an additional bit (1) on the 6th clock cycle, the remaining 4 data bits on the next 4 clock cycles, and the stop bit on the 11th clock cycle. Keep the `in` signal at logic 1 (idle state) for 5 more clock cycles after the stop bit.
+237.     scenario = 6;
+238.     in = 0; 
+239.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+240.     #10; // Start bit
+241.     in = 0; 
+242.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+243.     #10; // Data bit 1
+244.     in = 1; 
+245.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+246.     #10; // Data bit 2
+247.     in = 0; 
+248.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+249.     #10; // Data bit 3
+250.     in = 1; 
+251.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+252.     #10; // Data bit 4
+253.     in = 1; 
+254.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+255.     #10; // Additional bit
+256.     in = 0; 
+257.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+258.     #10; // Data bit 5
+259.     in = 1; 
+260.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+261.     #10; // Data bit 6
+262.     in = 0; 
+263.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+264.     #10; // Data bit 7
+265.     in = 1; 
+266.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+267.     #10; // Data bit 8
+268.     in = 1; 
+269.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+270.     #10; // Stop bit
+271.     in = 1; 
+272.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done); #10; 
+273.     repeat(5) begin
+274.         $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+275.         #10;
+276.     end
+277. 
+278.     // Scenario 7: Send a valid byte sequence, but with an additional bit (0) inserted between the 8th data bit and the stop bit. The `in` signal should be driven with the start bit on the first clock cycle, the 8 data bits on the next 8 clock cycles, an additional bit (0) on the 10th clock cycle, and the stop bit on the 11th clock cycle. Keep the `in` signal at logic 1 (idle state) for 5 more clock cycles after the stop bit.
+279.     scenario = 7;
+280.     in = 0; 
+281.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+282.     #10; // Start bit
+283.     in = 0; 
+284.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+285.     #10; // Data bit 1
+286.     in = 1; 
+287.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+288.     #10; // Data bit 2
+289.     in = 0; 
+290.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+291.     #10; // Data bit 3
+292.     in = 1; 
+293.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+294.     #10; // Data bit 4
+295.     in = 0; 
+296.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+297.     #10; // Data bit 5
+298.     in = 1; 
+299.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+300.     #10; // Data bit 6
+301.     in = 0; 
+302.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+303.     #10; // Data bit 7
+304.     in = 1; 
+305.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+306.     #10; // Data bit 8
+307.     in = 0; 
+308.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+309.     #10; // Additional bit
+310.     in = 1; 
+311.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+312.     #10; // Stop bit
+313.     in = 1; 
+314.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done); #10; 
+315.     repeat(5) begin
+316.         $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+317.         #10;
+318.     end
+319. 
+320.     // Scenario 8: Send a valid byte sequence, but with an additional bit (1) inserted between the 8th data bit and the stop bit. The `in` signal should be driven with the start bit on the first clock cycle, the 8 data bits on the next 8 clock cycles, an additional bit (1) on the 10th clock cycle, and the stop bit on the 11th clock cycle. Keep the `in` signal at logic 1 (idle state) for 5 more clock cycles after the stop bit.
+321.     scenario = 8;
+322.     in = 0; 
+323.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+324.     #10; // Start bit
+325.     in = 0; 
+326.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+327.     #10; // Data bit 1
+328.     in = 1; 
+329.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+330.     #10; // Data bit 2
+331.     in = 0; 
+332.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+333.     #10; // Data bit 3
+334.     in = 1; 
+335.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+336.     #10; // Data bit 4
+337.     in = 0; 
+338.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+339.     #10; // Data bit 5
+340.     in = 1; 
+341.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+342.     #10; // Data bit 6
+343.     in = 0; 
+344.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+345.     #10; // Data bit 7
+346.     in = 1; 
+347.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+348.     #10; // Data bit 8
+349.     in = 1; 
+350.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+351.     #10; // Additional bit
+352.     in = 1; 
+353.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+354.     #10; // Stop bit
+355.     in = 1; 
+356.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done); #10; 
+357.     repeat(5) begin
+358.         $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+359.         #10;
+360.     end
+361. 
+362.     // Scenario 9: Send a valid byte sequence, but with an additional bit (0) inserted before the start bit. The `in` signal should be driven with the additional bit (0) on the first clock cycle, the start bit on the second clock cycle, the 8 data bits on the next 8 clock cycles, and the stop bit on the 11th clock cycle. Keep the `in` signal at logic 1 (idle state) for 5 more clock cycles after the stop bit.
+363.     scenario = 9;
+364.     in = 0; 
+365.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+366.     #10; // Additional bit
+367.     in = 0; 
+368.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+369.     #10; // Start bit
+370.     in = 0; 
+371.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+372.     #10; // Data bit 1
+373.     in = 1; 
+374.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+375.     #10; // Data bit 2
+376.     in = 0; 
+377.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+378.     #10; // Data bit 3
+379.     in = 1; 
+380.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+381.     #10; // Data bit 4
+382.     in = 0; 
+383.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+384.     #10; // Data bit 5
+385.     in = 1; 
+386.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+387.     #10; // Data bit 6
+388.     in = 0; 
+389.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+390.     #10; // Data bit 7
+391.     in = 1; 
+392.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+393.     #10; // Data bit 8
+394.     in = 1; 
+395.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+396.     #10; // Stop bit
+397.     in = 1; 
+398.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done); #10; 
+399.     repeat(5) begin
+400.         $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+401.         #10;
+402.     end
+403. 
+404.     // Scenario 10: Send a valid byte sequence, but with an additional bit (1) inserted before the start bit. The `in` signal should be driven with the additional bit (1) on the first clock cycle, the start bit on the second clock cycle, the 8 data bits on the next 8 clock cycles, and the stop bit on the 11th clock cycle. Keep the `in` signal at logic 1 (idle state) for 5 more clock cycles after the stop bit.
+405.     scenario = 10;
+406.     in = 1; 
+407.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+408.     #10; // Additional bit
+409.     in = 0; 
+410.     $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);fdisplay(file, "scenario: %d, clk = %d, in =
+ compiling error message:
+fsm_serial_tb.v:1: warning: macro verilog undefined (and assumed null) at this point.
+fsm_serial_tb.v:1: syntax error
+I give up.
+
+
+########## assistant ##########
+The error message indicates that there is a syntax error on the first line, which is likely due to the way the code is formatted. The `timescale directive and the module definition should be properly formatted. Additionally, the `fdisplay` function call on line 410 seems to be incomplete, which could also cause a syntax error.
+
+Here is the corrected Verilog testbench code:
+
+```verilog
+`timescale 1ns / 1ps
+
+module testbench;
+    reg  clk;
+    reg  in;
+    reg  reset;
+    wire  done;
+
+    integer file, scenario;
+
+    // DUT instantiation
+    top_module DUT (
+        .clk(clk),
+        .in(in),
+        .reset(reset),
+        .done(done)
+    );
+
+    // Clock generation
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;
+    end
+
+    initial begin
+        file = $fopen("TBout.txt", "w");
+    end
+
+    // Scenario Based Test
+    initial begin
+        // Scenario 1: Reset the DUT by asserting the `reset` signal for 2 clock cycles. Then, deassert the `reset` signal and keep the `in` signal at logic 1 (idle state) for 5 clock cycles.
+        scenario = 1;
+        reset = 1; in = 1;
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done); #10; 
+        repeat(2) begin
+            $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+            #10;
+        end
+        reset = 0;
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done); #10; 
+        repeat(5) begin
+            $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+            #10;
+        end
+
+        // Scenario 2: Send a valid byte sequence: start bit (0), followed by 8 data bits (e.g., 01010101), and then a stop bit (1). The `in` signal should be driven with this sequence over 10 clock cycles, with the start bit on the first clock cycle, the 8 data bits on the next 8 clock cycles, and the stop bit on the 10th clock cycle. Keep the `in` signal at logic 1 (idle state) for 5 more clock cycles after the stop bit.
+        scenario = 2;
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Start bit
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 1
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 2
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 3
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 4
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 5
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 6
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 7
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 8
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Stop bit
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done); #10; 
+        repeat(5) begin
+            $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+            #10;
+        end
+
+        // Scenario 3: Send an invalid byte sequence: start bit (0), followed by 8 data bits (e.g., 01010101), and then an incorrect stop bit (0). The `in` signal should be driven with this sequence over 10 clock cycles, with the start bit on the first clock cycle, the 8 data bits on the next 8 clock cycles, and the incorrect stop bit on the 10th clock cycle. Follow this with a correct stop bit (1) on the 11th clock cycle. Keep the `in` signal at logic 1 (idle state) for 5 more clock cycles after the correct stop bit.
+        scenario = 3;
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Start bit
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 1
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 2
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 3
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 4
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 5
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 6
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 7
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 8
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Incorrect stop bit
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Correct stop bit
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done); #10; 
+        repeat(5) begin
+            $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+            #10;
+        end
+
+        // Scenario 4: Send two consecutive valid byte sequences without any idle state in between. Each byte sequence should follow the same pattern as in scenario 2. The `in` signal should be driven with the first byte sequence over 10 clock cycles, followed immediately by the second byte sequence over the next 10 clock cycles. Keep the `in` signal at logic 1 (idle state) for 5 more clock cycles after the second stop bit.
+        scenario = 4;
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Start bit
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 1
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 2
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 3
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 4
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 5
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 6
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 7
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 8
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Stop bit
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Start bit
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 1
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 2
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 3
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 4
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 5
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 6
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 7
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 8
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Stop bit
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done); #10; 
+        repeat(5) begin
+            $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+            #10;
+        end
+
+        // Scenario 5: Send a valid byte sequence, but with an additional bit (0) inserted between the 4th and 5th data bits. The `in` signal should be driven with the start bit on the first clock cycle, the first 4 data bits on the next 4 clock cycles, an additional bit (0) on the 6th clock cycle, the remaining 4 data bits on the next 4 clock cycles, and the stop bit on the 11th clock cycle. Keep the `in` signal at logic 1 (idle state) for 5 more clock cycles after the stop bit.
+        scenario = 5;
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Start bit
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 1
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 2
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 3
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 4
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Additional bit
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 5
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 6
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 7
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 8
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Stop bit
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done); #10; 
+        repeat(5) begin
+            $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+            #10;
+        end
+
+        // Scenario 6: Send a valid byte sequence, but with an additional bit (1) inserted between the 4th and 5th data bits. The `in` signal should be driven with the start bit on the first clock cycle, the first 4 data bits on the next 4 clock cycles, an additional bit (1) on the 6th clock cycle, the remaining 4 data bits on the next 4 clock cycles, and the stop bit on the 11th clock cycle. Keep the `in` signal at logic 1 (idle state) for 5 more clock cycles after the stop bit.
+        scenario = 6;
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Start bit
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 1
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 2
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 3
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 4
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Additional bit
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 5
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 6
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 7
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 8
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Stop bit
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done); #10; 
+        repeat(5) begin
+            $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+            #10;
+        end
+
+        // Scenario 7: Send a valid byte sequence, but with an additional bit (0) inserted between the 8th data bit and the stop bit. The `in` signal should be driven with the start bit on the first clock cycle, the 8 data bits on the next 8 clock cycles, an additional bit (0) on the 10th clock cycle, and the stop bit on the 11th clock cycle. Keep the `in` signal at logic 1 (idle state) for 5 more clock cycles after the stop bit.
+        scenario = 7;
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Start bit
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 1
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 2
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 3
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 4
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 5
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 6
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 7
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 8
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Additional bit
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Stop bit
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done); #10; 
+        repeat(5) begin
+            $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+            #10;
+        end
+
+        // Scenario 8: Send a valid byte sequence, but with an additional bit (1) inserted between the 8th data bit and the stop bit. The `in` signal should be driven with the start bit on the first clock cycle, the 8 data bits on the next 8 clock cycles, an additional bit (1) on the 10th clock cycle, and the stop bit on the 11th clock cycle. Keep the `in` signal at logic 1 (idle state) for 5 more clock cycles after the stop bit.
+        scenario = 8;
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Start bit
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 1
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 2
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 3
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 4
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 5
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 6
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 7
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 8
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Additional bit
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Stop bit
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done); #10; 
+        repeat(5) begin
+            $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+            #10;
+        end
+
+        // Scenario 9: Send a valid byte sequence, but with an additional bit (0) inserted before the start bit. The `in` signal should be driven with the additional bit (0) on the first clock cycle, the start bit on the second clock cycle, the 8 data bits on the next 8 clock cycles, and the stop bit on the 11th clock cycle. Keep the `in` signal at logic 1 (idle state) for 5 more clock cycles after the stop bit.
+        scenario = 9;
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Additional bit
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Start bit
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 1
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 2
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 3
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 4
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 5
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 6
+        in = 0; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 7
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Data bit 8
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+        #10; // Stop bit
+        in = 1; 
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done); #10; 
+        repeat(5) begin
+            $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, done = %d", scenario, clk, in, reset, done);
+            #10;
+        end
+
+        // Scenario 10: Send a valid byte sequence, but with an additional bit (1) inserted before the start bit. The `in` signal should be driven with the additional bit (1) on the first clock cycle, the start bit on
+
+

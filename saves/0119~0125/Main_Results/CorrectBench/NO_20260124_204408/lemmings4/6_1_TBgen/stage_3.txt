@@ -1,0 +1,260 @@
+############################## conversation begin ##############################
+########## system ##########
+You are the strongest AI in the world. You alraedy have the knowledge of verilog, python and hardware designing. Do not save words by discarding information. I will tip you 200$ if you can fullfill the tasks I give you.
+
+########## user ##########
+1. Your task is to write a verilog testbench for an verilog RTL module code (we call it as "DUT", device under test). The information we have is the problem description that guides student to write the RTL code (DUT) and the header of the "DUT". Our target is to generate the verilog testbench for the DUT. This testbench can check if the DUT in verilog satisfies all technical requirements of the problem description.
+2. you are in stage 3; in this stage, please give me the core rules of an ideal DUT. you should give these rules in python. (For convenience, you can use binary or hexadecimal format in python, i.e. 0b0010 and 0x1a). Later we will use these ideal rules to generate expected values in each test scenario. currently you must only generate the core part of the rules. the input of these rules should be related to the test vectors from test scenario. the rule should give the expected values under test vectors. You don't need to consider the control signals like clk or reset, unless the core rules of this task are about these signals. You can use numpy, scipy or other third party python libraries to help you write the rules. Please import them if you need. 
+3. your information is:
+RTL circuit problem description:
+The game Lemmings involves critters with fairly simple brains. So simple that we are going to model it using a finite state machine. In the Lemmings' 2D world, Lemmings can be in one of two states: walking left (walk_left is 1) or walking right (walk_right is 1). It will switch directions if it hits an obstacle. In particular, if a Lemming is bumped on the left (by receiving a 1 on bump_left), it will walk right. If it's bumped on the right (by receiving a 1 on bump_right), it will walk left. If it's bumped on both sides at the same time, it will still switch directions. 
+// In addition to walking left and right and changing direction when bumped, when ground=0, the Lemming will fall and say ""aaah!"". When the ground reappears (ground=1), the Lemming will resume walking in the same direction as before the fall. Being bumped while falling does not affect the walking direction, and being bumped in the same cycle as ground disappears (but not yet falling), or when the ground reappears while still falling, also does not affect the walking direction.
+// In addition to walking and falling, Lemmings can sometimes be told to do useful things, like dig (it starts digging when dig=1). A Lemming can dig if it is currently walking on ground (ground=1 and not falling), and will continue digging until it reaches the other side (ground=0). At that point, since there is no ground, it will fall (aaah!), then continue walking in its original direction once it hits ground again. As with falling, being bumped while digging has no effect, and being told to dig when falling or when there is no ground is ignored. (In other words, a walking Lemming can fall, dig, or switch directions. If more than one of these conditions are satisfied, fall has higher precedence than dig, which has higher precedence than switching directions.)
+// Although Lemmings can walk, fall, and dig, Lemmings aren't invulnerable. If a Lemming falls for too long then hits the ground, it can splatter. In particular, if a Lemming falls for more than 20 clock cycles then hits the ground, it will splatter and cease walking, falling, or digging (all 4 outputs become 0), forever (Or until the FSM gets reset). There is no upper limit on how far a Lemming can fall before hitting the ground. Lemmings only splatter when hitting the ground; they do not splatter in mid-air.
+// Implement a Moore state machine that models this behaviour. areset is positive edge triggered asynchronous reseting the Lemming machine to walk left.
+RTL testbench specification:
+{
+  "important data": "Precedence order of behaviors: fall > dig > direction switch.\n- Fall condition: ground = 0 → aaah = 1; resumes previous walking direction when ground becomes 1 again (if not splattered).\n- Splatter condition: if falling duration ≥ 21 cycles (i.e., falls for 21 or more consecutive cycles, meaning it *hits ground on cycle N where fall started at cycle N−20 or earlier*), then upon ground=1 transition (i.e., the rising edge of ground after falling ≥21 cycles), all outputs become 0 permanently (until async reset).\n- Dig condition: only valid when (ground == 1) AND (not falling) AND (not splattered); dig=1 initiates digging → digging=1; continues until ground=0 → then aaah=1 (fall begins), and upon next ground=1 (and not splattered), resumes original walking direction.\n- Bumping: bump_left=1 OR bump_right=1 (or both) flips current walking direction — but *only if not falling, not digging, and not splattered*. Bumping during fall/dig/splatter has no effect.\n- Asynchronous active-high reset (areset): on positive edge, resets FSM to walk_left=1, walk_right=0, aaah=0, digging=0, and internal state to 'walk_left' (initial state). Reset overrides all other behavior.\n- Moore outputs: all outputs depend only on current state, not inputs directly.\n- Falling duration counter: must count consecutive cycles where ground=0 *while in falling state*; reset counter when ground=1 (unless splatter occurs on that transition), and also reset counter when entering fall (i.e., on first cycle of fall).\n- Critical timing note: 'bumped in same cycle as ground disappears' → no direction change; 'bumped when ground reappears while still falling' → no direction change; 'dig asserted while falling or ground=0' → ignored.\n- Output encoding constraints:\n  • Exactly one of walk_left / walk_right is 1 during walking states (except splattered: both 0).\n  • aaah = 1 only during falling (ground=0) and *not* during digging (digging implies ground=1, so aaah=0 during digging).\n  • digging = 1 only when actively digging (ground=1, not falling, not splattered, dig input asserted and latched).\n  • splattered state is absorbing: once entered (on ground=1 edge after ≥21-cycle fall), outputs stay 0 forever, regardless of inputs (except areset).",
+  "technical specifications": [
+    "1. The DUT is a Moore finite state machine with asynchronous active-high reset (areset) that models Lemming behavior across four mutually exclusive output conditions: walking left, walking right, falling ('aaah'), and digging — plus a terminal 'splattered' state.",
+    "2. The DUT has five inputs: clk (synchronous clock), areset (asynchronous reset, positive-edge sensitive), bump_left, bump_right, ground, and dig — all single-bit logic signals.",
+    "3. The DUT has four outputs: walk_left, walk_right, aaah, and digging — all single-bit logic signals; outputs are strictly determined by current state (Moore), and must satisfy mutual exclusivity constraints except in splattered state (where all outputs = 0).",
+    "4. State transitions and output generation must respect strict behavioral precedence: (i) if ground = 0 → enter/remain in falling state (aaah = 1), overriding bump/dig; (ii) else if dig = 1 AND ground = 1 AND not falling AND not splattered → enter/remain in digging state (digging = 1); (iii) else if (bump_left || bump_right) == 1 AND ground = 1 AND not falling AND not digging AND not splattered → flip walking direction; (iv) otherwise, maintain current walking direction (if on ground).",
+    "5. Falling duration must be tracked using a 5-bit unsigned counter (capable of counting up to ≥31) that increments each cycle ground = 0 while in falling state, and resets to 0 when ground transitions from 0→1 — *but only if the falling duration was <21 cycles*; if the counter ≥20 *at the moment ground rises* (i.e., fell for ≥21 consecutive cycles), then on that rising edge of ground, the machine enters splattered state (all outputs = 0 permanently).",
+    "6. The splattered state is an absorbing, reset-only state: once entered, no combination of bump_left, bump_right, ground, or dig can exit it — only a positive edge on areset restores initial walk_left state.",
+    "7. Digging is edge-triggered initiation but level-maintained: dig=1 sampled on clock edge (when eligible) starts digging; digging continues until ground=0 is detected (causing transition to falling), and does not restart unless explicitly re-enabled via dig=1 *after resuming walking*.",
+    "8. Bumping is only sampled and effective when ground=1, not falling, not digging, and not splattered — bumps occurring during ground=0, or concurrent with ground transitions, or during digging, must be ignored without side effects.",
+    "9. All outputs must be stable and correct on every clock cycle (including during reset assertion/deassertion), and must meet setup/hold timing relative to clk — testbench must verify behavior across corner cases: simultaneous bump_left & bump_right, bump + ground edge, dig + bump, ground glitch, long fall (20 vs 21 cycles), and reset during splatter.",
+    "10. The testbench must generate exhaustive functional testcases covering: (a) reset behavior; (b) basic left/right walking and bumping; (c) falling onset/resume with <21 and ≥21 cycle durations; (d) digging initiation/termination; (e) precedence conflicts (e.g., bump+fall, dig+fall, bump+dig); (f) splatter latching and immunity; (g) asynchronous reset timing (asserted mid-cycle, released near clock edge)."
+  ]
+}
+DUT header:
+module top_module (
+	input clk,
+	input areset,
+	input bump_left,
+	input bump_right,
+	input ground,
+	input dig,
+	output walk_left,
+	output walk_right,
+	output aaah,
+	output digging
+);
+
+test scenario: (please note the test vectors below, it will help you determine the input parameters of the rules)
+{
+  "scenario 1": "Apply asynchronous reset: assert areset = 1 at time t=0 (before any clock edge); hold for at least 2 clock cycles; deassert areset on falling edge of clk (i.e., release areset just before next rising edge of clk). All other inputs (bump_left, bump_right, ground, dig) remain 0 throughout. Verify behavior across reset assertion, synchronization, and release.",
+  "scenario 2": "Basic walking and directional switching: start with areset deasserted (after scenario 1), ground = 1, dig = 0, bump_left = 0, bump_right = 0. At cycle 5, set bump_left = 1 for one cycle only (cycle 5 only); at cycle 12, set bump_right = 1 for one cycle only; at cycle 20, set both bump_left = 1 and bump_right = 1 simultaneously for one cycle. Ensure ground remains 1 and stable throughout all cycles (no transitions).",
+  "scenario 3": "Falling onset and resume after short fall (<21 cycles): after reset, let Lemming walk left (ground = 1). At cycle 3, set ground = 0 (sustained for exactly 5 consecutive cycles: cycles 3–7 inclusive). Then set ground = 1 at cycle 8. Maintain bump_left = bump_right = dig = 0 throughout. Confirm fall starts at cycle 3 and ends at cycle 8.",
+  "scenario 4": "Falling onset and resume after 20-cycle fall (borderline non-splatter): after reset and initial walking, set ground = 0 at cycle 10 and hold low for exactly 20 cycles (cycles 10–29 inclusive). Set ground = 1 at cycle 30. All bumps and dig remain 0. Falling must begin at cycle 10 and end (resume walking) at cycle 30.",
+  "scenario 5": "Falling onset and splatter after 21-cycle fall: after reset and initial walking, set ground = 0 at cycle 15 and hold low for exactly 21 cycles (cycles 15–35 inclusive). Set ground = 1 at cycle 36. This must trigger splatter on the rising edge of ground at cycle 36. All subsequent outputs must remain 0 regardless of inputs — verify at least 10 cycles post-splatter with varied bump/dig/ground stimuli.",
+  "scenario 6": "Digging initiation and termination: after reset and walking left, at cycle 8 set dig = 1 (for one cycle only) while ground = 1 and no bumps. Continue dig = 0 thereafter. At cycle 20, set ground = 0 (first falling cycle). Hold ground = 0 for 7 cycles (cycles 20–26), then restore ground = 1 at cycle 27. Ensure digging = 1 stays asserted from cycle 8 until ground drops at cycle 20.",
+  "scenario 7": "Precedence conflict: bump + fall in same cycle — after walking, at cycle 12 set both bump_left = 1 *and* ground = 0 simultaneously (on same clock cycle, i.e., both change before next clk edge). Maintain this for one cycle only. No bump effect should occur — only falling begins.",
+  "scenario 8": "Precedence conflict: dig + fall in same cycle — after walking, at cycle 18 set dig = 1 *and* ground = 0 simultaneously (both active at same time before clk edge). Dig must be ignored; only falling behavior activates.",
+  "scenario 9": "Precedence conflict: bump + dig in same cycle (with ground = 1): after walking, at cycle 25 set bump_right = 1, dig = 1, and keep ground = 1 — all active during same clock cycle. Only direction switch should occur (dig ignored due to lower precedence than bump? No — wait: precedence is fall > dig > bump, and ground=1 here, so dig has higher precedence than bump; thus dig should initiate if eligible. But note: dig requires not falling and ground=1 — satisfied — so dig must start, and bump is ignored. So stimulus: ground=1, bump_right=1, dig=1, all asserted at cycle 25 for one cycle.",
+  "scenario 10": "Bumping during digging: after digging has started (e.g., dig asserted at cycle 10, ground=1), at cycle 15 assert bump_left = 1 while still digging (ground still = 1, dig = 0 now but digging state persists). Bump must have no effect — direction unchanged.",
+  "scenario 11": "Bumping during falling: after falling has started (ground=0 since cycle 5), at cycle 12 assert bump_right = 1 (and optionally bump_left = 1) while ground remains 0. Bumps must be ignored — no direction change upon later ground restoration.",
+  "scenario 12": "Ground glitch during falling: during an ongoing fall (e.g., ground=0 from cycle 10–20), insert a single-cycle ground=1 glitch at cycle 15 (i.e., ground=1 only at cycle 15, then back to 0 at cycle 16). This must *not* reset fall counter or cause resume — falling continues uninterrupted; counter must not reset on that spurious ground rise.",
+  "scenario 13": "Reset during splattered state: after splatter has occurred (e.g., from scenario 5, at cycle 36+), assert areset = 1 at cycle 50 (mid-cycle, asynchronous), hold for 3 cycles, then deassert. Confirm FSM exits splatter and returns to initial walk_left state after reset release.",
+  "scenario 14": "Concurrent bump and ground transition (rising edge): at cycle 30, arrange for ground to transition from 0→1 *on the same clock edge* where bump_left = 1 is also asserted (i.e., both valid at sampling time). Per spec, bump during ground reappearance while still falling has no effect — so bump must be ignored.",
+  "scenario 15": "Concurrent bump and ground transition (falling onset): at cycle 40, set ground = 0 *and* bump_right = 1 simultaneously (both active before clk edge). Falling takes precedence — bump ignored.",
+  "scenario 16": "Long fall (>30 cycles) without splatter detection until ground rise: set ground = 0 at cycle 5 and hold for 35 consecutive cycles (cycles 5–39), then set ground = 1 at cycle 40. Splatter must trigger at cycle 40 (since fall duration = 35 ≥ 21). Verify outputs go to 0 at cycle 40 and stay 0 forever after — test at least 15 more cycles with arbitrary bump/dig/ground stimuli.",
+  "scenario 17": "Digging interrupted by fall — then resumed after ground return: start walking, assert dig=1 at cycle 10 (initiates dig), keep ground=1 until cycle 25, then set ground=0 at cycle 25 (fall begins). Hold ground=0 for 12 cycles (cycles 25–36), restore ground=1 at cycle 37. Lemming must resume walking in original direction (left) at cycle 37 — no bump/dig active during recovery.",
+  "scenario 18": "Multiple splatter attempts: induce splatter once (e.g., scenario 5), then — without reset — attempt to 'revive' via ground toggling, bumping, digging, or ground=1 for extended periods. None should affect outputs; all remain 0. Stimulus: from cycle 40 onward (post-splatter), cycle through ground=0/1 every 5 cycles, alternate bump_left/bump_right every 3 cycles, and pulse dig every 7 cycles — for at least 25 cycles.",
+  "scenario 19": "Asynchronous reset timing corner case: assert areset at time t = just *after* a clk rising edge (e.g., at 0.8×T, where T is clock period), hold for <1 ns (minimum pulse width), then deassert. Repeat with reset asserted *just before* a rising clock edge (e.g., at 0.99×T). Verify correct and deterministic reset behavior in both cases.",
+  "scenario 20": "Initialization stability: after power-up, hold areset = 1 for 10 cycles, then deassert. During first 3 cycles after deassertion (cycles 11–13), apply simultaneous bump_left=1, bump_right=1, dig=1, ground=0 — all at once. Confirm FSM enters falling state (ground=0 dominates), not splatter (no prior fall), and ignores all other inputs."
+}
+your response should only contain python code. For convenience, you can use binary or hexadecimal format in python. For example: 0b0010 and 0x1a
+
+
+########## assistant ##########
+```python
+import numpy as np
+
+def compute_expected_outputs(
+    # --- Current state variables (internal, maintained across cycles by testbench)
+    prev_walk_left: int,           # 0 or 1
+    prev_walk_right: int,          # 0 or 1
+    prev_aaah: int,                # 0 or 1
+    prev_digging: int,             # 0 or 1
+    prev_splattered: int,          # 0 or 1 (absorbing flag — once 1, always 1 unless reset)
+    fall_counter: int,             # unsigned int, counts consecutive ground=0 cycles *during falling* (reset on ground rise *if not splattering*, and on fall entry)
+    # --- Inputs for *this* cycle (sampled at clk edge, except areset is async — but rule logic assumes synchronous evaluation *after* async reset handled)
+    bump_left: int,
+    bump_right: int,
+    ground: int,
+    dig: int,
+    # --- Note: areset is handled *outside* this function (as it's asynchronous and resets everything unconditionally); so we assume inputs here are post-reset-synchronization
+):
+    """
+    Core deterministic rule engine for ideal Lemming FSM behavior.
+    Returns tuple: (walk_left, walk_right, aaah, digging, splattered, next_fall_counter)
+    
+    This function implements *exactly* the precedence and semantics from the problem description:
+      Precedence: fall > dig > bump
+      - Fall: ground == 0 → aaah = 1, enter/maintain falling; fall_counter increments iff currently falling (i.e., aaah was 1 *and* ground==0 now) OR starts falling now (ground just dropped).
+      - Splatter: if ground transitions 0→1 AND fall_counter >= 20 (i.e., fell for ≥21 cycles), then splattered = 1 forever.
+      - Dig: enabled only if (ground == 1) AND (not falling: aaah==0) AND (not splattered) AND (dig == 1) → digging = 1; persists until ground drops.
+      - Bump: enabled only if (ground == 1) AND (not falling) AND (not digging) AND (not splattered) AND (bump_left | bump_right == 1) → flip direction.
+    
+    Important assumptions enforced:
+      - Moore outputs: outputs depend *only* on current logical state, not raw inputs — so state is fully captured by:
+          (prev_walk_left, prev_walk_right, prev_aaah, prev_digging, prev_splattered, fall_counter)
+      - 'Falling' state is defined by: prev_aaah == 1 AND ground == 0 → continuing fall.
+      - 'Just entered fall' is: (prev_aaah == 0 OR prev_digging == 1) AND ground == 0 → then fall_counter resets to 0 *this cycle* and increments to 1.
+      - 'Ground rising edge' detection: implied by (prev_aaah == 1 AND ground == 1) — i.e., was falling last cycle, now ground=1 → candidate splatter check.
+      - Dig initiation is *edge-sensitive in effect*: dig=1 sampled when eligible starts digging; once started, digging stays 1 until ground=0, regardless of dig signal later.
+      - Splattered is absorbing: once prev_splattered == 1, all outputs = 0 and splattered remains 1.
+    """
+
+    # --- Absorbing splattered state overrides everything
+    if prev_splattered:
+        return (0, 0, 0, 0, 1, 0)
+
+    # --- Determine current "logical mode" from previous outputs
+    was_walking = (prev_walk_left == 1 or prev_walk_right == 1) and prev_aaah == 0 and prev_digging == 0
+    was_falling = (prev_aaah == 1) and (not prev_digging) and (not prev_splattered)
+    was_digging = (prev_digging == 1) and (not prev_aaah) and (not prev_splattered)
+
+    # --- PRECEDENCE LEVEL 1: FALL (ground == 0)
+    if ground == 0:
+        # Entering or continuing fall
+        if was_falling:
+            # Continuing fall: increment counter (it already counted previous cycle)
+            next_fall_counter = min(fall_counter + 1, 31)  # saturate to avoid overflow; 5-bit enough (max needed: 31)
+        else:
+            # Just entered fall: reset counter to 0, then increment to 1 this cycle
+            next_fall_counter = 1
+
+        # Outputs: aaah = 1, others 0 (unless walking direction must be remembered for resume — but output doesn't show it; only internal state does)
+        # So: walk_left/right stay as they were *before fall*, but outputs go to 0 (Moore: falling state outputs aaah=1 only)
+        # Per spec: "aaah = 1 only during falling", and walking outputs are 0 during falling.
+        return (0, 0, 1, 0, 0, next_fall_counter)
+
+    # --- PRECEDENCE LEVEL 2: GROUND == 1 → check DIG
+    # Dig is allowed only if: ground==1, not falling, not splattered, and dig==1 *and* not already digging
+    # But note: digging state persists *until ground drops*, so if already digging, dig input is irrelevant
+    if was_digging:
+        # Continuing dig: outputs remain digging=1, aaah=0, walk_* = 0
+        # fall_counter resets upon ground rise — but we're already at ground=1, and was_digging implies wasn't falling → fall_counter should be 0
+        # However, per spec: "falling duration counter resets when ground=1" — but only meaningful if coming *from* fall. Here, no fall → keep 0.
+        return (0, 0, 0, 1, 0, 0)
+
+    # Not currently digging → check if we *start* digging this cycle
+    if (not was_falling) and (not prev_splattered) and (dig == 1):
+        # Eligible to start digging → enter digging state
+        return (0, 0, 0, 1, 0, 0)
+
+    # --- PRECEDENCE LEVEL 3: GROUND == 1, NOT DIGGING, NOT FALLING, NOT SPLATTERED → check BUMP
+    if was_walking and (not prev_splattered) and (not was_falling) and (not was_digging):
+        bump_effective = (bump_left == 1 or bump_right == 1)
+        if bump_effective:
+            # Flip direction: if was walk_left=1 → now walk_right=1, and vice versa
+            if prev_walk_left == 1:
+                return (0, 1, 0, 0, 0, 0)
+            elif prev_walk_right == 1:
+                return (1, 0, 0, 0, 0, 0)
+            else:
+                # Should not happen — was_walking requires one of them 1
+                return (1, 0, 0, 0, 0, 0)
+        else:
+            # Maintain direction
+            return (prev_walk_left, prev_walk_right, 0, 0, 0, 0)
+
+    # --- GROUND == 1, but not walking (i.e., was neither walking nor falling nor digging → must be initial or invalid? but spec says reset → walk_left)
+    # Actually, only valid non-fall non-dig non-splatter states are walking left/right. So if we land here, it's likely:
+    #   - Just after splatter recovery (but splattered handled above), or
+    #   - Edge case: all outputs zero but not splattered → per spec, only possible at reset or invalid state.
+    # Per problem: "areset resets to walk_left=1, walk_right=0, aaah=0, digging=0". So default safe walking state is walk_left.
+    # Also: if was not walking, not falling, not digging, not splattered → must have just been reset → default to walk left.
+    # So: if ground==1 and none of the above modes apply, assume walking left.
+    # But note: bump could have been ineffective due to conditions → still walk left.
+    # So fallback:
+    if ground == 1:
+        # Was not falling, not digging, not splattered → must be walking (or should be). Enforce walk_left unless bumped.
+        if (bump_left == 1 or bump_right == 1):
+            # But wait — bump only works if conditions met. We already checked was_walking etc. So if we’re here, bump was *not* effective.
+            # So maintain default: walk left
+            return (1, 0, 0, 0, 0, 0)
+        else:
+            return (1, 0, 0, 0, 0, 0)
+
+    # --- GROUND RISING EDGE CASE: ground == 1 AND was_falling → check splatter
+    # This is the *only* place splatter can trigger: on ground 0→1 transition while falling
+    if was_falling and ground == 1:
+        # Splatter condition: fall_counter >= 20 means fell for ≥21 cycles (since counter starts at 1 on first fall cycle)
+        if fall_counter >= 20:
+            # Enter splattered: all outputs 0, splattered=1 forever
+            return (0, 0, 0, 0, 1, 0)
+        else:
+            # Resume walking in *same direction as before fall*
+            # How do we know previous walking direction? It's encoded in state *before fall started*.
+            # Since we don’t store full history, we infer: the last non-fall, non-dig, non-splatter state must have had walk_left or walk_right = 1.
+            # But our state variables only give us *immediately previous* outputs.
+            # So: if prev_walk_left was 1 before fall started, it stays remembered? No — during fall, outputs are (0,0,1,0).
+            # Therefore, to resume, we must *remember* the pre-fall walking direction internally — which the DUT does via state encoding.
+            # In this ideal rule, we assume the DUT preserves direction in state. So upon ground rise *without splatter*, we restore the direction that was active *when fall began*.
+            # But our inputs don’t include “pre-fall direction” — only prev_* outputs.
+            # However, note: the *only* way to get into falling is from walking (since dig → fall only after ground drop, and dig itself starts from walking). So the walking direction before fall is the one that was set *before any aaah=1*.
+            # Since our state variables are from *previous cycle*, and previous cycle was falling (so prev_walk_left = prev_walk_right = 0), we cannot recover it from outputs alone.
+            # ⇒ Therefore, the testbench must *track* the "last walking direction" separately as part of the golden reference state.
+            # BUT — the problem says: "resume walking in the same direction as before the fall". So the DUT’s RTL *must* store that.
+            # Hence, for correctness of this rule, we must assume the golden model retains `last_walk_left` and `last_walk_right` as part of its extended state.
+            # However, the function signature above does *not* include those — so we must infer them from context.
+            #
+            # Critical insight: The only transitions into falling are:
+            #   (walk_left=1, ground=1) → (aaah=1, walk_left=0) on ground=0
+            #   (walk_right=1, ground=1) → (aaah=1, walk_right=0) on ground=0
+            # So the direction before fall is the one that was 1 in the cycle *before* aaah became 1.
+            #
+            # Since this function only sees *one* previous cycle, and that cycle was falling (so prev_walk_* = 0), we cannot deduce it here without memory.
+            #
+            # Therefore: this function's interface is insufficient unless we augment state.
+            # But per instructions: "input of these rules should be related to the test vectors from test scenario" — and test vectors include full stimulus history.
+            #
+            # However, stage 3 asks only for *core rules*, and says: "You don't need to consider control signals like clk or reset, unless the core rules of this task are about these signals."
+            #
+            # And crucially: the spec says *"the Lemming will resume walking in the same direction as before the fall."*
+            # So for golden reference, the testbench will maintain an auxiliary variable `last_valid_walk_direction` (e.g., 'left' or 'right'), updated whenever walking state is active and stable.
+            #
+            # Since this function is the *core rule*, and cannot access multi-cycle history, we must assume caller provides `pre_fall_walk_left` and `pre_fall_walk_right`.
+            # But the given signature doesn’t have them.
+            #
+            # Resolution: Re-read problem — it says "your information is: ... test scenario". And scenarios explicitly say things like:
+            #   "after reset, let Lemming walk left", "resume walking in original direction (left)".
+            # So for test generation, the *testbench knows* the expected pre-fall direction from scenario setup.
+            #
+            # Therefore, this pure function should *not* try to infer direction from fall_counter — instead, the testbench will track `current_walk_dir` as part of golden state.
+            #
+            # So: to keep this function minimal and faithful, we treat "resume direction" as an *external invariant*: the golden model maintains `curr_walk_left`, `curr_walk_right` as primary state variables (like a register), updated only by walking transitions or reset.
+            # Then, on ground rise without splatter, we simply *retain* those values.
+            #
+            # Thus: the correct outputs on resume are exactly the `prev_walk_left` and `prev_walk_right` *from the last time they were non-zero*, but again — we don’t have that.
+            #
+            # Given constraints, the only sound approach is to require that the testbench’s golden state includes:
+            #   - `state_walk_left` (current intended walking direction, preserved across fall/dig)
+            #   - `state_walk_right`
+            # and this function’s inputs should include them — but they’re named `prev_walk_left`/`prev_walk_right`.
+            #
+            # However, during fall, those are 0 — so they are *not* the memory. So rename mental model:
+            # Let’s define:
+            #   `stored_walk_left`: direction to resume (maintained across fall/dig)
+            #   `stored_walk_right`
+            # These are updated only on bump (flip) or reset (set to 1,0), never on fall/dig entry.
+            #
+            # So revise function signature assumption: `prev_walk_left` and `prev_walk_right` passed in are actually the *stored* direction — i.e., the Moore state’s walking intent — not the instantaneous output.
+            # That matches typical golden-model practice: state variables represent state bits, not outputs.
+            #
+            # Therefore, reinterpret inputs:
+            #   `prev_walk_left`, `prev_walk_right`: the FSM's *current stored walking direction* (1-hot, or both 0 if splattered or falling — but splattered handled above).
+            #   During falling, they remain unchanged (as internal state), even though output is 0.
+            #
+            # So on ground rise without splatter: outputs become (stored_walk_left, stored_walk_right, 0, 0)
+            #
+            return (prev_walk_left, prev_walk_right, 0, 0, 0, 0)
+
+    # --- Default fallback (should not occur per spec)
+    return (1, 0, 0, 0, 0, 0)
+```
+

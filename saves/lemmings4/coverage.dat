@@ -1,0 +1,124 @@
+# SystemC::Coverage-3
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl10n7ttogglepagev_toggle/testbenchowalk_right:0->1htestbench' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl10n7ttogglepagev_toggle/testbenchowalk_right:1->0htestbench' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl109n5tlinepagev_line/testbenchoblockS109-110htestbench' 21
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl11n7ttogglepagev_toggle/testbenchoaaah:0->1htestbench' 3
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl11n7ttogglepagev_toggle/testbenchoaaah:1->0htestbench' 3
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl12n7ttogglepagev_toggle/testbenchodigging:0->1htestbench' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl12n7ttogglepagev_toggle/testbenchodigging:1->0htestbench' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl121n5tlinepagev_line/testbenchoblockS121-122htestbench' 21
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl159n5tlinepagev_line/testbenchoblockS159-160htestbench' 21
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl175n5tlinepagev_line/testbenchoblockS175-176htestbench' 21
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl29n1tlinepagev_line/testbenchoblockS29-30htestbench' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl3n6ttogglepagev_toggle/testbenchoclk:0->1htestbench' 149
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl3n6ttogglepagev_toggle/testbenchoclk:1->0htestbench' 149
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl31n22texprpagev_expr/testbencho(clk==0) => 1htestbench' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl31n22texprpagev_expr/testbencho(clk==1) => 0htestbench' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl31n5tlinepagev_line/testbenchoblockS31htestbench' 298
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl34n1tlinepagev_line/testbenchoblockS34-35htestbench' 1
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl38n1tlinepagev_line/testbenchoblockS38,40-48,51-59,62-70,73-81,84-92,95-103,106-109,112-115,118-121,124-127,130-138,141-149,152-159,162-165,168-175,178-181,184-192,195-203,205-207htestbench' 1
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl4n6ttogglepagev_toggle/testbenchoareset:0->1htestbench' 1
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl4n6ttogglepagev_toggle/testbenchoareset:1->0htestbench' 1
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl5n6ttogglepagev_toggle/testbenchobump_left:0->1htestbench' 4
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl5n6ttogglepagev_toggle/testbenchobump_left:1->0htestbench' 4
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl6n6ttogglepagev_toggle/testbenchobump_right:0->1htestbench' 4
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl6n6ttogglepagev_toggle/testbenchobump_right:1->0htestbench' 4
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl7n6ttogglepagev_toggle/testbenchoground:0->1htestbench' 10
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl7n6ttogglepagev_toggle/testbenchoground:1->0htestbench' 9
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl8n6ttogglepagev_toggle/testbenchodig:0->1htestbench' 1
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl8n6ttogglepagev_toggle/testbenchodig:1->0htestbench' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl9n7ttogglepagev_toggle/testbenchowalk_left:0->1htestbench' 3
+C 'f/home/zhang/CorrectBench/saves/lemmings4/final_TB.vl9n7ttogglepagev_toggle/testbenchowalk_left:1->0htestbench' 3
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl10n9ttogglepagev_toggle/top_moduleoaaah:0->1htestbench.DUT' 3
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl10n9ttogglepagev_toggle/top_moduleoaaah:1->0htestbench.DUT' 3
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl11n9ttogglepagev_toggle/top_moduleodigging:0->1htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl11n9ttogglepagev_toggle/top_moduleodigging:1->0htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl14n12ttogglepagev_toggle/top_moduleostate[0]:0->1htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl14n12ttogglepagev_toggle/top_moduleostate[0]:1->0htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl14n12ttogglepagev_toggle/top_moduleostate[1]:0->1htestbench.DUT' 3
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl14n12ttogglepagev_toggle/top_moduleostate[1]:1->0htestbench.DUT' 2
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl14n12ttogglepagev_toggle/top_moduleostate[2]:0->1htestbench.DUT' 1
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl14n12ttogglepagev_toggle/top_moduleostate[2]:1->0htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl15n12ttogglepagev_toggle/top_moduleonext[0]:0->1htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl15n12ttogglepagev_toggle/top_moduleonext[0]:1->0htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl15n12ttogglepagev_toggle/top_moduleonext[1]:0->1htestbench.DUT' 3
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl15n12ttogglepagev_toggle/top_moduleonext[1]:1->0htestbench.DUT' 2
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl15n12ttogglepagev_toggle/top_moduleonext[2]:0->1htestbench.DUT' 1
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl15n12ttogglepagev_toggle/top_moduleonext[2]:1->0htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl17n15ttogglepagev_toggle/top_moduleofall_counter[0]:0->1htestbench.DUT' 19
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl17n15ttogglepagev_toggle/top_moduleofall_counter[0]:1->0htestbench.DUT' 19
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl17n15ttogglepagev_toggle/top_moduleofall_counter[1]:0->1htestbench.DUT' 10
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl17n15ttogglepagev_toggle/top_moduleofall_counter[1]:1->0htestbench.DUT' 10
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl17n15ttogglepagev_toggle/top_moduleofall_counter[2]:0->1htestbench.DUT' 5
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl17n15ttogglepagev_toggle/top_moduleofall_counter[2]:1->0htestbench.DUT' 5
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl17n15ttogglepagev_toggle/top_moduleofall_counter[3]:0->1htestbench.DUT' 2
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl17n15ttogglepagev_toggle/top_moduleofall_counter[3]:1->0htestbench.DUT' 2
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl17n15ttogglepagev_toggle/top_moduleofall_counter[4]:0->1htestbench.DUT' 2
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl17n15ttogglepagev_toggle/top_moduleofall_counter[4]:1->0htestbench.DUT' 2
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl19n5tlinepagev_line/top_moduleoblockS19-20htestbench.DUT' 598
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl2n8ttogglepagev_toggle/top_moduleoclk:0->1htestbench.DUT' 149
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl2n8ttogglepagev_toggle/top_moduleoclk:1->0htestbench.DUT' 149
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl21n12texprpagev_expr/top_moduleo(ground==0) => 1htestbench.DUT' 464
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl21n12texprpagev_expr/top_moduleo(ground==1) => 0htestbench.DUT' 134
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl21n6tlinepagev_line/top_moduleocaseS21htestbench.DUT' 27
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl21n8tlinepagev_line/top_moduleoelsifS21htestbench.DUT' 17
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl22n10tlinepagev_line/top_moduleoelsifS22htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl23n10tlinepagev_line/top_moduleoifS23htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl23n11tlinepagev_line/top_moduleoelseS24htestbench.DUT' 10
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl25n6tlinepagev_line/top_moduleocaseS25htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl26n5tlinepagev_line/top_moduleoelsifS26htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl26n9texprpagev_expr/top_moduleo(ground==0) => 1htestbench.DUT' 464
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl26n9texprpagev_expr/top_moduleo(ground==1) => 0htestbench.DUT' 134
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl27n10tlinepagev_line/top_moduleoelsifS27htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl28n10tlinepagev_line/top_moduleoifS28htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl28n11tlinepagev_line/top_moduleoelseS29htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl3n8ttogglepagev_toggle/top_moduleoareset:0->1htestbench.DUT' 1
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl3n8ttogglepagev_toggle/top_moduleoareset:1->0htestbench.DUT' 1
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl30n18texprpagev_expr/top_moduleo(ground==0) => 0htestbench.DUT' 464
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl30n18texprpagev_expr/top_moduleo(ground==1) => 1htestbench.DUT' 134
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl30n47tbranchpagev_branch/top_moduleocond_thenS30htestbench.DUT' 9
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl30n48tbranchpagev_branch/top_moduleocond_elseS30htestbench.DUT' 151
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl30n49tbranchpagev_branch/top_moduleocond_thenS30htestbench.DUT' 3
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl30n50tbranchpagev_branch/top_moduleocond_elseS30htestbench.DUT' 6
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl30n9tlinepagev_line/top_moduleocaseS30htestbench.DUT' 160
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl31n18texprpagev_expr/top_moduleo(ground==0) => 0htestbench.DUT' 464
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl31n18texprpagev_expr/top_moduleo(ground==1) => 1htestbench.DUT' 134
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl31n47tbranchpagev_branch/top_moduleocond_thenS31htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl31n48tbranchpagev_branch/top_moduleocond_elseS31htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl31n49tbranchpagev_branch/top_moduleocond_thenS31htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl31n50tbranchpagev_branch/top_moduleocond_elseS31htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl31n9tlinepagev_line/top_moduleocaseS31htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl32n17texprpagev_expr/top_moduleo(ground==0) => 0htestbench.DUT' 464
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl32n17texprpagev_expr/top_moduleo(ground==1) => 1htestbench.DUT' 134
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl32n26tbranchpagev_branch/top_moduleocond_thenS32htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl32n27tbranchpagev_branch/top_moduleocond_elseS32htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl32n8tlinepagev_line/top_moduleocaseS32htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl33n17texprpagev_expr/top_moduleo(ground==0) => 0htestbench.DUT' 464
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl33n17texprpagev_expr/top_moduleo(ground==1) => 1htestbench.DUT' 134
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl33n26tbranchpagev_branch/top_moduleocond_thenS33htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl33n27tbranchpagev_branch/top_moduleocond_elseS33htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl33n8tlinepagev_line/top_moduleocaseS33htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl34n8tlinepagev_line/top_moduleocaseS34htestbench.DUT' 411
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl38n5tlinepagev_line/top_moduleoblockS38htestbench.DUT' 150
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl39n3tbranchpagev_branch/top_moduleoifS39htestbench.DUT' 3
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl39n4tbranchpagev_branch/top_moduleoelseS40htestbench.DUT' 147
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl4n8ttogglepagev_toggle/top_moduleobump_left:0->1htestbench.DUT' 4
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl4n8ttogglepagev_toggle/top_moduleobump_left:1->0htestbench.DUT' 4
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl43n2tlinepagev_line/top_moduleoblockS43htestbench.DUT' 149
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl44n22texprpagev_expr/top_moduleo((state == FALLL)==0 && (state == FALLR)==0) => 0htestbench.DUT' 109
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl44n22texprpagev_expr/top_moduleo((state == FALLL)==1) => 1htestbench.DUT' 40
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl44n22texprpagev_expr/top_moduleo((state == FALLR)==1) => 1htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl44n3tbranchpagev_branch/top_moduleoifS44htestbench.DUT' 40
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl44n4tbranchpagev_branch/top_moduleoelseS49htestbench.DUT' 109
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl45n4tbranchpagev_branch/top_moduleoifS45-46htestbench.DUT' 38
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl45n5tbranchpagev_branch/top_moduleoelsehtestbench.DUT' 2
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl5n8ttogglepagev_toggle/top_moduleobump_right:0->1htestbench.DUT' 4
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl5n8ttogglepagev_toggle/top_moduleobump_right:1->0htestbench.DUT' 4
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl6n8ttogglepagev_toggle/top_moduleoground:0->1htestbench.DUT' 10
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl6n8ttogglepagev_toggle/top_moduleoground:1->0htestbench.DUT' 9
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl7n8ttogglepagev_toggle/top_moduleodig:0->1htestbench.DUT' 1
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl7n8ttogglepagev_toggle/top_moduleodig:1->0htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl8n9ttogglepagev_toggle/top_moduleowalk_left:0->1htestbench.DUT' 3
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl8n9ttogglepagev_toggle/top_moduleowalk_left:1->0htestbench.DUT' 3
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl9n9ttogglepagev_toggle/top_moduleowalk_right:0->1htestbench.DUT' 0
+C 'f/home/zhang/CorrectBench/saves/lemmings4/prob_lemmings4.vl9n9ttogglepagev_toggle/top_moduleowalk_right:1->0htestbench.DUT' 0

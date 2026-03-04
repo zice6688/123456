@@ -1,0 +1,1740 @@
+2026-01-07 12:44:26.6 | INFO     | all configurations are loaded, starting the main process...
+2026-01-07 12:44:26.6 | INFO     | 
+2026-01-07 12:44:26.6 | INFO     | ######################### task 1/1 [fsm_ps2data] #########################
+DEBUG: Connecting to https://dashscope.aliyuncs.com/compatible-mode/v1...
+
+[DEBUG] Raw LLM Response:
+ ```verilog
+module top_module (
+    input clk,
+    input [7:0] in,
+    input reset,
+    output reg [23:0] out_bytes,
+    output reg done
+);
+
+    typedef enum logic [1:0] {
+        IDLE,
+        BYTE1,
+        BYTE2,
+        BYTE3
+    } state_t;
+
+    state_t state, next_state;
+    reg [7:0] byte1, byte2, byte3;
+
+    always @(posedge clk) begin
+        if (reset) begin
+            state <= IDLE;
+            out_bytes <= 0;
+            done <= 0;
+            byte1 <= 0;
+            byte2 <= 0;
+            byte3 <= 0;
+        end else begin
+            state <= next_state;
+            case (state)
+                IDLE: begin
+                    if (in[3]) begin
+                        byte1 <= in;
+                        next_state <= BYTE1;
+                    end else begin
+                        next_state <= IDLE;
+                    end
+                end
+                BYTE1: begin
+                    byte2 <= in;
+                    next_state <= BYTE2;
+                end
+                BYTE2: begin
+                    byte3 <= in;
+                    next_state <= BYTE3;
+                end
+                BYTE3: begin
+                    out_bytes <= {byte1, byte2, byte3};
+                    done <= 1;
+                    next_state <= IDLE;
+                end
+                default: begin
+                    next_state <= IDLE;
+                end
+            endcase
+        end
+    end
+
+    always @(*) begin
+        case (state)
+            IDLE: begin
+                done = 0;
+            end
+            BYTE1, BYTE2: begin
+                done = 0;
+            end
+            BYTE3: begin
+                done = 1;
+            end
+            default: begin
+                done = 0;
+            end
+        endcase
+    end
+
+endmodule
+```
+------------------------------
+2026-01-07 12:44:38.4 | INFO     | [fsm_ps2data] [TBgen] stage_0 ends (11.78s used)
+DEBUG: Connecting to https://dashscope.aliyuncs.com/compatible-mode/v1...
+2026-01-07 12:44:52.4 | INFO     | [fsm_ps2data] [TBgen] stage_1 ends (13.94s used)
+DEBUG: Connecting to https://dashscope.aliyuncs.com/compatible-mode/v1...
+2026-01-07 12:49:04.2 | INFO     | [fsm_ps2data] [TBgen] stage_2 ends (251.82s used)
+DEBUG: Connecting to https://dashscope.aliyuncs.com/compatible-mode/v1...
+
+[DEBUG] Raw LLM Response:
+ ```python
+import numpy as np
+
+def is_bit_set(byte, bit_position):
+    """Check if a specific bit in a byte is set."""
+    return (byte & (1 << bit_position)) != 0
+
+def process_input_bytes(input_bytes, reset_signal):
+    """Process the input bytes and generate the expected 'done' signal and 'out_bytes' output.
+    
+    Args:
+        input_bytes (list of int): List of input bytes.
+        reset_signal (list of bool): List of reset signals corresponding to each clock cycle.
+    
+    Returns:
+        tuple: (done_signal, out_bytes)
+            - done_signal (list of bool): List of 'done' signals for each clock cycle.
+            - out_bytes (list of int): List of 24-bit (3-byte) messages for each clock cycle.
+    """
+    state = 'DISCARD'
+    message_buffer = [0, 0, 0]
+    done_signal = []
+    out_bytes = []
+
+    for i, (byte, reset) in enumerate(zip(input_bytes, reset_signal)):
+        if reset:
+            state = 'DISCARD'
+            message_buffer = [0, 0, 0]
+            done_signal.append(False)
+            out_bytes.append(0)
+            continue
+
+        if state == 'DISCARD':
+            if is_bit_set(byte, 3):
+                state = 'COLLECT_1'
+                message_buffer[0] = byte
+            done_signal.append(False)
+            out_bytes.append(0)
+        elif state == 'COLLECT_1':
+            message_buffer[1] = byte
+            state = 'COLLECT_2'
+            done_signal.append(False)
+            out_bytes.append(0)
+        elif state == 'COLLECT_2':
+            message_buffer[2] = byte
+            state = 'DONE'
+            done_signal.append(True)
+            out_bytes.append((message_buffer[0] << 16) | (message_buffer[1] << 8) | message_buffer[2])
+        elif state == 'DONE':
+            if is_bit_set(byte, 3):
+                state = 'COLLECT_1'
+                message_buffer[0] = byte
+            else:
+                state = 'DISCARD'
+            done_signal.append(False)
+            out_bytes.append(0)
+
+    return done_signal, out_bytes
+
+# Example usage
+input_bytes = [0x00, 0x00, 0x00, 0x00, 0x2C, 0x81, 0x09, 0x6B, 0x0D, 0x8D, 0x6D, 0x12, 0x01, 0x76, 0x3D, 0xED, 0x8C, 0xF9, 0xCE, 0xC5, 0xAA]
+reset_signal = [True, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+
+done_signal, out_bytes = process_input_bytes(input_bytes, reset_signal)
+print("Done Signal:", done_signal)
+print("Out Bytes (in hexadecimal):", [f"{byte:06x}" for byte in out_bytes])
+```
+
+This Python code defines the core rules for the DUT based on the given problem description. It processes a sequence of input bytes and generates the expected `done` signal and `out_bytes` output. The `process_input_bytes` function takes a list of input bytes and a list of reset signals, and returns the expected `done` signal and `out_bytes` for each clock cycle. The example usage demonstrates how to use this function with a sample input sequence.
+------------------------------
+2026-01-07 12:49:27.9 | INFO     | [fsm_ps2data] [TBgen] stage_3 ends (23.73s used)
+DEBUG: Connecting to https://dashscope.aliyuncs.com/compatible-mode/v1...
+
+[DEBUG] Raw LLM Response:
+ ```verilog
+`timescale 1ns / 1ps
+module testbench;
+reg  clk;
+reg [7:0] in;
+reg  reset;
+wire [23:0] out_bytes;
+wire  done;
+
+integer file, scenario;
+// DUT instantiation
+top_module DUT (
+	.clk(clk),
+	.in(in),
+	.reset(reset),
+	.out_bytes(out_bytes),
+	.done(done)
+);
+// Clock generation
+initial begin
+    clk = 0;
+    forever #5 clk = ~clk;
+end
+
+initial begin
+    file = $fopen("TBout.txt", "w");
+end
+// Scenario Based Test
+initial begin
+
+    // Scenario 1
+    scenario = 1;
+    reset = 1; in = 8'h00; #10;
+    reset = 0; in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h2C; #10;
+    in = 8'h81; #10;
+    in = 8'h09; #10;
+    in = 8'h6B; #10;
+    in = 8'h0D; #10;
+    in = 8'h8D; #10;
+    in = 8'h6D; #10;
+    in = 8'h12; #10;
+    in = 8'h01; #10;
+    in = 8'h76; #10;
+    in = 8'h3D; #10;
+    in = 8'hED; #10;
+    in = 8'h8C; #10;
+    in = 8'hF9; #10;
+    in = 8'hCE; #10;
+    in = 8'hC5; #10;
+    in = 8'hAA; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+
+    // Scenario 2
+    scenario = 2;
+    reset = 1; in = 8'h2C; #10;
+    reset = 0; in = 8'h81; #10;
+    in = 8'h09; #10;
+    in = 8'h6B; #10;
+    in = 8'h0D; #10;
+    in = 8'h8D; #10;
+    in = 8'h6D; #10;
+    in = 8'h12; #10;
+    in = 8'h01; #10;
+    in = 8'h76; #10;
+    in = 8'h3D; #10;
+    in = 8'hED; #10;
+    in = 8'h8C; #10;
+    in = 8'hF9; #10;
+    in = 8'hCE; #10;
+    in = 8'hC5; #10;
+    in = 8'hAA; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+
+    // Scenario 3
+    scenario = 3;
+    reset = 1; in = 8'h00; #10;
+    reset = 0; in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h2C; #10;
+    in = 8'h81; #10;
+    in = 8'h09; #10;
+    in = 8'h6B; #10;
+    in = 8'h0D; #10;
+    in = 8'h8D; #10;
+    in = 8'h6D; #10;
+    in = 8'h12; #10;
+    in = 8'h01; #10;
+    in = 8'h76; #10;
+    in = 8'h3D; #10;
+    in = 8'hED; #10;
+    in = 8'h8C; #10;
+    in = 8'hF9; #10;
+    in = 8'hCE; #10;
+    in = 8'hC5; #10;
+    in = 8'hAA; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+
+    // Scenario 4
+    scenario = 4;
+    reset = 1; in = 8'h2C; #10;
+    reset = 0; in = 8'h81; #10;
+    in = 8'h09; #10;
+    in = 8'h6B; #10;
+    in = 8'h0D; #10;
+    in = 8'h8D; #10;
+    in = 8'h6D; #10;
+    in = 8'h12; #10;
+    in = 8'h01; #10;
+    in = 8'h76; #10;
+    in = 8'h3D; #10;
+    in = 8'hED; #10;
+    in = 8'h8C; #10;
+    in = 8'hF9; #10;
+    in = 8'hCE; #10;
+    in = 8'hC5; #10;
+    in = 8'hAA; #10;
+    in = 8'h2C; #10;
+    in = 8'h81; #10;
+    in = 8'h09; #10;
+    in = 8'h6B; #10;
+    in = 8'h0D; #10;
+    in = 8'h8D; #10;
+    in = 8'h6D; #10;
+    in = 8'h12; #10;
+    in = 8'h01; #10;
+    in = 8'h76; #10;
+    in = 8'h3D; #10;
+    in = 8'hED; #10;
+    in = 8'h8C; #10;
+    in = 8'hF9; #10;
+    in = 8'hCE; #10;
+    in = 8'hC5; #10;
+    in = 8'hAA; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+
+    // Scenario 5
+    scenario = 5;
+    reset = 1; in = 8'h2C; #10;
+    reset = 0; in = 8'h81; #10;
+    in = 8'h09; #10;
+    in = 8'h6B; #10;
+    in = 8'h0D; #10;
+    in = 8'h8D; #10;
+    in = 8'h6D; #10;
+    in = 8'h12; #10;
+    in = 8'h01; #10;
+    in = 8'h76; #10;
+    in = 8'h3D; #10;
+    in = 8'hED; #10;
+    in = 8'h8C; #10;
+    in = 8'hF9; #10;
+    in = 8'hCE; #10;
+    in = 8'hC5; #10;
+    in = 8'hAA; #10;
+    in = 8'h2C; #10;
+    in = 8'h81; #10;
+    in = 8'h09; #10;
+    in = 8'h6B; #10;
+    in = 8'h0D; #10;
+    in = 8'h8D; #10;
+    in = 8'h6D; #10;
+    in = 8'h12; #10;
+    in = 8'h01; #10;
+    in = 8'h76; #10;
+    in = 8'h3D; #10;
+    in = 8'hED; #10;
+    in = 8'h8C; #10;
+    in = 8'hF9; #10;
+    in = 8'hCE; #10;
+    in = 8'hC5; #10;
+    in = 8'hAA; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+
+    // Scenario 6
+    scenario = 6;
+    reset = 1; in = 8'h2C; #10;
+    reset = 0; in = 8'h81; #10;
+    in = 8'h09; #10;
+    in = 8'h6B; #10;
+    in = 8'h0D; #10;
+    in = 8'h8D; #10;
+    in = 8'h6D; #10;
+    in = 8'h12; #10;
+    in = 8'h01; #10;
+    in = 8'h76; #10;
+    in = 8'h3D; #10;
+    in = 8'hED; #10;
+    in = 8'h8C; #10;
+    in = 8'hF9; #10;
+    in = 8'hCE; #10;
+    in = 8'hC5; #10;
+    in = 8'hAA; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00
+------------------------------
+2026-01-07 12:53:38.9 | INFO     | [fsm_ps2data] [TBgen] stage_4 ends (250.97s used)
+2026-01-07 12:53:39.0 | ERROR    | [fsm_ps2data] error when running TBgen, current pipeline iter: 1, will REBOOT. error message: Unterminated string starting at: line 7 column 17 (char 1666) | location: autoline/TB_autoline.py, func: run_stages_core, line: 286 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 248
+DEBUG: Connecting to https://dashscope.aliyuncs.com/compatible-mode/v1...
+
+[DEBUG] Raw LLM Response:
+ ```verilog
+module top_module (
+    input clk,
+    input [7:0] in,
+    input reset,
+    output reg [23:0] out_bytes,
+    output reg done
+);
+
+    typedef enum logic [1:0] {
+        IDLE = 2'b00,
+        BYTE1 = 2'b01,
+        BYTE2 = 2'b10,
+        BYTE3 = 2'b11
+    } state_t;
+
+    reg [1:0] state;
+    reg [7:0] byte1, byte2, byte3;
+
+    always @(posedge clk or posedge reset) begin
+        if (reset) begin
+            state <= IDLE;
+            byte1 <= 8'h00;
+            byte2 <= 8'h00;
+            byte3 <= 8'h00;
+            out_bytes <= 24'h000000;
+            done <= 1'b0;
+        end else begin
+            case (state)
+                IDLE: begin
+                    if (in[3]) begin
+                        state <= BYTE1;
+                        byte1 <= in;
+                    end
+                end
+                BYTE1: begin
+                    state <= BYTE2;
+                    byte2 <= in;
+                end
+                BYTE2: begin
+                    state <= BYTE3;
+                    byte3 <= in;
+                end
+                BYTE3: begin
+                    state <= IDLE;
+                    out_bytes <= {byte1, byte2, byte3};
+                    done <= 1'b1;
+                end
+            endcase
+        end
+    end
+
+    always @(posedge clk) begin
+        if (done) begin
+            done <= 1'b0;
+        end
+    end
+
+endmodule
+```
+------------------------------
+2026-01-07 12:53:45.6 | INFO     | [fsm_ps2data] [TBgen] stage_0 ends (6.59s used)
+DEBUG: Connecting to https://dashscope.aliyuncs.com/compatible-mode/v1...
+2026-01-07 12:54:09.3 | INFO     | [fsm_ps2data] [TBgen] stage_1 ends (23.76s used)
+DEBUG: Connecting to https://dashscope.aliyuncs.com/compatible-mode/v1...
+2026-01-07 12:54:28.3 | INFO     | [fsm_ps2data] [TBgen] stage_2 ends (18.97s used)
+DEBUG: Connecting to https://dashscope.aliyuncs.com/compatible-mode/v1...
+
+[DEBUG] Raw LLM Response:
+ ```python
+import numpy as np
+
+def is_bit_set(byte, bit_position):
+    """Check if a specific bit in a byte is set."""
+    return (byte & (1 << bit_position)) != 0
+
+def process_byte_stream(input_bytes, reset_signal):
+    """
+    Process the input byte stream and generate the expected `done` and `out_bytes` signals.
+    
+    :param input_bytes: List of input bytes (8-bit integers)
+    :param reset_signal: List of reset signals (boolean values)
+    :return: A tuple (done_signals, out_bytes_signals) where:
+             - done_signals is a list of boolean values indicating when `done` should be asserted
+             - out_bytes_signals is a list of 24-bit integers representing the 3-byte message
+    """
+    state = 'idle'
+    first_byte = 0
+    second_byte = 0
+    third_byte = 0
+    done_signals = []
+    out_bytes_signals = []
+
+    for i, (byte, reset) in enumerate(zip(input_bytes, reset_signal)):
+        if reset:
+            state = 'idle'
+            first_byte = 0
+            second_byte = 0
+            third_byte = 0
+            done_signals.append(False)
+            out_bytes_signals.append(0x000000)
+        else:
+            if state == 'idle':
+                if is_bit_set(byte, 3):
+                    state = 'first_byte_received'
+                    first_byte = byte
+                    done_signals.append(False)
+                    out_bytes_signals.append(0x000000)
+                else:
+                    done_signals.append(False)
+                    out_bytes_signals.append(0x000000)
+            elif state == 'first_byte_received':
+                second_byte = byte
+                state = 'second_byte_received'
+                done_signals.append(False)
+                out_bytes_signals.append(0x000000)
+            elif state == 'second_byte_received':
+                third_byte = byte
+                state = 'third_byte_received'
+                done_signals.append(False)
+                out_bytes_signals.append(0x000000)
+            elif state == 'third_byte_received':
+                done_signals.append(True)
+                out_bytes_signals.append((first_byte << 16) | (second_byte << 8) | third_byte)
+                if is_bit_set(byte, 3):
+                    state = 'first_byte_received'
+                    first_byte = byte
+                    second_byte = 0
+                    third_byte = 0
+                else:
+                    state = 'idle'
+            else:
+                raise ValueError("Invalid state: {}".format(state))
+
+    return done_signals, out_bytes_signals
+
+# Example usage
+input_bytes = [0b00000000, 0b00000000, 0b00010010, 0b00001001, 0b00000011,  # Discard, First byte, Second byte, Third byte
+               0b00000000, 0b00000000, 0b00010010, 0b00001001, 0b00000011]  # Another message
+reset_signal = [True, False, False, False, False, False, False, False, False, False]
+
+done_signals, out_bytes_signals = process_byte_stream(input_bytes, reset_signal)
+
+print("Done Signals:", done_signals)
+print("Out Bytes Signals:", out_bytes_signals)
+```
+
+This Python code defines a function `process_byte_stream` that simulates the behavior of the FSM described in the problem. It processes the input byte stream and generates the expected `done` and `out_bytes` signals based on the rules provided. The function uses a simple state machine to track the current state and the received bytes. The example usage at the end demonstrates how to use this function with a sample input byte stream and reset signal.
+------------------------------
+2026-01-07 12:54:46.7 | INFO     | [fsm_ps2data] [TBgen] stage_3 ends (18.41s used)
+DEBUG: Connecting to https://dashscope.aliyuncs.com/compatible-mode/v1...
+
+[DEBUG] Raw LLM Response:
+ ```verilog
+`timescale 1ns / 1ps
+module testbench;
+reg  clk;
+reg [7:0] in;
+reg  reset;
+wire [23:0] out_bytes;
+wire  done;
+
+integer file, scenario;
+// DUT instantiation
+top_module DUT (
+	.clk(clk),
+	.in(in),
+	.reset(reset),
+	.out_bytes(out_bytes),
+	.done(done)
+);
+// Clock generation
+initial begin
+    clk = 0;
+    forever #5 clk = ~clk;
+end
+
+initial begin
+    file = $fopen("TBout.txt", "w");
+end
+// Scenario Based Test
+initial begin
+
+    // Scenario 1: Reset the FSM
+    scenario = 1;
+    reset = 1; in = 8'h00;
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    reset = 0; in = 8'hAA;
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+
+    // Scenario 2: Discard bytes until in[3] = 1
+    scenario = 2;
+    in = 8'h00; repeat(3) begin
+        #10;
+        $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    end
+    in = 8'hB1; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+
+    // Scenario 3: Capture the next two bytes after in[3] = 1
+    scenario = 3;
+    in = 8'hC2; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hD3; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+
+    // Scenario 4: Signal `done` and output the 3-byte message
+    scenario = 4;
+    in = 8'hE4; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+
+    // Scenario 5: Handle multiple messages
+    scenario = 5;
+    in = 8'hF5; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hA6; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hB7; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+
+    // Scenario 6: Edge case: Single byte with in[3] = 1 followed by two bytes, but then reset the FSM before the third byte is received
+    scenario = 6;
+    in = 8'hC8; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hD9; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    reset = 1; in = 8'hE0; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    reset = 0; in = 8'hF1; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+
+    // Scenario 7: Edge case: Apply a byte with in[3] = 1, followed by two more bytes, and then immediately apply another byte with in[3] = 1
+    scenario = 7;
+    in = 8'hA2; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hB3; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hC4; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hD5; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+
+    // Scenario 8: Stress test: Apply a long sequence of bytes, including multiple instances of in[3] = 1
+    scenario = 8;
+    in = 8'hE6; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hF7; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hA8; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hB9; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hC0; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hD1; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+
+    // Scenario 9: Idle state: Apply a long sequence of bytes where in[3] is always 0
+    scenario = 9;
+    in = 8'h00; repeat(5) begin
+        #10;
+        $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    end
+
+    // Scenario 10: Random input: Apply a random sequence of bytes, including some with in[3] = 1
+    scenario = 10;
+    in = 8'hE2; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hF3; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hA4; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hB5; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hC6; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hD7; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+
+    $fclose(file);
+    $finish;
+end
+
+endmodule
+```
+------------------------------
+2026-01-07 12:55:44.8 | INFO     | [fsm_ps2data] [TBgen] stage_4 ends (58.09s used)
+2026-01-07 12:55:44.8 | INFO     | [fsm_ps2data] [TBgen] stage_checklist ends (0.00s used)
+DEBUG: Connecting to https://dashscope.aliyuncs.com/compatible-mode/v1...
+
+[DEBUG] Raw LLM Response:
+ ```verilog
+`timescale 1ns / 1ps
+module testbench;
+reg  clk;
+reg [7:0] in;
+reg  reset;
+wire [23:0] out_bytes;
+wire  done;
+
+integer file, scenario;
+// DUT instantiation
+top_module DUT (
+	.clk(clk),
+	.in(in),
+	.reset(reset),
+	.out_bytes(out_bytes),
+	.done(done)
+);
+// Clock generation
+initial begin
+    clk = 0;
+    forever #5 clk = ~clk;
+end
+
+initial begin
+    file = $fopen("TBout.txt", "w");
+end
+// Scenario Based Test
+initial begin
+
+    // Scenario 1: Reset the FSM
+    scenario = 1;
+    reset = 1; in = 8'h00;
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    reset = 0; in = 8'hAA;
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+
+    // Scenario 2: Discard bytes until in[3] = 1
+    scenario = 2;
+    in = 8'h00; repeat(3) begin
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+        #10;
+        $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    end
+    in = 8'hB1; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+
+    // Scenario 3: Capture the next two bytes after in[3] = 1
+    scenario = 3;
+    in = 8'hC2; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hD3; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+
+    // Scenario 4: Signal `done` and output the 3-byte message
+    scenario = 4;
+    in = 8'hE4; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+
+    // Scenario 5: Handle multiple messages
+    scenario = 5;
+    in = 8'hF5; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hA6; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hB7; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+
+    // Scenario 6: Edge case: Single byte with in[3] = 1 followed by two bytes, but then reset the FSM before the third byte is received
+    scenario = 6;
+    in = 8'hC8; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hD9; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    reset = 1; in = 8'hE0; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    reset = 0; in = 8'hF1; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+
+    // Scenario 7: Edge case: Apply a byte with in[3] = 1, followed by two more bytes, and then immediately apply another byte with in[3] = 1
+    scenario = 7;
+    in = 8'hA2; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hB3; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hC4; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hD5; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+
+    // Scenario 8: Stress test: Apply a long sequence of bytes, including multiple instances of in[3] = 1
+    scenario = 8;
+    in = 8'hE6; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hF7; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hA8; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hB9; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hC0; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hD1; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+
+    // Scenario 9: Idle state: Apply a long sequence of bytes where in[3] is always 0
+    scenario = 9;
+    in = 8'h00; repeat(5) begin
+        $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+        #10;
+        $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    end
+
+    // Scenario 10: Random input: Apply a random sequence of bytes, including some with in[3] = 1
+    scenario = 10;
+    in = 8'hE2; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hF3; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hA4; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hB5; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hC6; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    in = 8'hD7; 
+    $fdisplay(file, "scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+
+    $fclose(file);
+    $finish;
+end
+
+endmodule
+```
+------------------------------
+2026-01-07 12:57:42.5 | INFO     | [fsm_ps2data] [TBgen] stage_4b ends (117.67s used)
+DEBUG: Connecting to https://dashscope.aliyuncs.com/compatible-mode/v1...
+
+[DEBUG] Raw LLM Response:
+ ```python
+class GoldenDUT:
+    def __init__(self):
+        self.state_reg = 'idle'
+        self.first_byte_reg = 0
+        self.second_byte_reg = 0
+        self.third_byte_reg = 0
+        self.out_bytes_reg = 0x000000
+        self.done_reg = False
+
+    def load(self, signal_vector):
+        reset = signal_vector['reset']
+        in_signal = signal_vector['in']
+
+        if reset:
+            self.state_reg = 'idle'
+            self.first_byte_reg = 0
+            self.second_byte_reg = 0
+            self.third_byte_reg = 0
+            self.out_bytes_reg = 0x000000
+            self.done_reg = False
+        else:
+            if self.state_reg == 'idle':
+                if (in_signal & 0x08) != 0:  # Check if in[3] is set
+                    self.state_reg = 'first_byte_received'
+                    self.first_byte_reg = in_signal
+                else:
+                    self.state_reg = 'idle'
+            elif self.state_reg == 'first_byte_received':
+                self.second_byte_reg = in_signal
+                self.state_reg = 'second_byte_received'
+            elif self.state_reg == 'second_byte_received':
+                self.third_byte_reg = in_signal
+                self.state_reg = 'third_byte_received'
+            elif self.state_reg == 'third_byte_received':
+                self.done_reg = True
+                self.out_bytes_reg = (self.first_byte_reg << 16) | (self.second_byte_reg << 8) | self.third_byte_reg
+                if (in_signal & 0x08) != 0:  # Check if in[3] is set
+                    self.state_reg = 'first_byte_received'
+                    self.first_byte_reg = in_signal
+                    self.second_byte_reg = 0
+                    self.third_byte_reg = 0
+                else:
+                    self.state_reg = 'idle'
+                    self.done_reg = False
+                    self.out_bytes_reg = 0x000000
+            else:
+                raise ValueError("Invalid state: {}".format(self.state_reg))
+
+    def check(self, signal_vector):
+        expected_done = self.done_reg
+        expected_out_bytes = self.out_bytes_reg
+        observed_done = signal_vector['done']
+        observed_out_bytes = signal_vector['out_bytes']
+
+        if expected_done != observed_done or (expected_done and expected_out_bytes != observed_out_bytes):
+            print(f"Scenario: {signal_vector['scenario']}, expected: done={expected_done}, out_bytes={expected_out_bytes:06x}, observed: done={observed_done}, out_bytes={observed_out_bytes:06x}")
+            return False
+        return True
+```
+------------------------------
+2026-01-07 12:57:57.0 | INFO     | [fsm_ps2data] [TBgen] stage_5 ends (14.55s used)
+2026-01-07 12:57:57.0 | INFO     | [fsm_ps2data] 
+2026-01-07 12:57:57.1 | INFO     | [fsm_ps2data] [TBsim] iverilog compilation : passed!
+2026-01-07 12:57:57.1 | INFO     | [fsm_ps2data] [TBsim] python simulation : passed!
+2026-01-07 12:57:57.1 | INFO     | [fsm_ps2data] [TBsim] TBsim finished : True!
+2026-01-07 12:57:57.1 | INFO     | [fsm_ps2data] 
+2026-01-07 12:57:57.1 | INFO     | [fsm_ps2data] [TBcheck] [discriminator] Discriminating the testbench, NO.0 discrimination
+2026-01-07 12:57:57.6 | INFO     | [fsm_ps2data] [TBcheck] [discriminator] RTL(s) [10] have syntax error during discrimination
+2026-01-07 12:57:57.9 | NEGATIVE | [fsm_ps2data] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [2 6 8], scenario pass ratio: 7/10
+2026-01-07 12:57:57.9 | INFO     | [fsm_ps2data] [TBcheck] [corrector] naive corrector mode begins
+DEBUG: Connecting to https://dashscope.aliyuncs.com/compatible-mode/v1...
+DEBUG: Connecting to https://dashscope.aliyuncs.com/compatible-mode/v1...
+
+[DEBUG] Raw LLM Response:
+ Certainly! Below is the corrected Python code for the `GoldenDUT` class, incorporating the necessary changes to handle the reset and state transitions correctly. The structure of the class and its methods remain the same, but the logic within the `load` method has been updated.
+
+```python
+class GoldenDUT:
+    def __init__(self):
+        self.state_reg = 'idle'
+        self.first_byte_reg = 0
+        self.second_byte_reg = 0
+        self.third_byte_reg = 0
+        self.out_bytes_reg = 0x000000
+        self.done_reg = False
+
+    def load(self, signal_vector):
+        reset = signal_vector['reset']
+        in_signal = signal_vector['in']
+
+        if reset:
+            self.state_reg = 'idle'
+            self.first_byte_reg = 0
+            self.second_byte_reg = 0
+            self.third_byte_reg = 0
+            self.out_bytes_reg = 0x000000
+            self.done_reg = False
+        else:
+            if self.state_reg == 'idle':
+                if (in_signal & 0x08) != 0:  # Check if in[3] is set
+                    self.state_reg = 'first_byte_received'
+                    self.first_byte_reg = in_signal
+                else:
+                    self.state_reg = 'idle'
+            elif self.state_reg == 'first_byte_received':
+                self.second_byte_reg = in_signal
+                self.state_reg = 'second_byte_received'
+            elif self.state_reg == 'second_byte_received':
+                self.third_byte_reg = in_signal
+                self.state_reg = 'third_byte_received'
+            elif self.state_reg == 'third_byte_received':
+                self.done_reg = True
+                self.out_bytes_reg = (self.first_byte_reg << 16) | (self.second_byte_reg << 8) | self.third_byte_reg
+                if (in_signal & 0x08) != 0:  # Check if in[3] is set
+                    self.state_reg = 'first_byte_received'
+                    self.first_byte_reg = in_signal
+                    self.second_byte_reg = 0
+                    self.third_byte_reg = 0
+                    self.done_reg = False  # Reset done flag for new message
+                else:
+                    self.state_reg = 'idle'
+                    self.done_reg = False
+                    self.out_bytes_reg = 0x000000
+            else:
+                raise ValueError("Invalid state: {}".format(self.state_reg))
+
+    def check(self, signal_vector):
+        expected_done = self.done_reg
+        expected_out_bytes = self.out_bytes_reg
+        observed_done = signal_vector['done']
+        observed_out_bytes = signal_vector['out_bytes']
+
+        if expected_done != observed_done or (expected_done and expected_out_bytes != observed_out_bytes):
+            print(f"Scenario: {signal_vector['scenario']}, expected: done={expected_done}, out_bytes={expected_out_bytes:06x}, observed: done={observed_done}, out_bytes={observed_out_bytes:06x}")
+            return False
+        return True
+```
+
+### Explanation of Changes:
+1. **Reset Handling:**
+   - The `reset` signal now correctly resets all internal registers and sets the FSM to the `idle` state.
+   - If the `reset` signal is high, the FSM will transition to the `idle` state and clear all internal registers, regardless of the current state.
+
+2. **State Transitions:**
+   - After the FSM has captured the third byte and signaled `done`, it checks the next input byte. If the next input byte has `in[3] = 1`, it transitions to the `first_byte_received` state and starts capturing a new message. Otherwise, it transitions back to the `idle` state.
+   - The `done` flag is reset when a new message is started, ensuring that the `done` signal is only asserted for the correct 3-byte message.
+
+These changes should address the issues in the failed scenarios and ensure the FSM behaves as expected.
+------------------------------
+2026-01-07 12:58:45.7 | INFO     | [fsm_ps2data] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-01-07 12:58:45.7 | INFO     | [fsm_ps2data] [TBcheck] [discriminator] Discriminating the testbench, NO.1 discrimination
+2026-01-07 12:58:46.2 | NEGATIVE | [fsm_ps2data] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [2 6 8], scenario pass ratio: 7/10
+2026-01-07 12:58:46.2 | INFO     | [fsm_ps2data] [TBcheck] wrong scenarios not decreased for 1 times (3 = 3), continue the correction
+2026-01-07 12:58:46.2 | INFO     | [fsm_ps2data] [TBcheck] [corrector] naive corrector mode begins
+DEBUG: Connecting to https://dashscope.aliyuncs.com/compatible-mode/v1...
+DEBUG: Connecting to https://dashscope.aliyuncs.com/compatible-mode/v1...
+
+[DEBUG] Raw LLM Response:
+ Certainly! Based on our previous conversation and the provided hints, here is the corrected Python code for the `GoldenDUT` class. The corrections focus on ensuring that the `reset` signal and state transitions are handled correctly, and the `done` flag is managed properly.
+
+```python
+class GoldenDUT:
+    def __init__(self):
+        self.state_reg = 'idle'
+        self.first_byte_reg = 0
+        self.second_byte_reg = 0
+        self.third_byte_reg = 0
+        self.out_bytes_reg = 0x000000
+        self.done_reg = False
+
+    def load(self, signal_vector):
+        reset = signal_vector['reset']
+        in_signal = signal_vector['in']
+
+        if reset:
+            self.state_reg = 'idle'
+            self.first_byte_reg = 0
+            self.second_byte_reg = 0
+            self.third_byte_reg = 0
+            self.out_bytes_reg = 0x000000
+            self.done_reg = False
+        else:
+            if self.state_reg == 'idle':
+                if (in_signal & 0x08) != 0:  # Check if in[3] is set
+                    self.state_reg = 'first_byte_received'
+                    self.first_byte_reg = in_signal
+                else:
+                    self.state_reg = 'idle'
+            elif self.state_reg == 'first_byte_received':
+                self.second_byte_reg = in_signal
+                self.state_reg = 'second_byte_received'
+            elif self.state_reg == 'second_byte_received':
+                self.third_byte_reg = in_signal
+                self.state_reg = 'third_byte_received'
+            elif self.state_reg == 'third_byte_received':
+                self.done_reg = True
+                self.out_bytes_reg = (self.first_byte_reg << 16) | (self.second_byte_reg << 8) | self.third_byte_reg
+                if (in_signal & 0x08) != 0:  # Check if in[3] is set
+                    self.state_reg = 'first_byte_received'
+                    self.first_byte_reg = in_signal
+                    self.second_byte_reg = 0
+                    self.third_byte_reg = 0
+                    self.done_reg = False  # Reset done flag for new message
+                else:
+                    self.state_reg = 'idle'
+                    self.done_reg = False
+                    self.out_bytes_reg = 0x000000
+            else:
+                raise ValueError("Invalid state: {}".format(self.state_reg))
+
+    def check(self, signal_vector):
+        expected_done = self.done_reg
+        expected_out_bytes = self.out_bytes_reg
+        observed_done = signal_vector['done']
+        observed_out_bytes = signal_vector['out_bytes']
+
+        if expected_done != observed_done or (expected_done and expected_out_bytes != observed_out_bytes):
+            print(f"Scenario: {signal_vector['scenario']}, expected: done={expected_done}, out_bytes={expected_out_bytes:06x}, observed: done={observed_done}, out_bytes={observed_out_bytes:06x}")
+            return False
+        return True
+```
+
+### Explanation of Changes:
+1. **Reset Handling:**
+   - The `reset` signal handling remains the same. When `reset` is high, the FSM transitions to the `idle` state, and all internal registers are reset.
+
+2. **State Transitions:**
+   - In the `load` method, the state transitions are managed more carefully:
+     - When in the `idle` state, if `in[3]` is set, the FSM transitions to `first_byte_received` and updates `first_byte_reg`.
+     - When in the `first_byte_received` state, the FSM transitions to `second_byte_received` and updates `second_byte_reg`.
+     - When in the `second_byte_received` state, the FSM transitions to `third_byte_received` and updates `third_byte_reg`.
+     - When in the `third_byte_received` state, the `done` flag is set to `True`, and `out_bytes_reg` is updated. If `in[3]` is set, the FSM transitions to `first_byte_received` and updates `first_byte_reg`. If `in[3]` is not set, the FSM transitions to `idle`.
+
+3. **Done Flag Management:**
+   - The `done` flag is set to `True` only after the third byte is received.
+   - The `done` flag is reset to `False` when the FSM transitions to `idle` or `first_byte_received`.
+
+This should ensure that the FSM behaves correctly according to the specified requirements and handles the `reset` signal and state transitions appropriately.
+------------------------------
+2026-01-07 12:59:45.1 | INFO     | [fsm_ps2data] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-01-07 12:59:45.1 | INFO     | [fsm_ps2data] [TBcheck] [discriminator] Discriminating the testbench, NO.2 discrimination
+2026-01-07 12:59:45.9 | NEGATIVE | [fsm_ps2data] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [2 6 8], scenario pass ratio: 7/10
+2026-01-07 12:59:45.9 | INFO     | [fsm_ps2data] [TBcheck] wrong scenarios not decreased for 2 times (3 = 3), I give up, quiting the funccheck stage...
+2026-01-07 12:59:45.9 | INFO     | [fsm_ps2data] [TBcheck] self funccheck finished. Next Action: [reboot]
+2026-01-07 12:59:45.9 | INFO     | [fsm_ps2data] 
+DEBUG: Connecting to https://dashscope.aliyuncs.com/compatible-mode/v1...
+
+[DEBUG] Raw LLM Response:
+ ```verilog
+module top_module (
+    input clk,
+    input [7:0] in,
+    input reset,
+    output reg [23:0] out_bytes,
+    output reg done
+);
+
+    typedef enum logic [1:0] {
+        IDLE,
+        BYTE1,
+        BYTE2,
+        BYTE3
+    } state_t;
+
+    state_t state, next_state;
+    reg [23:0] message;
+    reg [1:0] byte_count;
+
+    always @(posedge clk or posedge reset) begin
+        if (reset) begin
+            state <= IDLE;
+            out_bytes <= 24'b0;
+            done <= 0;
+            message <= 24'b0;
+            byte_count <= 0;
+        end else begin
+            state <= next_state;
+            case (state)
+                IDLE: begin
+                    if (in[3]) begin
+                        message <= {in, 16'b0};
+                        byte_count <= 1;
+                        next_state <= BYTE1;
+                    end else begin
+                        next_state <= IDLE;
+                    end
+                end
+                BYTE1: begin
+                    if (byte_count == 1) begin
+                        message <= {message[15:8], in, 8'b0};
+                        byte_count <= 2;
+                        next_state <= BYTE2;
+                    end else begin
+                        next_state <= BYTE1;
+                    end
+                end
+                BYTE2: begin
+                    if (byte_count == 2) begin
+                        message <= {message[7:0], in};
+                        byte_count <= 3;
+                        next_state <= BYTE3;
+                    end else begin
+                        next_state <= BYTE2;
+                    end
+                end
+                BYTE3: begin
+                    out_bytes <= message;
+                    done <= 1;
+                    next_state <= IDLE;
+                end
+            endcase
+        end
+    end
+
+    always @(*) begin
+        case (state)
+            IDLE: begin
+                done = 0;
+            end
+            BYTE1, BYTE2: begin
+                done = 0;
+            end
+            BYTE3: begin
+                done = 1;
+            end
+        endcase
+    end
+
+endmodule
+```
+------------------------------
+2026-01-07 12:59:56.4 | INFO     | [fsm_ps2data] [TBgen] stage_0 ends (10.51s used)
+DEBUG: Connecting to https://dashscope.aliyuncs.com/compatible-mode/v1...
+Traceback (most recent call last):
+  File "/home/zhang/CorrectBench/main.py", line 57, in <module>
+    main(config_path)
+  File "/home/zhang/CorrectBench/main.py", line 32, in main
+    al.run_autoline()
+  File "/home/zhang/CorrectBench/autoline/TB_autoline.py", line 27, in run_autoline
+    autoline()
+  File "/home/zhang/CorrectBench/autoline/TB_autoline.py", line 57, in __call__
+    return self.run(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/autoline/TB_autoline.py", line 49, in run
+    run_info_single = one_task.run()
+                      ^^^^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/autoline/TB_autoline.py", line 141, in run
+    self.run_stages()
+  File "/home/zhang/CorrectBench/autoline/TB_autoline.py", line 248, in run_stages
+    self.run_stages_core()
+  File "/home/zhang/CorrectBench/autoline/TB_autoline.py", line 282, in run_stages_core
+    self.run_TBgen(f"{i+1}_1_TBgen")
+  File "/home/zhang/CorrectBench/autoline/TB_autoline.py", line 155, in run_TBgen
+    self.TBgen()
+  File "/home/zhang/CorrectBench/prompt_scripts/base_script.py", line 312, in __call__
+    self.run(*args, **kwargs)
+  File "/home/zhang/CorrectBench/prompt_scripts/base_script.py", line 206, in run
+    self.make_and_run_stages()
+  File "/home/zhang/CorrectBench/prompt_scripts/script_pychecker.py", line 31, in make_and_run_stages
+    self.stage_operation(self.stage1)
+  File "/home/zhang/CorrectBench/prompt_scripts/base_script.py", line 252, in stage_operation
+    stage()
+  File "/home/zhang/CorrectBench/prompt_scripts/base_script.py", line 77, in __call__
+    self.run(*args, **kwargs)
+  File "/home/zhang/CorrectBench/prompt_scripts/base_script.py", line 84, in run
+    self.call_gpt()
+  File "/home/zhang/CorrectBench/prompt_scripts/base_script.py", line 100, in call_gpt
+    self.response, self.gptinfo = llm_call(input_messages=gpt_messages, model=self.gpt_model, api_key_path=self.api_key_path, system_message=self.system_message, **other_kwargs)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/LLM_call.py", line 89, in llm_call
+    output = gpt_call(input_messages, model, api_key_path, system_message, temperature, json_mode)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/LLM_call.py", line 138, in gpt_call
+    completion = client.chat.completions.create(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/venv/lib/python3.12/site-packages/openai/_utils/_utils.py", line 274, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/venv/lib/python3.12/site-packages/openai/resources/chat/completions.py", line 704, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/venv/lib/python3.12/site-packages/openai/_base_client.py", line 1265, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/venv/lib/python3.12/site-packages/openai/_base_client.py", line 942, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/venv/lib/python3.12/site-packages/openai/_base_client.py", line 978, in _request
+    response = self._client.send(
+               ^^^^^^^^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/venv/lib/python3.12/site-packages/httpx/_client.py", line 926, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/venv/lib/python3.12/site-packages/httpx/_client.py", line 954, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/venv/lib/python3.12/site-packages/httpx/_client.py", line 991, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/venv/lib/python3.12/site-packages/httpx/_client.py", line 1027, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/venv/lib/python3.12/site-packages/httpx/_transports/default.py", line 236, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/home/zhang/CorrectBench/venv/lib/python3.12/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/venv/lib/python3.12/site-packages/httpcore/_sync/connection.py", line 103, in handle_request
+    return self._connection.handle_request(request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/venv/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 136, in handle_request
+    raise exc
+  File "/home/zhang/CorrectBench/venv/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 106, in handle_request
+    ) = self._receive_response_headers(**kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/venv/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 177, in _receive_response_headers
+    event = self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/venv/lib/python3.12/site-packages/httpcore/_sync/http11.py", line 217, in _receive_event
+    data = self._network_stream.read(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/venv/lib/python3.12/site-packages/httpcore/_backends/sync.py", line 128, in read
+    return self._sock.recv(max_bytes)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/ssl.py", line 1233, in recv
+    return self.read(buflen)
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/ssl.py", line 1106, in read
+    return self._sslobj.read(len)
+           ^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

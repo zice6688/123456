@@ -1,0 +1,363 @@
+############################## conversation begin ##############################
+########## system ##########
+You are the strongest AI in the world. You alraedy have the knowledge of verilog, python and hardware designing. Do not save words by discarding information. I will tip you 200$ if you can fullfill the tasks I give you.
+
+########## user ##########
+
+1. Your task is to complete a given verilog testbench code. This testbench is for a verilog RTL module code (we call it as "DUT", device under test). This circuit is a sequential circuit. The infomation we have is 
+- 1.1. the problem description that guides student to write the RTL code (DUT) and the header of the "DUT". 
+- 1.2. the module header.
+- 1.3. test scenarios which determines values and sequential information of test vectors
+- 1.4. the testbench structure
+- 1.5. the instruction of writing our testbench
+
+DUT header:
+module top_module (
+	input clk,
+	input [7:0] in,
+	input reset,
+	output [23:0] out_bytes,
+	output done
+);
+
+Your other information:
+RTL circuit problem description:
+We want a finite state machine that will search for message boundaries when given an input byte stream. The algorithm we'll use is to discard bytes until we see one with in[3]=1. We then assume that this is byte 1 of a message, and signal the receipt of a message once all 3 bytes have been received (done). The FSM should signal done in the cycle immediately after the third byte of each message was successfully received.
+
+// Implement the datapath module that will output the 24-bit (3 byte) message whenever a packet is received (out_bytes[23:16] is the first byte, out_bytes[15:8] is the second byte, etc.). The reset signal is active high synchronous. out_bytes needs to be valid whenever the done signal is asserted. You may output anything at other times (i.e., don't-care). 
+
+// Waveform example:
+// time            clk             reset           in[7:0]         done            out_bytes       
+// 0ns             0               1                0              x                    x          
+// 5ns             1               1                0              0                    x          
+// 10ns            0               1                0              0                    x          
+// 15ns            1               0               2c              0                    x          
+// 20ns            0               0               2c              0                    x          
+// 25ns            1               0               81              0                    x          
+// 30ns            0               0               81              0                    x          
+// 35ns            1               0                9              0                    x          
+// 40ns            0               0                9              0                    x          
+// 45ns            1               0               6b              1               2c8109          
+// 50ns            0               0               6b              1               2c8109          
+// 55ns            1               0                d              0                    x          
+// 60ns            0               0                d              0                    x          
+// 65ns            1               0               8d              0                    x          
+// 70ns            0               0               8d              0                    x          
+// 75ns            1               0               6d              1               6b0d8d          
+// 80ns            0               0               6d              1               6b0d8d          
+// 85ns            1               0               12              0                    x          
+// 90ns            0               0               12              0                    x          
+// 95ns            1               0                1              0                    x          
+// 100ns           0               0                1              0                    x          
+// 105ns           1               0                d              1               6d1201          
+// 110ns           0               0                d              1               6d1201          
+// 115ns           1               0               76              0                    x          
+// 120ns           0               0               76              0                    x          
+// 125ns           1               0               3d              0                    x          
+// 130ns           0               0               3d              0                    x          
+// 135ns           1               0               ed              1                d763d          
+// 140ns           0               0               ed              1                d763d          
+// 145ns           1               0               8c              0                    x          
+// 150ns           0               0               8c              0                    x          
+// 155ns           1               0               f9              0                    x          
+// 160ns           0               0               f9              0                    x          
+// 165ns           1               0               ce              1               ed8cf9          
+// 170ns           0               0               ce              1               ed8cf9          
+// 175ns           1               0               c5              0                    x          
+// 180ns           0               0               c5              0                    x          
+// 185ns           1               0               aa              0                    x          
+// 190ns           0               0               aa              0                    x          
+IMPORTANT - test scenario (Please determine the values of input signals according to these test scenarios.):
+{
+  "scenario 1": "Reset the FSM. Set reset = 1 for 2 clock cycles, then set reset = 0. After the reset, provide a sequence of bytes where the first byte with in[3] = 1 is at the 5th clock cycle, followed by two more bytes. The sequence should be: 0x00, 0x00, 0x00, 0x00, 0x2C, 0x81, 0x09.",
+  "scenario 2": "Provide a sequence of bytes where the first byte with in[3] = 1 is at the 3rd clock cycle, followed by two more bytes. The sequence should be: 0x00, 0x00, 0x2C, 0x81, 0x09. Then, after 2 clock cycles, provide another message starting with 0x6B, 0x0D, 0x8D.",
+  "scenario 3": "Provide a sequence of bytes where the first byte with in[3] = 1 is at the 7th clock cycle, followed by two more bytes. The sequence should be: 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x2C, 0x81, 0x09. Then, after 3 clock cycles, provide another message starting with 0x6D, 0x12, 0x01.",
+  "scenario 4": "Provide a sequence of bytes where the first byte with in[3] = 1 is at the 2nd clock cycle, followed by two more bytes. The sequence should be: 0x00, 0x2C, 0x81, 0x09. Then, after 1 clock cycle, provide another message starting with 0x6B, 0x0D, 0x8D. After 2 more clock cycles, provide another message starting with 0xED, 0x8C, 0xF9.",
+  "scenario 5": "Provide a sequence of bytes where the first byte with in[3] = 1 is at the 1st clock cycle, followed by two more bytes. The sequence should be: 0x2C, 0x81, 0x09. Then, after 4 clock cycles, provide another message starting with 0x6D, 0x12, 0x01. After 3 more clock cycles, provide another message starting with 0xED, 0x8C, 0xF9.",
+  "scenario 6": "Provide a sequence of bytes where the first byte with in[3] = 1 is at the 4th clock cycle, followed by two more bytes. The sequence should be: 0x00, 0x00, 0x00, 0x2C, 0x81, 0x09. Then, after 5 clock cycles, provide another message starting with 0x6B, 0x0D, 0x8D. After 4 more clock cycles, provide another message starting with 0x6D, 0x12, 0x01.",
+  "scenario 7": "Provide a sequence of bytes where the first byte with in[3] = 1 is at the 6th clock cycle, followed by two more bytes. The sequence should be: 0x00, 0x00, 0x00, 0x00, 0x00, 0x2C, 0x81, 0x09. Then, after 6 clock cycles, provide another message starting with 0x6B, 0x0D, 0x8D. After 5 more clock cycles, provide another message starting with 0xED, 0x8C, 0xF9.",
+  "scenario 8": "Provide a sequence of bytes where the first byte with in[3] = 1 is at the 8th clock cycle, followed by two more bytes. The sequence should be: 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x2C, 0x81, 0x09. Then, after 7 clock cycles, provide another message starting with 0x6B, 0x0D, 0x8D. After 6 more clock cycles, provide another message starting with 0xED, 0x8C, 0xF9.",
+  "scenario 9": "Provide a sequence of bytes where the first byte with in[3] = 1 is at the 10th clock cycle, followed by two more bytes. The sequence should be: 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x2C, 0x81, 0x09. Then, after 8 clock cycles, provide another message starting with 0x6B, 0x0D, 0x8D. After 7 more clock cycles, provide another message starting with 0xED, 0x8C, 0xF9.",
+  "scenario 10": "Provide a sequence of bytes where the first byte with in[3] = 1 is at the 12th clock cycle, followed by two more bytes. The sequence should be: 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x2C, 0x81, 0x09. Then, after 9 clock cycles, provide another message starting with 0x6B, 0x0D, 0x8D. After 8 more clock cycles, provide another message starting with 0xED, 0x8C, 0xF9."
+}
+below is the given testbench codes:
+`timescale 1ns / 1ps
+module testbench;
+reg  clk;
+reg [7:0] in;
+reg  reset;
+wire [23:0] out_bytes;
+wire  done;
+
+integer file, scenario;
+// DUT instantiation
+top_module DUT (
+	.clk(clk),
+	.in(in),
+	.reset(reset),
+	.out_bytes(out_bytes),
+	.done(done)
+);
+// Clock generation
+initial begin
+    clk = 0;
+    forever #5 clk = ~clk;
+end
+
+initial begin
+    file = $fopen("TBout.txt", "w");
+end
+// Scenario Based Test
+initial begin
+
+    // write your scenario checking codes here, according to scenario information
+
+    $fclose(file);
+    $finish;
+end
+
+endmodule
+
+
+The testbench does not need to check the DUT's output but only export the signals of DUT. Please export the signals of DUT to a file named "TBout.txt" at the end of each scenario. The template is given below:
+$fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+The variables are already declared. The clock signal is already prepared. This output will be used to check the correctness of the DUT's output later.
+please only use "#10" as the delay when you need. If you need longer delay, you can use multiple "#10", such as "#10; #10; #10;". Avoid meaningless long delay in your code.
+If you need a loop in a scenario to check multiple time points, use "repeat" loop. for exmaple:
+```
+// scenario x
+scenario = x;
+signal_1 = 1;
+repeat(5) begin
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    #10;
+end
+```
+Please determine the input signal's exact values according to given test scenarios. 
+Note: please complete the last initial code part (marked in the given testbench template). You should give me the completed full code. The testbench template above is to help you generate the code. You must use %d when exporting values.
+please generate the full testbench code. please only reply verilog codes, no other words. 
+
+
+
+########## assistant ##########
+`timescale 1ns / 1ps
+module testbench;
+reg clk;
+reg [7:0] in;
+reg reset;
+wire [23:0] out_bytes;
+wire done;
+
+integer file, scenario;
+
+// DUT instantiation
+top_module DUT (
+	.clk(clk),
+	.in(in),
+	.reset(reset),
+	.out_bytes(out_bytes),
+	.done(done)
+);
+
+// Clock generation
+initial begin
+    clk = 0;
+    forever #5 clk = ~clk;
+end
+
+initial begin
+    file = $fopen("TBout.txt", "w");
+end
+
+// Scenario Based Test
+initial begin
+    // Scenario 1
+    scenario = 1;
+    reset = 1; in = 8'h00; #10; // Reset for 2 clock cycles
+    reset = 1; in = 8'h00; #10;
+    reset = 0; in = 8'h00; #10; // Provide sequence of bytes
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h2C; #10;
+    in = 8'h81; #10;
+    in = 8'h09; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    
+    // Scenario 2
+    scenario = 2;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h2C; #10;
+    in = 8'h81; #10;
+    in = 8'h09; #10;
+    in = 8'h00; #10; #10; // 2 clock cycles
+    in = 8'h6B; #10;
+    in = 8'h0D; #10;
+    in = 8'h8D; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    
+    // Scenario 3
+    scenario = 3;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h2C; #10;
+    in = 8'h81; #10;
+    in = 8'h09; #10;
+    in = 8'h00; #10; #10; #10; // 3 clock cycles
+    in = 8'h6D; #10;
+    in = 8'h12; #10;
+    in = 8'h01; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    
+    // Scenario 4
+    scenario = 4;
+    in = 8'h00; #10;
+    in = 8'h2C; #10;
+    in = 8'h81; #10;
+    in = 8'h09; #10;
+    in = 8'h00; #10; // 1 clock cycle
+    in = 8'h6B; #10;
+    in = 8'h0D; #10;
+    in = 8'h8D; #10;
+    in = 8'h00; #10; #10; // 2 clock cycles
+    in = 8'hED; #10;
+    in = 8'h8C; #10;
+    in = 8'hF9; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    
+    // Scenario 5
+    scenario = 5;
+    in = 8'h2C; #10;
+    in = 8'h81; #10;
+    in = 8'h09; #10;
+    in = 8'h00; #10; #10; #10; #10; // 4 clock cycles
+    in = 8'h6D; #10;
+    in = 8'h12; #10;
+    in = 8'h01; #10;
+    in = 8'h00; #10; #10; #10; // 3 clock cycles
+    in = 8'hED; #10;
+    in = 8'h8C; #10;
+    in = 8'hF9; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    
+    // Scenario 6
+    scenario = 6;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h2C; #10;
+    in = 8'h81; #10;
+    in = 8'h09; #10;
+    in = 8'h00; #10; #10; #10; #10; #10; // 5 clock cycles
+    in = 8'h6B; #10;
+    in = 8'h0D; #10;
+    in = 8'h8D; #10;
+    in = 8'h00; #10; #10; #10; #10; // 4 clock cycles
+    in = 8'h6D; #10;
+    in = 8'h12; #10;
+    in = 8'h01; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    
+    // Scenario 7
+    scenario = 7;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h2C; #10;
+    in = 8'h81; #10;
+    in = 8'h09; #10;
+    in = 8'h00; #10; #10; #10; #10; #10; #10; // 6 clock cycles
+    in = 8'h6B; #10;
+    in = 8'h0D; #10;
+    in = 8'h8D; #10;
+    in = 8'h00; #10; #10; #10; #10; #10; // 5 clock cycles
+    in = 8'hED; #10;
+    in = 8'h8C; #10;
+    in = 8'hF9; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    
+    // Scenario 8
+    scenario = 8;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h2C; #10;
+    in = 8'h81; #10;
+    in = 8'h09; #10;
+    in = 8'h00; #10; #10; #10; #10; #10; #10; #10; // 7 clock cycles
+    in = 8'h6B; #10;
+    in = 8'h0D; #10;
+    in = 8'h8D; #10;
+    in = 8'h00; #10; #10; #10; #10; #10; #10; // 6 clock cycles
+    in = 8'hED; #10;
+    in = 8'h8C; #10;
+    in = 8'hF9; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    
+    // Scenario 9
+    scenario = 9;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h2C; #10;
+    in = 8'h81; #10;
+    in = 8'h09; #10;
+    in = 8'h00; #10; #10; #10; #10; #10; #10; #10; #10; // 8 clock cycles
+    in = 8'h6B; #10;
+    in = 8'h0D; #10;
+    in = 8'h8D; #10;
+    in = 8'h00; #10; #10; #10; #10; #10; #10; #10; // 7 clock cycles
+    in = 8'hED; #10;
+    in = 8'h8C; #10;
+    in = 8'hF9; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    
+    // Scenario 10
+    scenario = 10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h00; #10;
+    in = 8'h2C; #10;
+    in = 8'h81; #10;
+    in = 8'h09; #10;
+    in = 8'h00; #10; #10; #10; #10; #10; #10; #10; #10; #10; // 9 clock cycles
+    in = 8'h6B; #10;
+    in = 8'h0D; #10;
+    in = 8'h8D; #10;
+    in = 8'h00; #10; #10; #10; #10; #10; #10; #10; #10; // 8 clock cycles
+    in = 8'hED; #10;
+    in = 8'h8C; #10;
+    in = 8'hF9; #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, in = %d, reset = %d, out_bytes = %d, done = %d", scenario, clk, in, reset, out_bytes, done);
+    
+    $fclose(file);
+    $finish;
+end
+
+endmodule
+

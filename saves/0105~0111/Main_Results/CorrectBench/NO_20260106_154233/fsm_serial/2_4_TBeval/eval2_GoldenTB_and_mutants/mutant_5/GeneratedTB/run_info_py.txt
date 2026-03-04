@@ -1,0 +1,182 @@
+python compilation passed!
+
+###output:
+Passed; vector: {'check_en': True, 'scenario': '1', 'clk': 1, 'in': 1, 'reset': 1, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '1', 'clk': 1, 'in': 1, 'reset': 1, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '1', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '1', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '1', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '1', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '1', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Scenario: 2, expected: done=0, observed: done=1
+Failed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'in': 1, 'reset': 0, 'done': 1}
+Passed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Scenario: 2, expected: done=0, observed: done=1
+Failed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'in': 1, 'reset': 0, 'done': 1}
+Passed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'in': 0, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'in': 0, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'in': 0, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'in': 0, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'in': 0, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'in': 0, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'in': 0, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'in': 0, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'in': 0, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'in': 0, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Scenario: 4, expected: done=0, observed: done=1
+Failed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 1}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Scenario: 4, expected: done=0, observed: done=1
+Failed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 1}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Scenario: 4, expected: done=0, observed: done=1
+Failed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 1}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Scenario: 5, expected: done=0, observed: done=1
+Failed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'in': 1, 'reset': 0, 'done': 1}
+Passed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Scenario: 6, expected: done=0, observed: done=1
+Failed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'in': 1, 'reset': 0, 'done': 1}
+Passed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '7', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '7', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '7', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '7', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Scenario: 7, expected: done=0, observed: done=1
+Failed; vector: {'check_en': True, 'scenario': '7', 'clk': 1, 'in': 1, 'reset': 0, 'done': 1}
+Passed; vector: {'check_en': True, 'scenario': '7', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '7', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '7', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '7', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '7', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '7', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '7', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '7', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '7', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Scenario: 7, expected: done=0, observed: done=1
+Failed; vector: {'check_en': True, 'scenario': '7', 'clk': 1, 'in': 1, 'reset': 0, 'done': 1}
+Passed; vector: {'check_en': True, 'scenario': '7', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '8', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '8', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '8', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '8', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '8', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '8', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '8', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '8', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Scenario: 8, expected: done=0, observed: done=1
+Failed; vector: {'check_en': True, 'scenario': '8', 'clk': 1, 'in': 1, 'reset': 0, 'done': 1}
+Passed; vector: {'check_en': True, 'scenario': '8', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '8', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '8', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '8', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '8', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '8', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '8', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '9', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Scenario: 9, expected: done=0, observed: done=1
+Failed; vector: {'check_en': True, 'scenario': '9', 'clk': 1, 'in': 1, 'reset': 0, 'done': 1}
+Passed; vector: {'check_en': True, 'scenario': '9', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '9', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '9', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '9', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '9', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '9', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '9', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '9', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '9', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Scenario: 9, expected: done=0, observed: done=1
+Failed; vector: {'check_en': True, 'scenario': '9', 'clk': 1, 'in': 1, 'reset': 0, 'done': 1}
+Passed; vector: {'check_en': True, 'scenario': '9', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '9', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '9', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '9', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '10', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '10', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '10', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '10', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '10', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Scenario: 10, expected: done=0, observed: done=1
+Failed; vector: {'check_en': True, 'scenario': '10', 'clk': 1, 'in': 1, 'reset': 0, 'done': 1}
+Passed; vector: {'check_en': True, 'scenario': '10', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '10', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '10', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '10', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '10', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '10', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '10', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '10', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Passed; vector: {'check_en': True, 'scenario': '10', 'clk': 1, 'in': 1, 'reset': 0, 'done': 0}
+Scenario: 10, expected: done=0, observed: done=1
+Failed; vector: {'check_en': True, 'scenario': '10', 'clk': 1, 'in': 1, 'reset': 0, 'done': 1}
+['2', '2', '4', '4', '4', '5', '6', '7', '7', '8', '9', '9', '10', '10']
+
+
+###error:
+
+

@@ -1,0 +1,29 @@
+autoline:
+  result_path: "results"
+  TBcheck:
+    discrim_mode: col_70_wrong_row_25_correct
+  debug:
+    max: 3
+  itermax: 10
+  probset:
+    more_info_paths: ['data/HDLBits/HDLBits_data_RTL_4o_20.jsonl']
+    mutant_path: data/HDLBits/HDLBits_data_mutants.jsonl
+    only: ['lemmings4']
+    path: data/HDLBits/HDLBits_data.jsonl
+  promptscript: pychecker
+  save_compile: false
+  
+  timeout: 300
+  update_desc: false
+gpt:
+  model: qwen-max
+  rtlgen_model: qwen-max
+run:
+  mode: autoline
+save:
+  en: true
+  log:
+    debug_en: false
+  pub:
+    prefix: 'NO'
+    subdir: Main_Results/CorrectBench

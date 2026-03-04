@@ -1,0 +1,23 @@
+2026-01-06 15:42:41 | INFO     | [counter_2bc] [TBgen] stage_0 ends (7.18s used)
+2026-01-06 15:42:52 | INFO     | [counter_2bc] [TBgen] stage_1 ends (11.20s used)
+2026-01-06 15:43:11 | INFO     | [counter_2bc] [TBgen] stage_2 ends (19.24s used)
+2026-01-06 15:43:56 | INFO     | [counter_2bc] [TBgen] stage_3 ends (45.11s used)
+2026-01-06 15:44:47 | INFO     | [counter_2bc] [TBgen] stage_4 ends (50.63s used)
+2026-01-06 15:44:47 | INFO     | [counter_2bc] [TBgen] stage_checklist ends (0.00s used)
+2026-01-06 15:46:04 | INFO     | [counter_2bc] [TBgen] stage_4b ends (77.73s used)
+2026-01-06 15:46:16 | INFO     | [counter_2bc] [TBgen] stage_5 ends (11.57s used)
+2026-01-06 15:46:16 | INFO     | [counter_2bc] 
+2026-01-06 15:46:16 | INFO     | [counter_2bc] [TBsim] iverilog compilation : passed!
+2026-01-06 15:46:16 | INFO     | [counter_2bc] [TBsim] python simulation : passed!
+2026-01-06 15:46:16 | INFO     | [counter_2bc] [TBsim] TBsim finished : True!
+2026-01-06 15:46:16 | INFO     | [counter_2bc] 
+2026-01-06 15:46:16 | INFO     | [counter_2bc] [TBcheck] [discriminator] Discriminating the testbench, NO.0 discrimination
+2026-01-06 15:46:16 | POSITIVE | [counter_2bc] [TBcheck] [discriminator] TB_discriminating finished, TB passed, wrong scenarios: [], scenario pass ratio: 10/10
+2026-01-06 15:46:16 | INFO     | [counter_2bc] [TBcheck] Testbench passed the funccheck
+2026-01-06 15:46:16 | INFO     | [counter_2bc] [TBcheck] self funccheck finished. Next Action: [pass]
+2026-01-06 15:46:16 | INFO     | [counter_2bc] 
+2026-01-06 15:46:16 | INFO     | [counter_2bc] [TBeval] Eval 1: Golden RTL checking begins
+2026-01-06 15:46:16 | POSITIVE | [counter_2bc] [TBeval] Eval 1: Golden RTL checking passed!
+2026-01-06 15:46:16 | INFO     | [counter_2bc] [TBeval] Eval 2: Golden TB checking on RTL mutants
+2026-01-06 15:46:17 | SUCCESS  | [counter_2bc] [TBeval] Eval 2: Golden TB checking on RTL mutants perfectly passed!
+2026-01-06 15:46:17 | INFO     | [counter_2bc] 

@@ -1,0 +1,26 @@
+iverilog simulation passed!
+
+iverilog cmd 1:
+/usr/bin/iverilog -g2012 -o run.vvp driver.v DUT.v 
+iverilog cmd 1 output:
+
+iverilog cmd 1 error:
+driver.v:46: warning: Extra digits given for sized binary constant.
+driver.v:61: warning: Extra digits given for sized binary constant.
+driver.v:80: warning: Extra digits given for sized binary constant.
+driver.v:86: warning: Extra digits given for sized binary constant.
+driver.v:101: warning: Extra digits given for sized binary constant.
+driver.v:116: warning: Extra digits given for sized binary constant.
+driver.v:131: warning: Extra digits given for sized binary constant.
+driver.v:146: warning: Extra digits given for sized binary constant.
+driver.v:161: warning: Extra digits given for sized binary constant.
+driver.v:176: warning: Extra digits given for sized binary constant.
+driver.v:176: warning: Numeric constant truncated to 9 bits.
+
+iverilog cmd 2:
+/usr/bin/vvp run.vvp
+iverilog cmd 2 output:
+driver.v:190: $finish called at 1810000 (1ps)
+
+iverilog cmd 2 error:
+

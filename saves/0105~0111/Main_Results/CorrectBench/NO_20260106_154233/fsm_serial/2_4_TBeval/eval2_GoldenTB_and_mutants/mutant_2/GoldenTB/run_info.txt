@@ -1,0 +1,21 @@
+iverilog simulation passed!
+
+iverilog cmd 1:
+/usr/bin/iverilog -g2012 -o run.vvp fsm_serial.v fsm_serial_tb.v 
+iverilog cmd 1 output:
+
+iverilog cmd 1 error:
+
+iverilog cmd 2:
+/usr/bin/vvp run.vvp
+iverilog cmd 2 output:
+VCD info: dumpfile wave.vcd opened for output.
+fsm_serial_tb.v:80: $finish called at 4526 (1ps)
+Hint: Output 'done' has 20 mismatches. First mismatch occurred at time 820.
+Hint: Total mismatched samples is 20 out of 905 samples
+
+Simulation finished at 4526 ps
+Mismatches: 20 in 905 samples
+
+iverilog cmd 2 error:
+

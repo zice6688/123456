@@ -1,0 +1,191 @@
+
+---------------custom config--------------
+autoline: 
+    TBcheck: 
+        discrim_mode: col_70_wrong_row_25_correct
+    debug: 
+        max: 3
+    itermax: 10
+    probset: 
+        more_info_paths: ['data/HDLBits/HDLBits_data_RTL_4o_20.jsonl']
+        mutant_path: data/HDLBits/HDLBits_data_mutants.jsonl
+        only: ['lemmings4']
+        path: data/HDLBits/HDLBits_data.jsonl
+    promptscript: pychecker
+    save_compile: False
+    timeout: 40
+    update_desc: False
+gpt: 
+    model: qwen-max
+    rtlgen_model: qwen-max
+run: 
+    mode: autoline
+save: 
+    en: True
+    log: 
+        debug_en: False
+    pub: 
+        prefix: NO
+        subdir: Main_Results/CorrectBench
+------------------------------------------
+------config info (custom + default)------
+run: 
+    version: 2.0
+    author: Ruidi Qiu - Technical University of Munich
+    time: 20260111_103300
+    custom_path: /home/zhang/CorrectBench/config/custom.yaml
+    mode: autoline
+    hostname: localhost
+    pid: 125727
+    pyversion: 3.12.3 (main, Nov  6 2025, 13:44:16) [GCC 13.3.0]
+save: 
+    en: True
+    root: None
+    pub: 
+        prefix: NO
+        dir: saves/0105~0111/
+        subdir: Main_Results/CorrectBench/
+    log: 
+        en: True
+        dir: logs/
+        notes: None
+        cfg_pmode: iwantall
+        debug_en: False
+        level: TRACE
+    message: 
+        en: True
+        dir: messages/
+        format: json
+    iverilog: 
+        en: True
+        subdir: ivcode_nodebug
+load: 
+    prompt: 
+        path: config/initial_prompts/prompt1.txt
+        pick_idx: []
+    stage_template: 
+        path: config/templates/stage_template0301.txt
+gpt: 
+    model: qwen-max
+    key_path: config/key_API.json
+    temperature: None
+    json_mode: False
+    chatgpt: 
+        start_form: chat
+        one_time_talk: False
+    rtlgen_model: qwen-max
+iverilog: 
+    dir: 
+    task_id: 
+autoline: 
+    probset: 
+        path: data/HDLBits/HDLBits_data.jsonl
+        mutant_path: data/HDLBits/HDLBits_data_mutants.jsonl
+        gptgenRTL_path: None
+        more_info_paths: ['data/HDLBits/HDLBits_data_RTL_4o_20.jsonl']
+        only: ['lemmings4']
+        exclude: []
+        exclude_json: None
+        filter: [{}]
+    checklist: 
+        max: 3
+    debug: 
+        max: 3
+        reboot: 1
+        py_rollback: 2
+    onlyrun: None
+    promptscript: pychecker
+    timeout: 40
+    TBcheck: 
+        rtl_num: 20
+        correct_max: 3
+        discrim_mode: col_70_wrong_row_25_correct
+        correct_mode: naive
+        rtl_compens_en: True
+        rtl_compens_max_iter: 3
+    itermax: 10
+    update_desc: False
+    save_compile: False
+    save_finalcodes: True
+    error_interruption: False
+_initialized: True
+------------------------------------------
+
+--------------default config--------------
+run: 
+    version: 2.0
+    author: Ruidi Qiu - Technical University of Munich
+    time: None
+    custom_path: None
+    mode: chatgpt
+save: 
+    en: True
+    root: None
+    pub: 
+        prefix: None
+        dir: saves/$weekrange$/
+        subdir: 
+    log: 
+        en: True
+        dir: logs/
+        notes: None
+        cfg_pmode: iwantall
+        debug_en: False
+        level: TRACE
+    message: 
+        en: True
+        dir: messages/
+        format: json
+    iverilog: 
+        en: True
+        subdir: ivcode_nodebug
+load: 
+    prompt: 
+        path: config/initial_prompts/prompt1.txt
+        pick_idx: []
+    stage_template: 
+        path: config/templates/stage_template0301.txt
+gpt: 
+    model: 4o
+    key_path: config/key_API.json
+    temperature: None
+    json_mode: False
+    chatgpt: 
+        start_form: chat
+        one_time_talk: False
+    rtlgen_model: None
+iverilog: 
+    dir: 
+    task_id: 
+autoline: 
+    probset: 
+        path: None
+        mutant_path: None
+        gptgenRTL_path: None
+        more_info_paths: []
+        only: ['lemmings4']
+        exclude: []
+        exclude_json: None
+        filter: [{}]
+    checklist: 
+        max: 3
+    debug: 
+        max: 5
+        reboot: 1
+        py_rollback: 2
+    onlyrun: None
+    promptscript: None
+    timeout: 60
+    TBcheck: 
+        rtl_num: 20
+        correct_max: 3
+        discrim_mode: col_full_wrong
+        correct_mode: naive
+        rtl_compens_en: True
+        rtl_compens_max_iter: 3
+    itermax: 10
+    update_desc: False
+    save_compile: True
+    save_finalcodes: True
+    error_interruption: False
+------------------------------------------

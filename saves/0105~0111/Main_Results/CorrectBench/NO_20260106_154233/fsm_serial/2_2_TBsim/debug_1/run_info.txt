@@ -1,0 +1,12 @@
+iverilog simulation failed!
+
+iverilog cmd 1:
+/usr/bin/iverilog -g2012 -o run.vvp fsm_serial.v fsm_serial_tb.v 
+iverilog cmd 1 output:
+
+iverilog cmd 1 error:
+fsm_serial_tb.v:1: warning: macro fdisplay undefined (and assumed null) at this point.
+fsm_serial_tb.v:5: warning: macro verilog undefined (and assumed null) at this point.
+fsm_serial_tb.v:1: syntax error
+I give up.
+

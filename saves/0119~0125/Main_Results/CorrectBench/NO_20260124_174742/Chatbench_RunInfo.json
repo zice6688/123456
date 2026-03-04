@@ -1,0 +1,50 @@
+[
+    {
+        "task_id": "lemmings4",
+        "task_number": 150,
+        "time": 1012.62,
+        "prompt_tokens": 69430,
+        "completion_tokens": 29027,
+        "token_cost": 3.1302199999999996,
+        "ERROR(incomplete)": false,
+        "op_record": [
+            "gen",
+            "syncheck",
+            "funccheck",
+            "gen",
+            "syncheck",
+            "funccheck",
+            "cga",
+            "eval"
+        ],
+        "reboot_times": 1,
+        "max_iter": 10,
+        "coverage": 76.92307692307693,
+        "circuit_type": "SEQ",
+        "checklist_worked": false,
+        "scenario_num": 10,
+        "Eval0_pass": true,
+        "Eval0_iv_pass": true,
+        "debug_iter_iv": 0,
+        "iv_runing_time": 0.01,
+        "Eval0_py_pass": true,
+        "debug_iter_py": 0,
+        "py_runing_time": 0.01,
+        "TB_corrected": false,
+        "TBcheck_oprecord": [
+            [
+                "discrim",
+                "correct",
+                "discrim",
+                "correct",
+                "discrim"
+            ],
+            [
+                "discrim"
+            ]
+        ],
+        "rtl_num_newly_gen": 0,
+        "Eval1_pass": false,
+        "full_pass": false
+    }
+]

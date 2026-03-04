@@ -1,0 +1,806 @@
+########## system ##########
+You are the strongest AI in the world. I always trust you. You already have the knowledge about python and verilog. Do not save words by discarding information.
+
+########## user ##########
+Your task is to correct the testbench according to the failing scenarios. the information we have is the failed/passed scenarios of the testbench, the problem description and the testbench code. 
+the testbench code is consisted of both verilog and python code. The verilog code aims to generate test stimulus (under test scenarios) and drive the DUT to generate the output signal; the python code aims to check if the output vector from the DUT is correct. 
+ATTENTION: The python code contains error, and your target is to find it and tell me how to correct it (you don't need to give me the code in this stage).
+Here is the problem description:
+The game Lemmings involves critters with fairly simple brains. So simple that we are going to model it using a finite state machine. In the Lemmings' 2D world, Lemmings can be in one of two states: walking left (walk_left is 1) or walking right (walk_right is 1). It will switch directions if it hits an obstacle. In particular, if a Lemming is bumped on the left (by receiving a 1 on bump_left), it will walk right. If it's bumped on the right (by receiving a 1 on bump_right), it will walk left. If it's bumped on both sides at the same time, it will still switch directions. 
+// In addition to walking left and right and changing direction when bumped, when ground=0, the Lemming will fall and say ""aaah!"". When the ground reappears (ground=1), the Lemming will resume walking in the same direction as before the fall. Being bumped while falling does not affect the walking direction, and being bumped in the same cycle as ground disappears (but not yet falling), or when the ground reappears while still falling, also does not affect the walking direction.
+// In addition to walking and falling, Lemmings can sometimes be told to do useful things, like dig (it starts digging when dig=1). A Lemming can dig if it is currently walking on ground (ground=1 and not falling), and will continue digging until it reaches the other side (ground=0). At that point, since there is no ground, it will fall (aaah!), then continue walking in its original direction once it hits ground again. As with falling, being bumped while digging has no effect, and being told to dig when falling or when there is no ground is ignored. (In other words, a walking Lemming can fall, dig, or switch directions. If more than one of these conditions are satisfied, fall has higher precedence than dig, which has higher precedence than switching directions.)
+// Although Lemmings can walk, fall, and dig, Lemmings aren't invulnerable. If a Lemming falls for too long then hits the ground, it can splatter. In particular, if a Lemming falls for more than 20 clock cycles then hits the ground, it will splatter and cease walking, falling, or digging (all 4 outputs become 0), forever (Or until the FSM gets reset). There is no upper limit on how far a Lemming can fall before hitting the ground. Lemmings only splatter when hitting the ground; they do not splatter in mid-air.
+// Implement a Moore state machine that models this behaviour. areset is positive edge triggered asynchronous reseting the Lemming machine to walk left.
+Here is the testbench code:
+ATTENTION: the following scenarios are wrong: [ 7  9 10 12 13 14]
+the circuit type of this task is sequential
+Here is the verilog code. it contains the meaning of each scenario. you can combine the wong scenario info above and the following code to better understand the reason of failing:
+`timescale 1ns / 1ps
+module testbench;
+reg  clk;
+reg  areset;
+reg  bump_left;
+reg  bump_right;
+reg  ground;
+reg  dig;
+wire  walk_left;
+wire  walk_right;
+wire  aaah;
+wire  digging;
+
+integer file, scenario;
+// DUT instantiation
+top_module DUT (
+	.clk(clk),
+	.areset(areset),
+	.bump_left(bump_left),
+	.bump_right(bump_right),
+	.ground(ground),
+	.dig(dig),
+	.walk_left(walk_left),
+	.walk_right(walk_right),
+	.aaah(aaah),
+	.digging(digging)
+);
+// Clock generation
+initial begin
+    clk = 0;
+    forever #5 clk = ~clk;
+end
+
+initial begin
+    file = $fopen("TBout.txt", "w");
+end
+// Scenario Based Test
+initial begin
+
+    // scenario 1: Baseline walking left
+    scenario = 1;
+    areset = 1; bump_left = 0; bump_right = 0; ground = 1; dig = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    areset = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    repeat(12) begin
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+        #10;
+    end
+
+    // scenario 2: Baseline walking right
+    scenario = 2;
+    areset = 1; bump_left = 0; bump_right = 0; ground = 1; dig = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    areset = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    bump_left = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    bump_left = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    repeat(12) begin
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+        #10;
+    end
+
+    // scenario 3: Bump-induced direction flip while walking
+    scenario = 3;
+    areset = 1; bump_left = 0; bump_right = 0; ground = 1; dig = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    areset = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(5) begin // t=1 to t=5: walking left
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    bump_right = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    bump_right = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(6) begin // t=7 to t=12
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+
+    // scenario 4: Simultaneous bumps
+    scenario = 4;
+    areset = 1; bump_left = 0; bump_right = 0; ground = 1; dig = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    areset = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(3) begin // t=1–3
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    bump_left = 1; bump_right = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    bump_left = 0; bump_right = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(6) begin // t=5–10
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+
+    // scenario 5: Falling onset and resume (15-cycle fall)
+    scenario = 5;
+    areset = 1; bump_left = 0; bump_right = 0; ground = 1; dig = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    areset = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(3) begin // t=1–3
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    ground = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(15) begin // t=4–18
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    ground = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+
+    // scenario 6: Falling for exactly 20 cycles then resume
+    scenario = 6;
+    areset = 1; bump_left = 0; bump_right = 0; ground = 1; dig = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    areset = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(3) begin // t=1–3
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    ground = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(20) begin // t=4–23 inclusive → 20 cycles
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    ground = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+
+    // scenario 7: Splatter activation (21-cycle fall)
+    scenario = 7;
+    areset = 1; bump_left = 0; bump_right = 0; ground = 1; dig = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    areset = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(3) begin // t=1–3
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    ground = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(21) begin // t=4–24 inclusive → 21 cycles
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    ground = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    // post-splatter: 5 more cycles with arbitrary inputs
+    bump_left = 1; bump_right = 1; dig = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    bump_left = 0; bump_right = 0; dig = 0; ground = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    ground = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    dig = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+
+    // scenario 8: Bump during falling (ignored)
+    scenario = 8;
+    areset = 1; bump_left = 0; bump_right = 0; ground = 1; dig = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    areset = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(2) begin // t=1–2
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    ground = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(3) begin // t=3–5
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    bump_left = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    bump_left = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(3) begin // t=7–9
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    ground = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+
+    // scenario 9: Dig initiation and termination
+    scenario = 9;
+    areset = 1; bump_left = 0; bump_right = 0; ground = 1; dig = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    areset = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(3) begin // t=1–3
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    dig = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(4) begin // t=4–7: dig=1, ground=1
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    ground = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    dig = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(12) begin // t=9–20: ground=0 for 12 cycles (t=8–19 is 12 cycles, so t=9–20 is 12 outputs)
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    ground = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+
+    // scenario 10: Dig during walking with concurrent bump (priority test)
+    scenario = 10;
+    areset = 1; bump_left = 0; bump_right = 0; ground = 1; dig = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    areset = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(2) begin // t=1–2
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    dig = 1; bump_right = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    dig = 0; bump_right = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(5) begin // t=4–8
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+
+    // scenario 11: Bump same cycle as ground disappearance (fall precedence)
+    scenario = 11;
+    areset = 1; bump_left = 0; bump_right = 0; ground = 1; dig = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    areset = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(2) begin // t=1–2
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    ground = 0; bump_left = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    bump_left = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(4) begin // t=4–7: ground=0
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    ground = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+
+    // scenario 12: Ground reappears while falling — splatter check on boundary (21 cycles)
+    scenario = 12;
+    areset = 1; bump_left = 0; bump_right = 0; ground = 1; dig = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    areset = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(2) begin // t=1–2
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    ground = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(21) begin // t=3–23 inclusive → 21 cycles
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    ground = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    // continue 4 more cycles to verify persistent zero
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+
+    // scenario 13: Reset during splatter
+    scenario = 13;
+    areset = 1; bump_left = 0; bump_right = 0; ground = 1; dig = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    areset = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(2) begin // t=1–2
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    ground = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(21) begin // t=3–23 → 21 cycles
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    ground = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    // now splattered (t=24), run to t=29 to confirm #10;
+    repeat(5) begin
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    // reset at t=30
+    areset = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    areset = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    // respond to bump at t=32
+    bump_left = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    bump_left = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+
+    // scenario 14: Dig when not walking (ignored) — after splatter
+    scenario = 14;
+    areset = 1; bump_left = 0; bump_right = 0; ground = 1; dig = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    areset = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(2) begin // t=1–2
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    ground = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10;
+    repeat(21) begin // t=3–23 → 21 cycles
+        $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    end
+    ground = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    // now splattered (t=24), run to t=25 to confirm zero
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    // t=26: ground=1, dig=1, bumps=0 — dig must be ignored
+    ground = 1; dig = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+
+    // scenario 15: Multiple priority conflicts in one cycle
+    scenario = 15;
+    areset = 1; bump_left = 0; bump_right = 0; ground = 1; dig = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    areset = 0;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10; // t=1
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; // t=2: walk left established
+    ground = 0; bump_left = 1; dig = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging); #10; 
+    ground = 1;
+    $fdisplay(file, "scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+    #10;
+    $fdisplay(file, "[check]scenario: %d, clk = %d, areset = %d, bump_left = %d, bump_right = %d, ground = %d, dig = %d, walk_left = %d, walk_right = %d, aaah = %d, digging = %d", scenario, clk, areset, bump_left, bump_right, ground, dig, walk_left, walk_right, aaah, digging);
+
+    $fclose(file);
+    $finish;
+end
+
+endmodule
+
+Here is the python code, it contains error, please combine it with the wrong scenario info and the verilog code to understand:
+class GoldenDUT:
+    def __init__(self):
+        # Internal state registers (suffix "_reg")
+        self.walk_left_reg = 1      # initial: walk left after reset
+        self.walk_right_reg = 0
+        self.aaah_reg = 0
+        self.digging_reg = 0
+        self.fall_counter_reg = 0  # counts consecutive ground=0 cycles while aaah=1
+        self.splattered_reg = False
+        self.base_dir_reg = 0      # 0 = walk left, 1 = walk right (persistent base direction)
+        self.ground_prev_reg = 1   # previous ground value; initial = 1 (ground present at reset)
+
+    def load(self, signal_vector):
+        areset = signal_vector['areset']
+        bump_left = signal_vector['bump_left']
+        bump_right = signal_vector['bump_right']
+        ground = signal_vector['ground']
+        dig = signal_vector['dig']
+
+        # Store current ground as previous for next cycle
+        self.ground_prev_reg = ground
+
+        # Asynchronous reset takes immediate effect (highest priority)
+        if areset:
+            self.walk_left_reg = 1
+            self.walk_right_reg = 0
+            self.aaah_reg = 0
+            self.digging_reg = 0
+            self.fall_counter_reg = 0
+            self.splattered_reg = False
+            self.base_dir_reg = 0
+            return
+
+        # If already splattered, all outputs remain 0 forever until reset
+        if self.splattered_reg:
+            self.walk_left_reg = 0
+            self.walk_right_reg = 0
+            self.aaah_reg = 0
+            self.digging_reg = 0
+            # fall_counter and base_dir unchanged; splattered persists
+            return
+
+        # FALL PRECEDENCE: ground == 0
+        if ground == 0:
+            # aaah = 1, others = 0
+            self.walk_left_reg = 0
+            self.walk_right_reg = 0
+            self.aaah_reg = 1
+            self.digging_reg = 0
+            # Fall counter increments only if was already falling (i.e., aaah was 1 last cycle)
+            if self.aaah_reg == 1:  # i.e., was falling in previous cycle
+                self.fall_counter_reg += 1
+            else:
+                self.fall_counter_reg = 1
+            return
+
+        # Now ground == 1 → not falling this cycle
+        # Check for SPLATTER TRIGGER: ground rising edge AND fall_counter >= 21
+        ground_rising = (self.ground_prev_reg == 0) and (ground == 1)
+        if ground_rising and (self.fall_counter_reg >= 21):
+            self.walk_left_reg = 0
+            self.walk_right_reg = 0
+            self.aaah_reg = 0
+            self.digging_reg = 0
+            self.fall_counter_reg = 0
+            self.splattered_reg = True
+            return
+
+        # Reset fall counter when ground is present
+        self.fall_counter_reg = 0
+
+        # DIG PRECEDENCE: enabled only if not falling (aaah was 0), not digging (digging was 0),
+        # and was walking (i.e., walk_left or walk_right was 1) and dig==1
+        was_walking = (self.walk_left_reg == 1) or (self.walk_right_reg == 1)
+        can_dig = (not self.aaah_reg) and (not self.digging_reg) and was_walking and (dig == 1)
+        if can_dig:
+            self.walk_left_reg = 0
+            self.walk_right_reg = 0
+            self.aaah_reg = 0
+            self.digging_reg = 1
+            return
+
+        # BUMP or HOLD: only eligible if not falling and not digging
+        if (not self.aaah_reg) and (not self.digging_reg):
+            # Bump logic: flip base_dir on bumps
+            if bump_left and bump_right:
+                self.base_dir_reg = 1 - self.base_dir_reg
+            elif bump_left:
+                self.base_dir_reg = 1
+            elif bump_right:
+                self.base_dir_reg = 0
+            # else: hold base_dir
+
+            # Set walk outputs based on updated base_dir
+            if self.base_dir_reg == 0:
+                self.walk_left_reg = 1
+                self.walk_right_reg = 0
+            else:
+                self.walk_left_reg = 0
+                self.walk_right_reg = 1
+            self.aaah_reg = 0
+            self.digging_reg = 0
+        else:
+            # Not eligible for bump: resume base direction (e.g., after dig or fall)
+            if self.base_dir_reg == 0:
+                self.walk_left_reg = 1
+                self.walk_right_reg = 0
+            else:
+                self.walk_left_reg = 0
+                self.walk_right_reg = 1
+            self.aaah_reg = 0
+            self.digging_reg = 0
+
+    def check(self, signal_vector):
+        # Expected outputs are the current register values
+        expected_walk_left = self.walk_left_reg
+        expected_walk_right = self.walk_right_reg
+        expected_aaah = self.aaah_reg
+        expected_digging = self.digging_reg
+
+        # Observed outputs from DUT (from signal vector)
+        observed_walk_left = signal_vector.get('walk_left', 0)
+        observed_walk_right = signal_vector.get('walk_right', 0)
+        observed_aaah = signal_vector.get('aaah', 0)
+        observed_digging = signal_vector.get('digging', 0)
+
+        # Compare all four outputs
+        ok = True
+        if expected_walk_left != observed_walk_left:
+            print(f"Scenario: {signal_vector['scenario']}, expected walk_left={expected_walk_left}, observed walk_left={observed_walk_left}")
+            ok = False
+        if expected_walk_right != observed_walk_right:
+            print(f"Scenario: {signal_vector['scenario']}, expected walk_right={expected_walk_right}, observed walk_right={observed_walk_right}")
+            ok = False
+        if expected_aaah != observed_aaah:
+            print(f"Scenario: {signal_vector['scenario']}, expected aaah={expected_aaah}, observed aaah={observed_aaah}")
+            ok = False
+        if expected_digging != observed_digging:
+            print(f"Scenario: {signal_vector['scenario']}, expected digging={expected_digging}, observed digging={observed_digging}")
+            ok = False
+
+        return ok
+
+
+Here is some hints for your better understanding of the python codes above:
+Hints - explaination of the given python code:
+the python class "GoldenDUT": This python class can represent the golden DUT (the ideal one). In "GoldenDUT", following methods are defined:
+- 1. a method "def __init__(self)": Set the inner states/values of the golden DUT. These values have suffix "_reg". The initial value of these inner values is "x", but later will be digits. The "__init__" method has no input parameters except "self".
+- 2. a method "def load(self, signal_vector)": This method is to load the important input signals and the inner values of "GoldenDUT" shall change according to the input signals. There is no clock signal in the input signal vector, every time the "load" method is called, it means a new clock cycle. The initial values "x" should be changed according to the input signals. This method has no return value.
+- 3. a method "def check(self, signal_vector)": This method is to determine the expected output values and compare them with output signals from DUT. It should return True or False only.
+
+please reply me with the following steps:
+1. please analyze the reason of the failed scenarios. If possible, please find the in common between the failed scenarios.
+2. please analyze which part of the python code is related to the failed test scenarios ([ 7  9 10 12 13 14]).
+3. please tell me how to correct the wrong part (in natural language, do not give me the complete code implementation. please explain it in English.)
+here is an example of the reply:
+1. the failed scenarios are all related to the same signal x
+2. the mid part of the function_X is related to the failed scenarios
+3. the correct logic of signal x should be y.
+
+########## assistant ##########
+1. The failed scenarios ([7, 9, 10, 12, 13, 14]) all involve **falling → splatter → post-splatter behavior**, and critically, **the interaction between splatter persistence and subsequent input conditions (especially `dig`, `bump`, or `ground` changes *after* splatter has occurred)**. Specifically:
+   - Scenario 7: First splatter activation (21-cycle fall → ground rise → splatter), then tests behavior *after* splatter (bumps, dig, ground toggling) — expects *all outputs to remain 0 forever*, but the golden model incorrectly allows state transitions *after* splatter.
+   - Scenarios 12 & 13: Test splatter *boundary* (21 cycles) and *reset during splatter* — both rely on correct detection of splatter *and* strict enforcement that once `splattered_reg = True`, **no further state updates (including `base_dir_reg`, `fall_counter_reg`, or output assignments) are allowed under any condition except asynchronous reset**.
+   - Scenarios 9 & 10: Involve digging — but in scenario 9, digging starts *before* splatter, and in scenario 10, dig + bump occur concurrently *while walking*. However, their failure is *not* due to dig logic per se, but because **splatter state is not properly isolated from prior state evolution**: in scenarios 13 and 14, the golden model *reuses `walk_left_reg`/`walk_right_reg` values (e.g., in `was_walking`) *after* splatter has occurred, violating the requirement that “once splattered, it ceases walking, falling, or digging *forever* (or until reset)”. In particular, `was_walking` is computed *after* splatter has been set, but the golden code still evaluates `can_dig` or bump logic *as if the machine were active*, even though splatter should make those branches unreachable.
+   - Scenario 14: Explicitly tests “Dig when not walking (ignored) — after splatter”, i.e., `dig=1`, `ground=1`, but splattered → must ignore dig. The golden model fails here because it *still computes `was_walking`* (based on stale `walk_left_reg/walk_right_reg` which were zeroed *in the same cycle as splatter*, but then later reused in logic that assumes they reflect active walking state).
+
+   **Common root cause**: The golden model treats `splattered_reg = True` as a *temporary output suppressor*, but **does not fully decouple splattered state from the rest of the state update logic** — especially the use of `walk_left_reg`/`walk_right_reg` to compute `was_walking`, and the failure to *skip all non-reset state updates entirely* once splattered.
+
+2. The erroneous part is in the `load()` method of `GoldenDUT`, specifically:
+   - The block handling splatter (`if self.splattered_reg:`) correctly zeros outputs, but **it does *not* prevent downstream logic (like `was_walking`, `can_dig`, or bump evaluation) from executing later in the same function**, because that logic is *outside* the `if self.splattered_reg:` guard and only conditionally skipped *inside* the `if (not self.aaah_reg) and (not self.digging_reg):` branch — but `was_walking` is computed *unconditionally before that*, and `can_dig` depends on it.
+   - More precisely: the line `was_walking = (self.walk_left_reg == 1) or (self.walk_right_reg == 1)` appears *after* the `if self.splattered_reg:` block, meaning it executes even when splattered. Since `walk_left_reg` and `walk_right_reg` were just set to `0` inside the splatter block, `was_walking` becomes `False` — which seems correct — *but* the deeper issue is that **the golden model *still proceeds to evaluate `can_dig` and bump logic* for splattered lemmings**, even though the spec says it “ceases walking, falling, or digging *forever*”. While those evaluations may not change outputs (because outputs are forced to 0), they *do* potentially modify internal registers like `base_dir_reg` or `fall_counter_reg` *after* splatter — and indeed, in scenario 13, the golden model *resets `fall_counter_reg = 0`* in the `ground == 1` branch *after* splatter, violating persistence.
+
+   Crucially, the **fall counter logic is also flawed**:  
+   - In the `ground == 0` branch, it does `if self.aaah_reg == 1: self.fall_counter_reg += 1`, but `self.aaah_reg` was just set to `1` *in this same cycle*, so this checks the *new* value, not the *previous* one — i.e., it’s using the *current* `aaah_reg` (which is now 1) to decide whether to increment, but the intent is to detect *consecutive* falls — which requires checking whether it was *already falling* (i.e., `aaah_reg == 1` *before* this cycle’s update). However, since `aaah_reg` is updated *in the same cycle*, this check is logically incorrect — it will always be true in the first falling cycle, causing `fall_counter_reg` to start at 1 (correct), but then in subsequent falling cycles, it increments only if `aaah_reg` was 1 *before* the update — but the code doesn’t save the *old* `aaah` value anywhere. This leads to incorrect fall counting across scenarios 7, 12, 13.
+
+   So two tightly coupled bugs in `load()`:
+   - (A) Splatter state is not treated as a *hard barrier*: internal registers (`base_dir_reg`, `fall_counter_reg`) can still be modified *after* splatter is set, and `was_walking` is computed from zeroed outputs, misleading dig/bump logic.
+   - (B) Fall counter update uses the *updated* `aaah_reg` instead of the *pre-update* falling state — breaking the 21-cycle splatter threshold.
+
+3. To correct the python code:
+   - First, **enforce splatter as an absolute halt state**: Immediately after setting `self.splattered_reg = True`, and *also* in the `if self.splattered_reg:` block, the golden model must *skip all remaining state update logic entirely*. That means the entire remainder of `load()` (from the `# FALL PRECEDENCE` comment onward) must be guarded so that *none* of the fall counter, dig, bump, or base direction logic executes once `splattered_reg` is True — not even `was_walking` computation or `fall_counter_reg = 0` resets. The only allowed operation after splatter (besides output zeroing) is saving `ground_prev_reg`, which is harmless and necessary for edge-case detection on reset.
+   - Second, **fix the fall counter logic to track *consecutive falling cycles* correctly**: The fall counter should increment *only if the lemming was already falling in the previous cycle*, i.e., if `aaah_reg` was `1` *before* the current cycle’s update. Since the golden model doesn’t store the *old* `aaah` value, you must either: (i) save `aaah_reg` to a temporary variable *before* any updates in the current cycle, and use that to decide incrementing; or (ii) restructure the fall counter update to depend on `ground_prev_reg == 0 and ground == 0` (i.e., ground remained absent), which is equivalent and more robust. The current check `if self.aaah_reg == 1` is invalid because `aaah_reg` is overwritten to `1` unconditionally in the `ground == 0` branch — so it always evaluates to `True` in falling cycles, making the counter increment *every* falling cycle (which *seems* right) — but wait: no, actually, the problem is subtler — in the *first* falling cycle, `aaah_reg` was `0` before the update, so the condition `if self.aaah_reg == 1` would be false, and `fall_counter_reg` would be set to `1`. But in the golden code, it says `if self.aaah_reg == 1: self.fall_counter_reg += 1 else: self.fall_counter_reg = 1`. However, `self.aaah_reg` *has not yet been updated* at that point — it still holds its *previous cycle’s value*. So the logic *is* intended to use the old value — but the bug is elsewhere: the assignment `self.aaah_reg = 1` happens *after* the fall counter logic, so yes, `self.aaah_reg` is the old value. Then why do scenarios 7/12 fail? Because in scenario 7, the fall lasts 21 cycles, but the counter must reach *21* *by the time ground rises*, and the splatter trigger is `fall_counter_reg >= 21` *on the rising edge*. The issue is that the counter is incremented *during* falling, but the final count used for splatter is taken *after* the ground rises — and the golden code resets `fall_counter_reg = 0` in the `ground == 1` branch *before* checking splatter. That’s wrong: the splatter check must use the *just-completed fall count*, and *then* the counter should be reset *only if no splatter occurs*. So the `self.fall_counter_reg = 0` line must be moved *inside the `else` of the splatter check`, not unconditionally before it.
+
+   Therefore, the correction requires:
+   - Move the unconditional `self.fall_counter_reg = 0` out of the `ground == 1` section and place it *only* in the non-splatter branch *after* the splatter check.
+   - Ensure splatter state completely bypasses *all* state evolution — including `base_dir_reg` updates, `was_walking` computation, and any conditional logic that could mutate internal registers.
+   - Preserve `ground_prev_reg` update *before* any reset/splatter logic, as it’s needed for rising-edge detection.
+
+########## user ##########
+
+please correct the python code according to the following rules:
+
+PYTHON code rule: please do not change the original high level structure of the python code. i.e., if python code only contains one class and several functions such as init, load, check and more, only modify the implementation of the function, but do not change the name or delete the functions/class methods. you can add new class methods or functions if needed. you can use python libraries such as numpy or math.
+
+
+Hints - explaination of the given python code:
+the python class "GoldenDUT": This python class can represent the golden DUT (the ideal one). In "GoldenDUT", following methods are defined:
+- 1. a method "def __init__(self)": Set the inner states/values of the golden DUT. These values have suffix "_reg". The initial value of these inner values is "x", but later will be digits. The "__init__" method has no input parameters except "self".
+- 2. a method "def load(self, signal_vector)": This method is to load the important input signals and the inner values of "GoldenDUT" shall change according to the input signals. There is no clock signal in the input signal vector, every time the "load" method is called, it means a new clock cycle. The initial values "x" should be changed according to the input signals. This method has no return value.
+- 3. a method "def check(self, signal_vector)": This method is to determine the expected output values and compare them with output signals from DUT. It should return True or False only.
+
+i.e., your python code format in response should still be like:
+
+class <class_name>:
+    def __init__(self):
+        ...(omitted)
+
+    def load(self, ...):
+        ...
+
+    def check(self, ...):
+        ...
+
+    def <other_functions>(self, ...):
+        ...
+
+ATTENTION: please give me the corrected python code according to our previous conversation and the hints above. please give me the corrected full python code (not the part but the whole python code like I give you in our previous conversation).
+
+
+########## assistant ##########
+```python
+class GoldenDUT:
+    def __init__(self):
+        # Internal state registers (suffix "_reg")
+        self.walk_left_reg = 1      # initial: walk left after reset
+        self.walk_right_reg = 0
+        self.aaah_reg = 0
+        self.digging_reg = 0
+        self.fall_counter_reg = 0  # counts consecutive ground=0 cycles while aaah=1
+        self.splattered_reg = False
+        self.base_dir_reg = 0      # 0 = walk left, 1 = walk right (persistent base direction)
+        self.ground_prev_reg = 1   # previous ground value; initial = 1 (ground present at reset)
+
+    def load(self, signal_vector):
+        areset = signal_vector['areset']
+        bump_left = signal_vector['bump_left']
+        bump_right = signal_vector['bump_right']
+        ground = signal_vector['ground']
+        dig = signal_vector['dig']
+
+        # Store current ground as previous for next cycle — do this *first*, before any state update
+        # because all edge detections (e.g., ground rising) depend on *old* ground vs *new* ground
+        ground_prev = self.ground_prev_reg
+        self.ground_prev_reg = ground
+
+        # Asynchronous reset takes immediate effect (highest priority)
+        if areset:
+            self.walk_left_reg = 1
+            self.walk_right_reg = 0
+            self.aaah_reg = 0
+            self.digging_reg = 0
+            self.fall_counter_reg = 0
+            self.splattered_reg = False
+            self.base_dir_reg = 0
+            return
+
+        # If already splattered, all outputs remain 0 forever until reset
+        # AND no internal state (base_dir, fall_counter, etc.) may be modified further
+        if self.splattered_reg:
+            self.walk_left_reg = 0
+            self.walk_right_reg = 0
+            self.aaah_reg = 0
+            self.digging_reg = 0
+            # DO NOT modify base_dir_reg, fall_counter_reg, or any other register
+            # All state is frozen — only ground_prev_reg was already updated above
+            return
+
+        # FALL PRECEDENCE: ground == 0
+        if ground == 0:
+            # aaah = 1, others = 0
+            self.walk_left_reg = 0
+            self.walk_right_reg = 0
+            self.aaah_reg = 1
+            self.digging_reg = 0
+            # Fall counter increments only if was *already falling* in previous cycle (i.e., aaah was 1 last cycle)
+            # Since aaah_reg hasn't been updated yet, it holds the *previous* cycle's aaah value
+            if self.aaah_reg == 1:  # was falling before this cycle
+                self.fall_counter_reg += 1
+            else:
+                self.fall_counter_reg = 1
+            return
+
+        # Now ground == 1 → not falling this cycle
+        # Check for SPLATTER TRIGGER: ground rising edge AND fall_counter >= 21
+        ground_rising = (ground_prev == 0) and (ground == 1)
+        if ground_rising and (self.fall_counter_reg >= 21):
+            self.walk_left_reg = 0
+            self.walk_right_reg = 0
+            self.aaah_reg = 0
+            self.digging_reg = 0
+            self.fall_counter_reg = 0
+            self.splattered_reg = True
+            # base_dir_reg remains unchanged (frozen), but outputs are zeroed — no need to preserve it for logic
+            return
+
+        # Only if NO splatter occurred on this ground-rising edge: reset fall counter
+        self.fall_counter_reg = 0
+
+        # DIG PRECEDENCE: enabled only if not falling (aaah was 0), not digging (digging was 0),
+        # and was walking (i.e., walk_left or walk_right was 1 *before* this cycle) and dig==1
+        # Note: 'was walking' means outputs were active *before* any updates this cycle.
+        # Since we haven't updated walk_*_reg yet, current values reflect prior state.
+        was_walking = (self.walk_left_reg == 1) or (self.walk_right_reg == 1)
+        can_dig = (not self.aaah_reg) and (not self.digging_reg) and was_walking and (dig == 1)
+        if can_dig:
+            self.walk_left_reg = 0
+            self.walk_right_reg = 0
+            self.aaah_reg = 0
+            self.digging_reg = 1
+            return
+
+        # BUMP or HOLD: only eligible if not falling and not digging
+        # Again: use *current* (i.e., pre-update) values of aaah_reg/digging_reg to check eligibility
+        if (not self.aaah_reg) and (not self.digging_reg):
+            # Bump logic: flip base_dir on bumps
+            if bump_left and bump_right:
+                self.base_dir_reg = 1 - self.base_dir_reg
+            elif bump_left:
+                self.base_dir_reg = 1
+            elif bump_right:
+                self.base_dir_reg = 0
+            # else: hold base_dir
+
+            # Set walk outputs based on updated base_dir
+            if self.base_dir_reg == 0:
+                self.walk_left_reg = 1
+                self.walk_right_reg = 0
+            else:
+                self.walk_left_reg = 0
+                self.walk_right_reg = 1
+            self.aaah_reg = 0
+            self.digging_reg = 0
+        else:
+            # Not eligible for bump: resume base direction (e.g., after dig or fall)
+            # But note: if we just exited dig or fall, base_dir_reg is still valid
+            if self.base_dir_reg == 0:
+                self.walk_left_reg = 1
+                self.walk_right_reg = 0
+            else:
+                self.walk_left_reg = 0
+                self.walk_right_reg = 1
+            self.aaah_reg = 0
+            self.digging_reg = 0
+
+    def check(self, signal_vector):
+        # Expected outputs are the current register values
+        expected_walk_left = self.walk_left_reg
+        expected_walk_right = self.walk_right_reg
+        expected_aaah = self.aaah_reg
+        expected_digging = self.digging_reg
+
+        # Observed outputs from DUT (from signal vector)
+        observed_walk_left = signal_vector.get('walk_left', 0)
+        observed_walk_right = signal_vector.get('walk_right', 0)
+        observed_aaah = signal_vector.get('aaah', 0)
+        observed_digging = signal_vector.get('digging', 0)
+
+        # Compare all four outputs
+        ok = True
+        if expected_walk_left != observed_walk_left:
+            print(f"Scenario: {signal_vector['scenario']}, expected walk_left={expected_walk_left}, observed walk_left={observed_walk_left}")
+            ok = False
+        if expected_walk_right != observed_walk_right:
+            print(f"Scenario: {signal_vector['scenario']}, expected walk_right={expected_walk_right}, observed walk_right={observed_walk_right}")
+            ok = False
+        if expected_aaah != observed_aaah:
+            print(f"Scenario: {signal_vector['scenario']}, expected aaah={expected_aaah}, observed aaah={observed_aaah}")
+            ok = False
+        if expected_digging != observed_digging:
+            print(f"Scenario: {signal_vector['scenario']}, expected digging={expected_digging}, observed digging={observed_digging}")
+            ok = False
+
+        return ok
+```
+
+
