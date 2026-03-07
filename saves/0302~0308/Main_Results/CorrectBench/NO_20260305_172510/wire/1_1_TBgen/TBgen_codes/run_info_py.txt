@@ -1,0 +1,17 @@
+python compilation passed!
+
+###output:
+Failed; vector: {'scenario': '          1', 'in': 0, 'out': 'z'}
+Failed; vector: {'scenario': '          1', 'in': 0, 'out': 'z'}
+Failed; vector: {'scenario': '          2', 'in': 1, 'out': 'z'}
+Failed; vector: {'scenario': '          2', 'in': 1, 'out': 'z'}
+Failed; vector: {'scenario': '          3', 'in': 0, 'out': 'z'}
+Failed; vector: {'scenario': '          3', 'in': 0, 'out': 'z'}
+Failed; vector: {'scenario': '          4', 'in': 1, 'out': 'z'}
+Failed; vector: {'scenario': '          4', 'in': 1, 'out': 'z'}
+['          1', '          1', '          2', '          2', '          3', '          3', '          4', '          4']
+
+
+###error:
+
+

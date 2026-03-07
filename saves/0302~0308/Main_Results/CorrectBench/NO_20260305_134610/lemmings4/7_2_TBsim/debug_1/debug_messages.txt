@@ -1,0 +1,246 @@
+########## system ##########
+You are a helpful assistant.
+
+########## user ##########
+please fix the python code below according to the error message below. please directly give me the corrected python codes.
+Attention: never remove the irrelevant codes!!!
+please only reply the full code modified. NEVER remove other irrelevant codes!!!
+The python code I give you is the one with error. To be convienient, each of the line begins with a line number. The line number also appears at the error message. You should use the line number to locate the error with the help of error message.
+
+ previous python code with error:
+1. class GoldenDUT:
+2.     def __init__(self):
+3.         self.WALK_LEFT = 0b0001
+4.         self.WALK_RIGHT = 0b0010
+5.         self.FALLING = 0b0100
+6.         self.DIGGING = 0b1000
+7.         self.SPLATTERED = 0b0000
+8. 
+9.         self.current_state_reg = self.WALK_LEFT
+10.         self.fall_counter_reg = 0
+11.         self.walk_left_reg = 0
+12.         self.walk_right_reg = 0
+13.         self.aaah_reg = 0
+14.         self.digging_reg = 0
+15. 
+16.     def load(self, signal_vector):
+17.         areset = signal_vector['areset']
+18.         bump_left = signal_vector['bump_left']
+19.         bump_right = signal_vector['bump_right']
+20.         ground = signal_vector['ground']
+21.         dig = signal_vector['dig']
+22. 
+23.         if areset:
+24.             self.current_state_reg = self.WALK_LEFT
+25.             self.fall_counter_reg = 0
+26.             self.walk_left_reg = 0
+27.             self.walk_right_reg = 0
+28.             self.aaah_reg = 0
+29.             self.digging_reg = 0
+30.         else:
+31.             self.current_state_reg, self.fall_counter_reg, self.walk_left_reg, self.walk_right_reg, self.aaah_reg, self.digging_reg = self.lemming_fsm(bump_left, bump_right, ground, dig, self.current_state_reg, self.fall_counter_reg)
+32. 
+33.     def check(self, signal_vector):
+34.         expected_walk_left = self.walk_left_reg
+35.         expected_walk_right = self.walk_right_reg
+36.         expected_aaah = self.aaah_reg
+37.         expected_digging = self.digging_reg
+38. 
+39.         observed_walk_left = signal_vector['walk_left']
+40.         observed_walk_right = signal_vector['walk_right']
+41.         observed_aaah = signal_vector['aaah']
+42.         observed_digging = signal_vector['digging']
+43. 
+44.         if (expected_walk_left != observed_walk_left or
+45.             expected_walk_right != observed_walk_right or
+46.             expected_aaah != observed_aaah or
+47.             expected_digging != observed_digging):
+48.             print(f"Scenario: {signal_vector['scenario']}, expected: walk_left={expected_walk_left}, observed walk_left={observed_walk_left}")
+49.             print(f"Scenario: {signal_vector['scenario']}, expected: walk_right={expected_walk_right}, observed walk_right={observed_walk_right}")
+50.             print(f"Scenario: {signal_vector['scenario']}, expected: aaah={expected_aaah}, observed aaah={observed_aaah}")
+51.             print(f"Scenario: {signal_vector['scenario']}, expected: digging={expected_digging}, observed digging={observed_digging}")
+52.             return False
+53.         return True
+54. 
+55.     def lemming_fsm(self, bump_left, bump_right, ground, dig, current_state, fall_counter):
+56.         walk_left = 0
+57.         walk_right = 0
+58.         aaah = 0
+59.         digging = 0
+60. 
+61.         if current_state == self.WALK_LEFT:
+62.             if bump_right or bump_left:
+63.                 next_state = self.WALK_RIGHT
+64.             elif not ground:
+65.                 next_state = self.FALLING
+66.                 aaah = 1
+67.             elif dig:
+68.                 next_state = self.DIGGING
+69.             else:
+70.                 next_state = self.WALK_LEFT
+71.                 walk_left = 1
+72.         elif current_state == self.WALK_RIGHT:
+73.             if bump_left or bump_right:
+74.                 next_state = self.WALK_LEFT
+75.             elif not ground:
+76.                 next_state = self.FALLING
+77.                 aaah = 1
+78.             elif dig:
+79.                 next_state = self.DIGGING
+80.             else:
+81.                 next_state = self.WALK_RIGHT
+82.                 walk_right = 1
+83.         elif current_state == self.FALLING:
+84.             if ground:
+85.                 if fall_counter > 20:
+86.                     next_state = self.SPLATTERED
+87.                 else:
+88.                     if current_state == self.WALK_LEFT:
+89.                         next_state = self.WALK_LEFT
+90.                         walk_left = 1
+91.                     elif current_state == self.WALK_RIGHT:
+92.                         next_state = self.WALK_RIGHT
+93.                         walk_right = 1
+94.             else:
+95.                 next_state = self.FALLING
+96.                 aaah = 1
+97.                 fall_counter += 1
+98.         elif current_state == self.DIGGING:
+99.             if not ground:
+100.                 next_state = self.FALLING
+101.                 aaah = 1
+102.             else:
+103.                 next_state = self.DIGGING
+104.                 digging = 1
+105.         elif current_state == self.SPLATTERED:
+106.             next_state = self.SPLATTERED
+107.         else:
+108.             next_state = self.SPLATTERED
+109. 
+110.         return next_state, fall_counter, walk_left, walk_right, aaah, digging
+111. 
+112. 
+ compiling error message:
+  File "/home/zhang/CorrectBench/saves/0302~0308/Main_Results/CorrectBench/NO_20260305_134610/lemmings4/7_1_TBgen/TBgen_codes/lemmings4_tb.py", line 110, in lemming_fsm
+    return next_state, fall_counter, walk_left, walk_right, aaah, digging
+           ^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'next_state' where it is not associated with a value
+
+ please directly give me the corrected python codes, no other words needed. Your python codes should start with [```python] and end with [```].
+
+########## assistant ##########
+```python
+class GoldenDUT:
+    def __init__(self):
+        self.WALK_LEFT = 0b0001
+        self.WALK_RIGHT = 0b0010
+        self.FALLING = 0b0100
+        self.DIGGING = 0b1000
+        self.SPLATTERED = 0b0000
+
+        self.current_state_reg = self.WALK_LEFT
+        self.fall_counter_reg = 0
+        self.walk_left_reg = 0
+        self.walk_right_reg = 0
+        self.aaah_reg = 0
+        self.digging_reg = 0
+
+    def load(self, signal_vector):
+        areset = signal_vector['areset']
+        bump_left = signal_vector['bump_left']
+        bump_right = signal_vector['bump_right']
+        ground = signal_vector['ground']
+        dig = signal_vector['dig']
+
+        if areset:
+            self.current_state_reg = self.WALK_LEFT
+            self.fall_counter_reg = 0
+            self.walk_left_reg = 0
+            self.walk_right_reg = 0
+            self.aaah_reg = 0
+            self.digging_reg = 0
+        else:
+            self.current_state_reg, self.fall_counter_reg, self.walk_left_reg, self.walk_right_reg, self.aaah_reg, self.digging_reg = self.lemming_fsm(bump_left, bump_right, ground, dig, self.current_state_reg, self.fall_counter_reg)
+
+    def check(self, signal_vector):
+        expected_walk_left = self.walk_left_reg
+        expected_walk_right = self.walk_right_reg
+        expected_aaah = self.aaah_reg
+        expected_digging = self.digging_reg
+
+        observed_walk_left = signal_vector['walk_left']
+        observed_walk_right = signal_vector['walk_right']
+        observed_aaah = signal_vector['aaah']
+        observed_digging = signal_vector['digging']
+
+        if (expected_walk_left != observed_walk_left or
+            expected_walk_right != observed_walk_right or
+            expected_aaah != observed_aaah or
+            expected_digging != observed_digging):
+            print(f"Scenario: {signal_vector['scenario']}, expected: walk_left={expected_walk_left}, observed walk_left={observed_walk_left}")
+            print(f"Scenario: {signal_vector['scenario']}, expected: walk_right={expected_walk_right}, observed walk_right={observed_walk_right}")
+            print(f"Scenario: {signal_vector['scenario']}, expected: aaah={expected_aaah}, observed aaah={observed_aaah}")
+            print(f"Scenario: {signal_vector['scenario']}, expected: digging={expected_digging}, observed digging={observed_digging}")
+            return False
+        return True
+
+    def lemming_fsm(self, bump_left, bump_right, ground, dig, current_state, fall_counter):
+        walk_left = 0
+        walk_right = 0
+        aaah = 0
+        digging = 0
+        next_state = current_state  # Initialize next_state to avoid UnboundLocalError
+
+        if current_state == self.WALK_LEFT:
+            if bump_right or bump_left:
+                next_state = self.WALK_RIGHT
+            elif not ground:
+                next_state = self.FALLING
+                aaah = 1
+            elif dig:
+                next_state = self.DIGGING
+            else:
+                next_state = self.WALK_LEFT
+                walk_left = 1
+        elif current_state == self.WALK_RIGHT:
+            if bump_left or bump_right:
+                next_state = self.WALK_LEFT
+            elif not ground:
+                next_state = self.FALLING
+                aaah = 1
+            elif dig:
+                next_state = self.DIGGING
+            else:
+                next_state = self.WALK_RIGHT
+                walk_right = 1
+        elif current_state == self.FALLING:
+            if ground:
+                if fall_counter > 20:
+                    next_state = self.SPLATTERED
+                else:
+                    if current_state == self.WALK_LEFT:
+                        next_state = self.WALK_LEFT
+                        walk_left = 1
+                    elif current_state == self.WALK_RIGHT:
+                        next_state = self.WALK_RIGHT
+                        walk_right = 1
+            else:
+                next_state = self.FALLING
+                aaah = 1
+                fall_counter += 1
+        elif current_state == self.DIGGING:
+            if not ground:
+                next_state = self.FALLING
+                aaah = 1
+            else:
+                next_state = self.DIGGING
+                digging = 1
+        elif current_state == self.SPLATTERED:
+            next_state = self.SPLATTERED
+        else:
+            next_state = self.SPLATTERED
+
+        return next_state, fall_counter, walk_left, walk_right, aaah, digging
+```
+
+

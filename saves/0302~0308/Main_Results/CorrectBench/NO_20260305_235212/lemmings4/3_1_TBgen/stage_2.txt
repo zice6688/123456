@@ -1,0 +1,82 @@
+############################## conversation begin ##############################
+########## system ##########
+You are the strongest AI in the world. You alraedy have the knowledge of verilog, python and hardware designing. Do not save words by discarding information. I will tip you 200$ if you can fullfill the tasks I give you.
+
+########## user ##########
+1. Your task is to write a verilog testbench for an verilog RTL module code (we call it as "DUT", device under test). The infomation we have is the problem description that guides student to write the RTL code (DUT) and the header of the "DUT". Our target is to generate the verilog testbench for the DUT. This testbench can check if the DUT in verilog satisfies all technical requirements of the problem description.
+2. you are in section 2. in this section, please give me the test scenarios. you only need to describe the stimulus in each test scenarios. If time is important, please inform the clock cycle information. we will use the stimulus description to generate the test vectors and send them to DUT. you must not tell the expected results even though you know that. 
+3. your information is:
+RTL circuit problem description:
+The game Lemmings involves critters with fairly simple brains. So simple that we are going to model it using a finite state machine. In the Lemmings' 2D world, Lemmings can be in one of two states: walking left (walk_left is 1) or walking right (walk_right is 1). It will switch directions if it hits an obstacle. In particular, if a Lemming is bumped on the left (by receiving a 1 on bump_left), it will walk right. If it's bumped on the right (by receiving a 1 on bump_right), it will walk left. If it's bumped on both sides at the same time, it will still switch directions. 
+// In addition to walking left and right and changing direction when bumped, when ground=0, the Lemming will fall and say ""aaah!"". When the ground reappears (ground=1), the Lemming will resume walking in the same direction as before the fall. Being bumped while falling does not affect the walking direction, and being bumped in the same cycle as ground disappears (but not yet falling), or when the ground reappears while still falling, also does not affect the walking direction.
+// In addition to walking and falling, Lemmings can sometimes be told to do useful things, like dig (it starts digging when dig=1). A Lemming can dig if it is currently walking on ground (ground=1 and not falling), and will continue digging until it reaches the other side (ground=0). At that point, since there is no ground, it will fall (aaah!), then continue walking in its original direction once it hits ground again. As with falling, being bumped while digging has no effect, and being told to dig when falling or when there is no ground is ignored. (In other words, a walking Lemming can fall, dig, or switch directions. If more than one of these conditions are satisfied, fall has higher precedence than dig, which has higher precedence than switching directions.)
+// Although Lemmings can walk, fall, and dig, Lemmings aren't invulnerable. If a Lemming falls for too long then hits the ground, it can splatter. In particular, if a Lemming falls for more than 20 clock cycles then hits the ground, it will splatter and cease walking, falling, or digging (all 4 outputs become 0), forever (Or until the FSM gets reset). There is no upper limit on how far a Lemming can fall before hitting the ground. Lemmings only splatter when hitting the ground; they do not splatter in mid-air.
+// Implement a Moore state machine that models this behaviour. areset is positive edge triggered asynchronous reseting the Lemming machine to walk left.
+RTL testbench specification:
+```json
+{
+  "important data": "The Lemmings' behavior is modeled as a Moore state machine. The state transitions and outputs are based on the following inputs: bump_left, bump_right, ground, and dig. The outputs of the DUT are walk_left, walk_right, aaah, and digging. The FSM has the following states and transitions:\n- Walking left (walk_left = 1)\n- Walking right (walk_right = 1)\n- Falling (aaah = 1)\n- Digging (digging = 1)\n- Splattering (all outputs = 0)\n\nState Transitions:\n- If bump_left = 1, switch to walking right.\n- If bump_right = 1, switch to walking left.\n- If ground = 0, switch to falling.\n- If ground = 1 and dig = 1, switch to digging.\n- If falling for more than 20 clock cycles and ground = 1, switch to splattering.\n- If falling and ground = 1, resume walking in the original direction.\n- If digging and ground = 0, switch to falling.\n- If digging and ground = 1, continue digging until ground = 0.\n- If splattering, stay in that state forever unless reset.",
+  "technical specifications": [
+    "1. The DUT is a Moore state machine with the following inputs: clk, areset, bump_left, bump_right, ground, and dig.",
+    "2. The DUT has the following outputs: walk_left, walk_right, aaah, and digging.",
+    "3. The DUT should transition between states based on the inputs and the current state.",
+    "4. The DUT should start in the 'walking left' state when areset is asserted.",
+    "5. The DUT should switch to 'walking right' if bump_left is 1, and to 'walking left' if bump_right is 1.",
+    "6. The DUT should switch to 'falling' if ground is 0, and should output 'aaah' during this state.",
+    "7. The DUT should switch to 'digging' if ground is 1 and dig is 1, and should output 'digging' during this state.",
+    "8. The DUT should switch to 'splattering' if it falls for more than 20 clock cycles and then hits the ground (ground = 1). In this state, all outputs should be 0.",
+    "9. The DUT should resume walking in the original direction if it was falling and the ground reappears (ground = 1).",
+    "10. The DUT should continue digging until the ground disappears (ground = 0), at which point it should switch to 'falling'.",
+    "11. The DUT should ignore bump signals while falling or digging.",
+    "12. The DUT should prioritize falling over digging and switching directions.",
+    "13. The DUT should remain in the 'splattering' state indefinitely unless areset is asserted."
+  ]
+}
+```
+DUT header:
+module top_module (
+	input clk,
+	input areset,
+	input bump_left,
+	input bump_right,
+	input ground,
+	input dig,
+	output walk_left,
+	output walk_right,
+	output aaah,
+	output digging
+);
+
+
+you only need to describe the stimulus in each test scenarios. If time is important, please inform the clock cycle information. we will use the stimulus description to generate the test vectors and send them to DUT. you must not tell the expected results even though you know that. 
+
+your response must be in JSON form. example:
+{
+  "scenario 1": "...", # each content is a string
+  "scenario 2": "...",
+  "scenario 3": "...",
+  ...
+}
+
+
+########## assistant ##########
+```json
+{
+  "scenario 1": "Initial state: areset is asserted for one clock cycle. After the reset, areset is deasserted, and the DUT should start in the 'walking left' state. No other inputs are asserted.",
+  "scenario 2": "Start with the DUT walking left. Assert bump_left for one clock cycle. The DUT should switch to 'walking right'.",
+  "scenario 3": "Start with the DUT walking right. Assert bump_right for one clock cycle. The DUT should switch to 'walking left'.",
+  "scenario 4": "Start with the DUT walking left. Deassert ground for one clock cycle. The DUT should switch to 'falling' and output 'aaah'. Reassert ground after one clock cycle. The DUT should resume 'walking left'.",
+  "scenario 5": "Start with the DUT walking right. Deassert ground for one clock cycle. The DUT should switch to 'falling' and output 'aaah'. Reassert ground after one clock cycle. The DUT should resume 'walking right'.",
+  "scenario 6": "Start with the DUT walking left. Deassert ground for 21 clock cycles. Reassert ground after 21 clock cycles. The DUT should switch to 'splattering' and all outputs should be 0.",
+  "scenario 7": "Start with the DUT walking right. Deassert ground for 21 clock cycles. Reassert ground after 21 clock cycles. The DUT should switch to 'splattering' and all outputs should be 0.",
+  "scenario 8": "Start with the DUT walking left. Assert dig while ground is 1. The DUT should switch to 'digging'. Deassert ground after 5 clock cycles. The DUT should switch to 'falling' and output 'aaah'. Reassert ground after 5 more clock cycles. The DUT should resume 'walking left'.",
+  "scenario 9": "Start with the DUT walking right. Assert dig while ground is 1. The DUT should switch to 'digging'. Deassert ground after 5 clock cycles. The DUT should switch to 'falling' and output 'aaah'. Reassert ground after 5 more clock cycles. The DUT should resume 'walking right'.",
+  "scenario 10": "Start with the DUT walking left. Assert bump_left and deassert ground simultaneously for one clock cycle. The DUT should switch to 'falling' and output 'aaah'. Reassert ground after one clock cycle. The DUT should resume 'walking left'.",
+  "scenario 11": "Start with the DUT walking right. Assert bump_right and deassert ground simultaneously for one clock cycle. The DUT should switch to 'falling' and output 'aaah'. Reassert ground after one clock cycle. The DUT should resume 'walking right'.",
+  "scenario 12": "Start with the DUT walking left. Assert bump_left and bump_right simultaneously for one clock cycle. The DUT should switch to 'walking right'.",
+  "scenario 13": "Start with the DUT walking right. Assert bump_left and bump_right simultaneously for one clock cycle. The DUT should switch to 'walking left'.",
+  "scenario 14": "Start with the DUT walking left. Assert dig while ground is 1. The DUT should switch to 'digging'. Deassert ground after 5 clock cycles. The DUT should switch to 'falling' and output 'aaah'. Reassert ground after 5 more clock cycles. The DUT should resume 'walking left'. During the digging phase, assert bump_left and bump_right. The DUT should ignore these signals.",
+  "scenario 15": "Start with the DUT walking right. Assert dig while ground is 1. The DUT should switch to 'digging'. Deassert ground after 5 clock cycles. The DUT should switch to 'falling' and output 'aaah'. Reassert ground after 5 more clock cycles. The DUT should resume 'walking right'. During the digging phase, assert bump_left and bump_right. The DUT should ignore these signals."
+}
+```
+

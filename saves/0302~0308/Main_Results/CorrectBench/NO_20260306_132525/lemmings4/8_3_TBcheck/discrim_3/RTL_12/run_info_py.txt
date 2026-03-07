@@ -1,0 +1,11 @@
+python compilation failed!
+
+###output:
+
+
+###error:
+  File "/home/zhang/CorrectBench/saves/0302~0308/Main_Results/CorrectBench/NO_20260306_132525/lemmings4/8_3_TBcheck/discrim_3/RTL_12/checker.py", line 54
+    def check_dut(vectors_in):
+IndentationError: expected an indented block after 'else' statement on line 53
+
+

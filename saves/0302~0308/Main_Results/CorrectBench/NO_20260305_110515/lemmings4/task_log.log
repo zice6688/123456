@@ -1,0 +1,29 @@
+2026-03-05 11:06:07 | INFO     | [lemmings4] [TBgen] stage_0 ends (51.57s used)
+2026-03-05 11:07:03 | INFO     | [lemmings4] [TBgen] stage_1 ends (55.61s used)
+2026-03-05 11:07:53 | INFO     | [lemmings4] [TBgen] stage_2 ends (50.22s used)
+2026-03-05 11:09:07 | INFO     | [lemmings4] [TBgen] stage_3 ends (73.88s used)
+2026-03-05 11:10:15 | INFO     | [lemmings4] [TBgen] stage_4 ends (68.26s used)
+2026-03-05 11:10:15 | INFO     | [lemmings4] [TBgen] stage_checklist ends (0.00s used)
+2026-03-05 11:13:21 | INFO     | [lemmings4] [TBgen] stage_4b ends (186.00s used)
+2026-03-05 11:14:25 | INFO     | [lemmings4] [TBgen] stage_5 ends (64.07s used)
+2026-03-05 11:14:25 | INFO     | [lemmings4] 
+2026-03-05 11:14:25 | INFO     | [lemmings4] [TBsim] iverilog compilation : passed!
+2026-03-05 11:14:25 | INFO     | [lemmings4] [TBsim] python simulation : passed!
+2026-03-05 11:14:25 | INFO     | [lemmings4] [TBsim] TBsim finished : True!
+2026-03-05 11:14:25 | INFO     | [lemmings4] 
+2026-03-05 11:14:25 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.0 discrimination
+2026-03-05 11:14:25 | INFO     | [lemmings4] [TBcheck] [discriminator] RTL(s) [3, 7] have syntax error during discrimination
+2026-03-05 11:14:26 | POSITIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB passed, wrong scenarios: [], scenario pass ratio: 0/10
+2026-03-05 11:14:26 | INFO     | [lemmings4] [TBcheck] Testbench passed the funccheck
+2026-03-05 11:14:26 | INFO     | [lemmings4] [TBcheck] self funccheck finished. Next Action: [pass]
+2026-03-05 11:14:26 | INFO     | [lemmings4] 
+2026-03-05 11:14:26 | INFO     | [lemmings4] [lemmings4] Starting Coverage-Guided Agent (CGA)...
+2026-03-05 11:14:26 | INFO     | [lemmings4] --- CGA Iter 0 (Baseline) ---
+2026-03-05 11:14:27 | INFO     | [lemmings4] Baseline Coverage: 68.75%
+2026-03-05 11:14:27 | INFO     | [lemmings4] --- CGA Iter 1 / 5 ---
+2026-03-05 11:14:27 | INFO     | [lemmings4] Asking LLM to fix missing logic (Current: 68.75%)...
+2026-03-05 11:15:06 | ERROR    | [lemmings4] CGA Stage Failed: TBInjector() takes no arguments. Fallback to original TB. | location: autoline/TB_autoline.py, func: run_stages_core, line: 389 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-05 11:15:06 | INFO     | [lemmings4] [TBeval] Eval 1: Golden RTL checking begins
+2026-03-05 11:15:06 | FAILED   | [lemmings4] [TBeval] Eval 1: Golden RTL checking failed!
+2026-03-05 11:15:06 | INFO     | [lemmings4] [TBeval] [lemmings4] Eval 2/2b is skipped because Eval 1 failed
+2026-03-05 11:15:06 | INFO     | [lemmings4] 

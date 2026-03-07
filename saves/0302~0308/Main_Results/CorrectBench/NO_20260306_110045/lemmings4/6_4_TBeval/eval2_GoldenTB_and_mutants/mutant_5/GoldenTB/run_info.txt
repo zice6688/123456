@@ -1,0 +1,24 @@
+iverilog simulation passed!
+
+iverilog cmd 1:
+/usr/bin/iverilog -g2012 -o run.vvp lemmings4_tb.v lemmings4.v 
+iverilog cmd 1 output:
+
+iverilog cmd 1 error:
+
+iverilog cmd 2:
+/usr/bin/vvp run.vvp
+iverilog cmd 2 output:
+VCD info: dumpfile wave.vcd opened for output.
+lemmings4_tb.v:215: $finish called at 5016 (1ps)
+Hint: Output 'walk_left' has 2 mismatches. First mismatch occurred at time 360.
+Hint: Output 'walk_right' has no mismatches.
+Hint: Output 'aaah' has 42 mismatches. First mismatch occurred at time 370.
+Hint: Output 'digging' has no mismatches.
+Hint: Total mismatched samples is 44 out of 1003 samples
+
+Simulation finished at 5016 ps
+Mismatches: 44 in 1003 samples
+
+iverilog cmd 2 error:
+

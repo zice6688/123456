@@ -1,0 +1,21 @@
+python compilation failed!
+
+###output:
+
+
+###error:
+Traceback (most recent call last):
+  File "/home/zhang/CorrectBench/saves/0302~0308/Main_Results/CorrectBench/NO_20260305_134610/lemmings4/7_1_TBgen/TBgen_codes/lemmings4_tb.py", line 159, in <module>
+    tb_pass = check_dut(vectors_in)
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/saves/0302~0308/Main_Results/CorrectBench/NO_20260305_134610/lemmings4/7_1_TBgen/TBgen_codes/lemmings4_tb.py", line 123, in check_dut
+    golden_dut.load(vector)
+  File "/home/zhang/CorrectBench/saves/0302~0308/Main_Results/CorrectBench/NO_20260305_134610/lemmings4/7_1_TBgen/TBgen_codes/lemmings4_tb.py", line 31, in load
+    self.current_state_reg, self.fall_counter_reg, self.walk_left_reg, self.walk_right_reg, self.aaah_reg, self.digging_reg = self.lemming_fsm(bump_left, bump_right, ground, dig, self.current_state_reg, self.fall_counter_reg)
+                                                                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/saves/0302~0308/Main_Results/CorrectBench/NO_20260305_134610/lemmings4/7_1_TBgen/TBgen_codes/lemmings4_tb.py", line 110, in lemming_fsm
+    return next_state, fall_counter, walk_left, walk_right, aaah, digging
+           ^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'next_state' where it is not associated with a value
+
+

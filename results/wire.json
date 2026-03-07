@@ -2,5 +2,5 @@
     "task_id": "wire",
     "stage": "TBeval",
     "pass": false,
-    "coverage": 0.0
+    "coverage": 100.0
 }

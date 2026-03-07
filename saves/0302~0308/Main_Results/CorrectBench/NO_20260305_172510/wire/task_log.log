@@ -1,0 +1,27 @@
+2026-03-05 17:25:12 | INFO     | [wire] [TBgen] stage_0 ends (1.84s used)
+2026-03-05 17:25:35 | INFO     | [wire] [TBgen] stage_1 ends (22.67s used)
+2026-03-05 17:25:43 | INFO     | [wire] [TBgen] stage_2 ends (8.52s used)
+2026-03-05 17:25:57 | INFO     | [wire] [TBgen] stage_3 ends (13.99s used)
+2026-03-05 17:26:50 | INFO     | [wire] [TBgen] stage_4 ends (52.62s used)
+2026-03-05 17:26:50 | INFO     | [wire] [TBgen] stage_checklist ends (0.00s used)
+2026-03-05 17:26:56 | INFO     | [wire] [TBgen] stage_5 ends (6.32s used)
+2026-03-05 17:26:56 | INFO     | [wire] 
+2026-03-05 17:26:56 | INFO     | [wire] [TBsim] iverilog compilation : passed!
+2026-03-05 17:26:56 | INFO     | [wire] [TBsim] python simulation : passed!
+2026-03-05 17:26:56 | INFO     | [wire] [TBsim] TBsim finished : True!
+2026-03-05 17:26:56 | INFO     | [wire] 
+2026-03-05 17:26:56 | INFO     | [wire] [TBcheck] [discriminator] Discriminating the testbench, NO.0 discrimination
+2026-03-05 17:26:56 | POSITIVE | [wire] [TBcheck] [discriminator] TB_discriminating finished, TB passed, wrong scenarios: [], scenario pass ratio: 4/4
+2026-03-05 17:26:56 | INFO     | [wire] [TBcheck] Testbench passed the funccheck
+2026-03-05 17:26:56 | INFO     | [wire] [TBcheck] self funccheck finished. Next Action: [pass]
+2026-03-05 17:26:56 | INFO     | [wire] 
+2026-03-05 17:26:56 | INFO     | [wire] [wire] Starting Coverage-Guided Agent (CGA)...
+2026-03-05 17:26:56 | INFO     | [wire] --- CGA Iter 0 (Baseline) ---
+2026-03-05 17:26:58 | INFO     | [wire] Baseline Coverage: 100.00%
+2026-03-05 17:26:58 | SUCCESS  | [wire] Target reached at baseline!
+2026-03-05 17:26:58 | INFO     | [wire] Saved optimized TB to: saves/0302~0308/Main_Results/CorrectBench/NO_20260305_172510/wire/final_TB.v
+2026-03-05 17:26:58 | INFO     | [wire] [TBeval] Eval 1: Golden RTL checking begins
+2026-03-05 17:26:58 | POSITIVE | [wire] [TBeval] Eval 1: Golden RTL checking passed!
+2026-03-05 17:26:58 | INFO     | [wire] [TBeval] Eval 2: Golden TB checking on RTL mutants
+2026-03-05 17:26:58 | SUCCESS  | [wire] [TBeval] Eval 2: Golden TB checking on RTL mutants perfectly passed!
+2026-03-05 17:26:58 | INFO     | [wire] 
