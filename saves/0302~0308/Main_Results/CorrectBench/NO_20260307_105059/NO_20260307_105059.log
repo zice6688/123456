@@ -1,0 +1,541 @@
+
+---------------custom config--------------
+autoline: 
+    result_path: results
+    TBcheck: 
+        discrim_mode: col_70_wrong_row_25_correct
+    debug: 
+        max: 3
+    itermax: 10
+    probset: 
+        more_info_paths: ['data/HDLBits/HDLBits_data_RTL_4o_20.jsonl']
+        mutant_path: data/HDLBits/HDLBits_data_mutants.jsonl
+        only: ['lemmings4']
+        path: data/HDLBits/HDLBits_data.jsonl
+    promptscript: pychecker
+    save_compile: False
+    timeout: 300
+    update_desc: False
+gpt: 
+    model: qwen-max
+    rtlgen_model: qwen-max
+run: 
+    mode: autoline
+save: 
+    en: True
+    log: 
+        debug_en: False
+    pub: 
+        prefix: NO
+        subdir: Main_Results/CorrectBench
+------------------------------------------
+------config info (custom + default)------
+run: 
+    version: 2.0
+    author: Ruidi Qiu - Technical University of Munich
+    time: 20260307_105059
+    custom_path: config/custom.yaml
+    mode: autoline
+    hostname: localhost
+    pid: 413280
+    pyversion: 3.12.3 (main, Jan 22 2026, 20:57:42) [GCC 13.3.0]
+save: 
+    en: True
+    root: saves/0302~0308/Main_Results/CorrectBench/NO_20260307_105059/
+    pub: 
+        prefix: NO
+        dir: saves/0302~0308/
+        subdir: Main_Results/CorrectBench/
+    log: 
+        en: True
+        dir: logs/
+        notes: None
+        cfg_pmode: iwantall
+        debug_en: False
+        level: TRACE
+    message: 
+        en: True
+        dir: messages/
+        format: json
+    iverilog: 
+        en: True
+        subdir: ivcode_nodebug
+load: 
+    prompt: 
+        path: config/initial_prompts/prompt1.txt
+        pick_idx: []
+    stage_template: 
+        path: config/templates/stage_template0301.txt
+gpt: 
+    model: qwen-max
+    key_path: config/key_API.json
+    temperature: None
+    json_mode: False
+    chatgpt: 
+        start_form: chat
+        one_time_talk: False
+    rtlgen_model: qwen-max
+iverilog: 
+    dir: 
+    task_id: 
+autoline: 
+    result_path: results
+    probset: 
+        path: data/HDLBits/HDLBits_data.jsonl
+        mutant_path: data/HDLBits/HDLBits_data_mutants.jsonl
+        gptgenRTL_path: None
+        more_info_paths: ['data/HDLBits/HDLBits_data_RTL_4o_20.jsonl']
+        only: ['lemmings4']
+        exclude: []
+        exclude_json: None
+        filter: [{}]
+    checklist: 
+        max: 3
+    debug: 
+        max: 3
+        reboot: 1
+        py_rollback: 2
+    onlyrun: None
+    promptscript: pychecker
+    timeout: 300
+    TBcheck: 
+        rtl_num: 20
+        correct_max: 3
+        discrim_mode: col_70_wrong_row_25_correct
+        correct_mode: naive
+        rtl_compens_en: True
+        rtl_compens_max_iter: 3
+    itermax: 10
+    update_desc: False
+    save_compile: False
+    save_finalcodes: True
+    error_interruption: False
+_initialized: True
+------------------------------------------
+
+--------------default config--------------
+run: 
+    version: 2.0
+    author: Ruidi Qiu - Technical University of Munich
+    time: None
+    custom_path: None
+    mode: qwen-max
+save: 
+    en: True
+    root: None
+    pub: 
+        prefix: None
+        dir: saves/$weekrange$/
+        subdir: 
+    log: 
+        en: True
+        dir: logs/
+        notes: None
+        cfg_pmode: iwantall
+        debug_en: False
+        level: TRACE
+    message: 
+        en: True
+        dir: messages/
+        format: json
+    iverilog: 
+        en: True
+        subdir: ivcode_nodebug
+load: 
+    prompt: 
+        path: config/initial_prompts/prompt1.txt
+        pick_idx: []
+    stage_template: 
+        path: config/templates/stage_template0301.txt
+gpt: 
+    model: 4o
+    key_path: config/key_API.json
+    temperature: None
+    json_mode: False
+    chatgpt: 
+        start_form: chat
+        one_time_talk: False
+    rtlgen_model: None
+iverilog: 
+    dir: 
+    task_id: 
+autoline: 
+    result_path: results
+    probset: 
+        path: None
+        mutant_path: None
+        gptgenRTL_path: None
+        more_info_paths: []
+        only: ['lemmings4']
+        exclude: []
+        exclude_json: None
+        filter: [{}]
+    checklist: 
+        max: 3
+    debug: 
+        max: 5
+        reboot: 1
+        py_rollback: 2
+    onlyrun: None
+    promptscript: None
+    timeout: 300
+    TBcheck: 
+        rtl_num: 20
+        correct_max: 3
+        discrim_mode: col_full_wrong
+        correct_mode: naive
+        rtl_compens_en: True
+        rtl_compens_max_iter: 3
+    itermax: 10
+    update_desc: False
+    save_compile: True
+    save_finalcodes: True
+    error_interruption: False
+------------------------------------------
+2026-03-07 10:50:59 | INFO     | all configurations are loaded, starting the main process...
+2026-03-07 10:50:59 | INFO     | 
+2026-03-07 10:50:59 | INFO     | ######################### task 1/1 [lemmings4] #########################
+2026-03-07 10:51:32 | INFO     | [lemmings4] [TBgen] stage_0 ends (33.29s used)
+2026-03-07 10:52:05 | INFO     | [lemmings4] [TBgen] stage_1 ends (33.06s used)
+2026-03-07 10:52:30 | INFO     | [lemmings4] [TBgen] stage_2 ends (25.26s used)
+2026-03-07 10:53:12 | INFO     | [lemmings4] [TBgen] stage_3 ends (41.65s used)
+2026-03-07 10:55:31 | INFO     | [lemmings4] [TBgen] stage_4 ends (139.23s used)
+2026-03-07 10:55:31 | INFO     | [lemmings4] [TBgen] stage_checklist ends (0.00s used)
+2026-03-07 10:58:45 | INFO     | [lemmings4] [TBgen] stage_4b ends (193.64s used)
+2026-03-07 10:59:29 | INFO     | [lemmings4] [TBgen] stage_5 ends (44.40s used)
+2026-03-07 10:59:29 | INFO     | [lemmings4] 
+2026-03-07 10:59:29 | INFO     | [lemmings4] [TBsim] iverilog compilation : passed!
+2026-03-07 10:59:30 | INFO     | [lemmings4] [TBsim] python simulation : passed!
+2026-03-07 10:59:30 | INFO     | [lemmings4] [TBsim] TBsim finished : True!
+2026-03-07 10:59:30 | INFO     | [lemmings4] 
+2026-03-07 10:59:30 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.0 discrimination
+2026-03-07 10:59:36 | INFO     | [lemmings4] [TBcheck] [discriminator] RTL(s) [3, 7] have syntax error during discrimination
+2026-03-07 10:59:36 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [5 6 7 8 9], scenario pass ratio: 0/10
+2026-03-07 10:59:36 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 11:01:31 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 11:01:31 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.1 discrimination
+2026-03-07 11:01:34 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [5 6 9], scenario pass ratio: 1/10
+2026-03-07 11:01:34 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 11:03:23 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 11:03:23 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.2 discrimination
+2026-03-07 11:03:26 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [5 6 9], scenario pass ratio: 1/10
+2026-03-07 11:03:26 | INFO     | [lemmings4] [TBcheck] wrong scenarios not decreased for 1 times (3 = 3), continue the correction
+2026-03-07 11:03:26 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 11:05:33 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 11:05:33 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.3 discrimination
+2026-03-07 11:05:36 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [5 6 9], scenario pass ratio: 1/10
+2026-03-07 11:05:36 | INFO     | [lemmings4] [TBcheck] self funccheck finished. Next Action: [reboot]
+2026-03-07 11:05:36 | INFO     | [lemmings4] 
+2026-03-07 11:06:23 | INFO     | [lemmings4] [TBgen] stage_0 ends (47.22s used)
+2026-03-07 11:06:48 | INFO     | [lemmings4] [TBgen] stage_1 ends (24.26s used)
+2026-03-07 11:07:21 | INFO     | [lemmings4] [TBgen] stage_2 ends (33.69s used)
+2026-03-07 11:09:24 | INFO     | [lemmings4] [TBgen] stage_3 ends (122.24s used)
+2026-03-07 11:12:10 | INFO     | [lemmings4] [TBgen] stage_4 ends (166.80s used)
+2026-03-07 11:12:10 | INFO     | [lemmings4] [TBgen] stage_checklist ends (0.00s used)
+2026-03-07 11:16:43 | INFO     | [lemmings4] [TBgen] stage_4b ends (272.35s used)
+2026-03-07 11:17:18 | INFO     | [lemmings4] [TBgen] stage_5 ends (35.65s used)
+2026-03-07 11:17:18 | INFO     | [lemmings4] 
+2026-03-07 11:17:19 | INFO     | [lemmings4] [TBsim] iverilog compilation : passed!
+2026-03-07 11:17:19 | INFO     | [lemmings4] [TBsim] python simulation : passed!
+2026-03-07 11:17:19 | INFO     | [lemmings4] [TBsim] TBsim finished : True!
+2026-03-07 11:17:19 | INFO     | [lemmings4] 
+2026-03-07 11:17:19 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.0 discrimination
+2026-03-07 11:17:22 | INFO     | [lemmings4] [TBcheck] [discriminator] RTL(s) [3, 7] have syntax error during discrimination
+2026-03-07 11:17:22 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [1 4 5 6 7], scenario pass ratio: 4/10
+2026-03-07 11:17:22 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 11:19:29 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 11:19:29 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.1 discrimination
+2026-03-07 11:19:31 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [1 4 5 6 7], scenario pass ratio: 4/10
+2026-03-07 11:19:31 | INFO     | [lemmings4] [TBcheck] wrong scenarios not decreased for 1 times (5 = 5), continue the correction
+2026-03-07 11:19:31 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 11:21:12 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 11:21:12 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.2 discrimination
+2026-03-07 11:21:15 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [1 4 5 6 7], scenario pass ratio: 4/10
+2026-03-07 11:21:15 | INFO     | [lemmings4] [TBcheck] wrong scenarios not decreased for 2 times (5 = 5), I give up, quiting the funccheck stage...
+2026-03-07 11:21:15 | INFO     | [lemmings4] [TBcheck] self funccheck finished. Next Action: [reboot]
+2026-03-07 11:21:15 | INFO     | [lemmings4] 
+2026-03-07 11:21:52 | INFO     | [lemmings4] [TBgen] stage_0 ends (36.68s used)
+2026-03-07 11:22:25 | INFO     | [lemmings4] [TBgen] stage_1 ends (33.66s used)
+2026-03-07 11:23:02 | INFO     | [lemmings4] [TBgen] stage_2 ends (36.78s used)
+2026-03-07 11:23:42 | INFO     | [lemmings4] [TBgen] stage_3 ends (40.04s used)
+2026-03-07 11:25:53 | INFO     | [lemmings4] [TBgen] stage_4 ends (130.93s used)
+2026-03-07 11:25:53 | INFO     | [lemmings4] [TBgen] stage_checklist ends (0.00s used)
+2026-03-07 11:40:36 | INFO     | [lemmings4] [TBgen] stage_4b ends (882.69s used)
+2026-03-07 11:41:30 | INFO     | [lemmings4] [TBgen] stage_5 ends (54.49s used)
+2026-03-07 11:41:30 | INFO     | [lemmings4] 
+2026-03-07 11:41:30 | INFO     | [lemmings4] [TBsim] iverilog compilation : passed!
+2026-03-07 11:41:30 | INFO     | [lemmings4] [TBsim] python simulation : passed!
+2026-03-07 11:41:30 | INFO     | [lemmings4] [TBsim] TBsim finished : True!
+2026-03-07 11:41:30 | INFO     | [lemmings4] 
+2026-03-07 11:41:30 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.0 discrimination
+2026-03-07 11:41:31 | INFO     | [lemmings4] [TBcheck] [discriminator] RTL(s) [3, 7] have syntax error during discrimination
+2026-03-07 11:41:31 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [ 1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16], scenario pass ratio: 5/21
+2026-03-07 11:41:31 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 11:43:39 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 11:43:39 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.1 discrimination
+2026-03-07 11:43:40 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [ 1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16], scenario pass ratio: 5/21
+2026-03-07 11:43:40 | INFO     | [lemmings4] [TBcheck] wrong scenarios not decreased for 1 times (16 = 16), continue the correction
+2026-03-07 11:43:40 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 11:45:44 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 11:45:44 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.2 discrimination
+2026-03-07 11:45:45 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [ 1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16], scenario pass ratio: 5/21
+2026-03-07 11:45:45 | INFO     | [lemmings4] [TBcheck] wrong scenarios not decreased for 2 times (16 = 16), I give up, quiting the funccheck stage...
+2026-03-07 11:45:45 | INFO     | [lemmings4] [TBcheck] self funccheck finished. Next Action: [reboot]
+2026-03-07 11:45:45 | INFO     | [lemmings4] 
+2026-03-07 11:46:12 | INFO     | [lemmings4] [TBgen] stage_0 ends (27.53s used)
+2026-03-07 11:46:46 | INFO     | [lemmings4] [TBgen] stage_1 ends (33.96s used)
+2026-03-07 11:47:22 | INFO     | [lemmings4] [TBgen] stage_2 ends (35.37s used)
+2026-03-07 11:48:25 | INFO     | [lemmings4] [TBgen] stage_3 ends (62.70s used)
+2026-03-07 11:49:36 | INFO     | [lemmings4] [TBgen] stage_4 ends (71.75s used)
+2026-03-07 11:49:36 | INFO     | [lemmings4] [TBgen] stage_checklist ends (0.00s used)
+2026-03-07 11:52:17 | INFO     | [lemmings4] [TBgen] stage_4b ends (160.59s used)
+2026-03-07 11:52:45 | INFO     | [lemmings4] [TBgen] stage_5 ends (27.76s used)
+2026-03-07 11:52:45 | INFO     | [lemmings4] 
+2026-03-07 11:52:45 | INFO     | [lemmings4] [TBsim] iverilog compilation : passed!
+2026-03-07 11:52:45 | INFO     | [lemmings4] [TBsim] python simulation : passed!
+2026-03-07 11:52:45 | INFO     | [lemmings4] [TBsim] TBsim finished : True!
+2026-03-07 11:52:45 | INFO     | [lemmings4] 
+2026-03-07 11:52:45 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.0 discrimination
+2026-03-07 11:52:45 | INFO     | [lemmings4] [TBcheck] [discriminator] RTL(s) [3, 7] have syntax error during discrimination
+2026-03-07 11:52:45 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [6 9], scenario pass ratio: 2/10
+2026-03-07 11:52:45 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 11:54:09 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 11:54:09 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.1 discrimination
+2026-03-07 11:54:10 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [9], scenario pass ratio: 2/10
+2026-03-07 11:54:10 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 11:55:44 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 11:55:44 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.2 discrimination
+2026-03-07 11:55:45 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [9], scenario pass ratio: 2/10
+2026-03-07 11:55:45 | INFO     | [lemmings4] [TBcheck] wrong scenarios not decreased for 1 times (1 = 1), continue the correction
+2026-03-07 11:55:45 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 11:57:25 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 11:57:25 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.3 discrimination
+2026-03-07 11:57:25 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [9], scenario pass ratio: 2/10
+2026-03-07 11:57:25 | INFO     | [lemmings4] [TBcheck] self funccheck finished. Next Action: [reboot]
+2026-03-07 11:57:25 | INFO     | [lemmings4] 
+2026-03-07 11:58:13 | INFO     | [lemmings4] [TBgen] stage_0 ends (47.86s used)
+2026-03-07 11:58:47 | INFO     | [lemmings4] [TBgen] stage_1 ends (34.16s used)
+2026-03-07 11:59:13 | INFO     | [lemmings4] [TBgen] stage_2 ends (25.55s used)
+2026-03-07 12:00:09 | INFO     | [lemmings4] [TBgen] stage_3 ends (56.24s used)
+2026-03-07 12:01:38 | INFO     | [lemmings4] [TBgen] stage_4 ends (88.69s used)
+2026-03-07 12:01:38 | INFO     | [lemmings4] [TBgen] stage_checklist ends (0.00s used)
+2026-03-07 12:04:32 | INFO     | [lemmings4] [TBgen] stage_4b ends (174.33s used)
+2026-03-07 12:05:24 | INFO     | [lemmings4] [TBgen] stage_5 ends (51.46s used)
+2026-03-07 12:05:24 | INFO     | [lemmings4] 
+2026-03-07 12:05:24 | INFO     | [lemmings4] [TBsim] iverilog compilation : passed!
+2026-03-07 12:05:24 | INFO     | [lemmings4] [TBsim] python compilation failed! Debuging python... (debug_iter = 1)
+2026-03-07 12:06:10 | INFO     | [lemmings4] [TBsim] python tier - 1/3, total - 1/6: python DEBUG finished (46.13s used)
+2026-03-07 12:06:10 | INFO     | [lemmings4] [TBsim] python compilation failed! Rebooting... (debug_iter = 2)
+2026-03-07 12:06:50 | INFO     | [lemmings4] [TBsim] stage_5 ends (40.67s used)
+2026-03-07 12:06:51 | INFO     | [lemmings4] [TBsim] python tier - 2/3, total - 2/6: python REBOOT finished (40.69s used)
+2026-03-07 12:06:51 | INFO     | [lemmings4] [TBsim] python simulation : failed! will reboot both iverilog and python
+2026-03-07 12:06:51 | INFO     | [lemmings4] [TBsim] iverilog simulation failed! Rebooting... (debug_iter = 1)
+2026-03-07 12:08:42 | INFO     | [lemmings4] [TBsim] stage_4 ends (111.73s used)
+2026-03-07 12:08:42 | INFO     | [lemmings4] [TBsim] stage_checklist ends (0.00s used)
+2026-03-07 12:12:12 | INFO     | [lemmings4] [TBsim] stage_4b ends (209.83s used)
+2026-03-07 12:12:12 | INFO     | [lemmings4] [TBsim] verilog iter - 1/3, total - 3/6: verilog REBOOT finished (321.58s used)
+2026-03-07 12:12:12 | INFO     | [lemmings4] [TBsim] iverilog simulation failed! Debuging... (debug_iter = 2)
+2026-03-07 12:16:22 | INFO     | [lemmings4] [TBsim] verilog iter - 2/3, total - 4/6: verilog DEBUG finished (249.66s used)
+2026-03-07 12:16:22 | INFO     | [lemmings4] [TBsim] iverilog compilation : passed!
+2026-03-07 12:16:22 | INFO     | [lemmings4] [TBsim] python compilation failed! Debuging python... (debug_iter = 3)
+2026-03-07 12:16:54 | INFO     | [lemmings4] [TBsim] python tier - 3/3, total - 5/6: python DEBUG finished (32.15s used)
+2026-03-07 12:16:54 | INFO     | [lemmings4] [TBsim] python simulation : passed!
+2026-03-07 12:16:54 | INFO     | [lemmings4] [TBsim] TBsim finished : True!
+2026-03-07 12:16:54 | INFO     | [lemmings4] 
+2026-03-07 12:16:54 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.0 discrimination
+2026-03-07 12:16:54 | INFO     | [lemmings4] [TBcheck] [discriminator] RTL(s) [3, 7] have syntax error during discrimination
+2026-03-07 12:16:55 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [2 3 4 5 6], scenario pass ratio: 4/10
+2026-03-07 12:16:55 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 12:18:19 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 12:18:19 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.1 discrimination
+2026-03-07 12:18:19 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [2 3 4 5], scenario pass ratio: 4/10
+2026-03-07 12:18:19 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 12:19:57 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 12:19:57 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.2 discrimination
+2026-03-07 12:19:58 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [2 3 4 5], scenario pass ratio: 4/10
+2026-03-07 12:19:58 | INFO     | [lemmings4] [TBcheck] wrong scenarios not decreased for 1 times (4 = 4), continue the correction
+2026-03-07 12:19:58 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 12:21:35 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 12:21:35 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.3 discrimination
+2026-03-07 12:21:36 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [2 3 4 5], scenario pass ratio: 4/10
+2026-03-07 12:21:36 | INFO     | [lemmings4] [TBcheck] self funccheck finished. Next Action: [reboot]
+2026-03-07 12:21:36 | INFO     | [lemmings4] 
+2026-03-07 12:22:05 | INFO     | [lemmings4] [TBgen] stage_0 ends (28.59s used)
+2026-03-07 12:22:31 | INFO     | [lemmings4] [TBgen] stage_1 ends (26.43s used)
+2026-03-07 12:23:07 | INFO     | [lemmings4] [TBgen] stage_2 ends (35.82s used)
+2026-03-07 12:23:50 | INFO     | [lemmings4] [TBgen] stage_3 ends (42.66s used)
+2026-03-07 12:25:37 | INFO     | [lemmings4] [TBgen] stage_4 ends (107.07s used)
+2026-03-07 12:25:37 | INFO     | [lemmings4] [TBgen] stage_checklist ends (0.00s used)
+2026-03-07 12:29:08 | INFO     | [lemmings4] [TBgen] stage_4b ends (210.92s used)
+2026-03-07 12:30:04 | INFO     | [lemmings4] [TBgen] stage_5 ends (56.12s used)
+2026-03-07 12:30:04 | INFO     | [lemmings4] 
+2026-03-07 12:30:04 | INFO     | [lemmings4] [TBsim] iverilog compilation : passed!
+2026-03-07 12:30:04 | INFO     | [lemmings4] [TBsim] python simulation : passed!
+2026-03-07 12:30:04 | INFO     | [lemmings4] [TBsim] TBsim finished : True!
+2026-03-07 12:30:04 | INFO     | [lemmings4] 
+2026-03-07 12:30:04 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.0 discrimination
+2026-03-07 12:30:04 | INFO     | [lemmings4] [TBcheck] [discriminator] RTL(s) [3, 7] have syntax error during discrimination
+2026-03-07 12:30:04 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [1 2 3 4 5 6 7], scenario pass ratio: 0/15
+2026-03-07 12:30:04 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 12:31:57 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 12:31:57 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.1 discrimination
+2026-03-07 12:31:58 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [1 2 3 4 5 6 7], scenario pass ratio: 0/15
+2026-03-07 12:31:58 | INFO     | [lemmings4] [TBcheck] wrong scenarios not decreased for 1 times (7 = 7), continue the correction
+2026-03-07 12:31:58 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 12:33:41 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 12:33:41 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.2 discrimination
+2026-03-07 12:33:41 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [1 2 3 4 5 6 7], scenario pass ratio: 0/15
+2026-03-07 12:33:41 | INFO     | [lemmings4] [TBcheck] wrong scenarios not decreased for 2 times (7 = 7), I give up, quiting the funccheck stage...
+2026-03-07 12:33:41 | INFO     | [lemmings4] [TBcheck] self funccheck finished. Next Action: [reboot]
+2026-03-07 12:33:41 | INFO     | [lemmings4] 
+2026-03-07 12:34:08 | INFO     | [lemmings4] [TBgen] stage_0 ends (26.85s used)
+2026-03-07 12:34:31 | INFO     | [lemmings4] [TBgen] stage_1 ends (22.88s used)
+2026-03-07 12:35:10 | INFO     | [lemmings4] [TBgen] stage_2 ends (38.95s used)
+2026-03-07 12:36:09 | INFO     | [lemmings4] [TBgen] stage_3 ends (58.95s used)
+2026-03-07 12:37:23 | INFO     | [lemmings4] [TBgen] stage_4 ends (73.65s used)
+2026-03-07 12:37:23 | INFO     | [lemmings4] [TBgen] stage_checklist ends (0.00s used)
+2026-03-07 12:39:52 | INFO     | [lemmings4] [TBgen] stage_4b ends (149.31s used)
+2026-03-07 12:40:25 | INFO     | [lemmings4] [TBgen] stage_5 ends (32.67s used)
+2026-03-07 12:40:25 | INFO     | [lemmings4] 
+2026-03-07 12:40:25 | INFO     | [lemmings4] [TBsim] iverilog compilation : passed!
+2026-03-07 12:40:25 | INFO     | [lemmings4] [TBsim] python simulation : passed!
+2026-03-07 12:40:25 | INFO     | [lemmings4] [TBsim] TBsim finished : True!
+2026-03-07 12:40:25 | INFO     | [lemmings4] 
+2026-03-07 12:40:25 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.0 discrimination
+2026-03-07 12:40:28 | INFO     | [lemmings4] [TBcheck] [discriminator] RTL(s) [3, 7] have syntax error during discrimination
+2026-03-07 12:40:28 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [ 1  2  3  4  5  6  8  9 12], scenario pass ratio: 3/12
+2026-03-07 12:40:28 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 12:42:01 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 12:42:01 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.1 discrimination
+2026-03-07 12:42:04 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [1 2 3 4 5 6], scenario pass ratio: 6/12
+2026-03-07 12:42:04 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 12:43:33 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 12:43:33 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.2 discrimination
+2026-03-07 12:43:36 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [1 2 3 4 5 6], scenario pass ratio: 6/12
+2026-03-07 12:43:36 | INFO     | [lemmings4] [TBcheck] wrong scenarios not decreased for 1 times (6 = 6), continue the correction
+2026-03-07 12:43:36 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 12:45:06 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 12:45:06 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.3 discrimination
+2026-03-07 12:45:08 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [1 2 3 4 5 6], scenario pass ratio: 6/12
+2026-03-07 12:45:08 | INFO     | [lemmings4] [TBcheck] self funccheck finished. Next Action: [reboot]
+2026-03-07 12:45:08 | INFO     | [lemmings4] 
+2026-03-07 12:45:40 | INFO     | [lemmings4] [TBgen] stage_0 ends (32.16s used)
+2026-03-07 12:46:20 | INFO     | [lemmings4] [TBgen] stage_1 ends (39.98s used)
+2026-03-07 12:46:42 | INFO     | [lemmings4] [TBgen] stage_2 ends (22.45s used)
+2026-03-07 12:47:48 | INFO     | [lemmings4] [TBgen] stage_3 ends (65.60s used)
+2026-03-07 12:48:56 | INFO     | [lemmings4] [TBgen] stage_4 ends (67.97s used)
+2026-03-07 12:48:56 | INFO     | [lemmings4] [TBgen] stage_checklist ends (0.00s used)
+2026-03-07 12:51:15 | INFO     | [lemmings4] [TBgen] stage_4b ends (139.39s used)
+2026-03-07 12:51:42 | INFO     | [lemmings4] [TBgen] stage_5 ends (26.61s used)
+2026-03-07 12:51:42 | INFO     | [lemmings4] 
+2026-03-07 12:51:42 | INFO     | [lemmings4] [TBsim] iverilog compilation : passed!
+2026-03-07 12:51:42 | INFO     | [lemmings4] [TBsim] python simulation : passed!
+2026-03-07 12:51:42 | INFO     | [lemmings4] [TBsim] TBsim finished : True!
+2026-03-07 12:51:42 | INFO     | [lemmings4] 
+2026-03-07 12:51:42 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.0 discrimination
+2026-03-07 12:51:42 | INFO     | [lemmings4] [TBcheck] [discriminator] RTL(s) [3, 7] have syntax error during discrimination
+2026-03-07 12:51:43 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [6 9], scenario pass ratio: 4/13
+2026-03-07 12:51:43 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 12:53:51 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 12:53:51 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.1 discrimination
+2026-03-07 12:53:52 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [9], scenario pass ratio: 4/13
+2026-03-07 12:53:52 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 12:55:09 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 12:55:09 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.2 discrimination
+2026-03-07 12:55:09 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [9], scenario pass ratio: 4/13
+2026-03-07 12:55:09 | INFO     | [lemmings4] [TBcheck] wrong scenarios not decreased for 1 times (1 = 1), continue the correction
+2026-03-07 12:55:09 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 12:56:51 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 12:56:51 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.3 discrimination
+2026-03-07 12:56:52 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [9], scenario pass ratio: 4/13
+2026-03-07 12:56:52 | INFO     | [lemmings4] [TBcheck] self funccheck finished. Next Action: [reboot]
+2026-03-07 12:56:52 | INFO     | [lemmings4] 
+2026-03-07 12:57:22 | INFO     | [lemmings4] [TBgen] stage_0 ends (30.40s used)
+2026-03-07 12:57:51 | INFO     | [lemmings4] [TBgen] stage_1 ends (28.99s used)
+2026-03-07 12:58:34 | INFO     | [lemmings4] [TBgen] stage_2 ends (42.94s used)
+2026-03-07 12:59:04 | INFO     | [lemmings4] [TBgen] stage_3 ends (30.09s used)
+2026-03-07 13:01:18 | INFO     | [lemmings4] [TBgen] stage_4 ends (133.99s used)
+2026-03-07 13:01:18 | INFO     | [lemmings4] [TBgen] stage_checklist ends (0.00s used)
+2026-03-07 13:11:14 | INFO     | [lemmings4] [TBgen] stage_4b ends (595.82s used)
+2026-03-07 13:12:13 | INFO     | [lemmings4] [TBgen] stage_5 ends (59.73s used)
+2026-03-07 13:12:14 | INFO     | [lemmings4] 
+2026-03-07 13:12:14 | INFO     | [lemmings4] [TBsim] iverilog compilation : passed!
+2026-03-07 13:12:14 | INFO     | [lemmings4] [TBsim] python simulation : passed!
+2026-03-07 13:12:14 | INFO     | [lemmings4] [TBsim] TBsim finished : True!
+2026-03-07 13:12:14 | INFO     | [lemmings4] 
+2026-03-07 13:12:14 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.0 discrimination
+2026-03-07 13:12:14 | INFO     | [lemmings4] [TBcheck] [discriminator] RTL(s) [3, 7] have syntax error during discrimination
+2026-03-07 13:12:14 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [4 5 6 7], scenario pass ratio: 0/20
+2026-03-07 13:12:14 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 13:14:42 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 13:14:42 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.1 discrimination
+2026-03-07 13:14:42 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [7], scenario pass ratio: 0/20
+2026-03-07 13:14:42 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 13:17:01 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 13:17:01 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.2 discrimination
+2026-03-07 13:17:01 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [7], scenario pass ratio: 0/20
+2026-03-07 13:17:01 | INFO     | [lemmings4] [TBcheck] wrong scenarios not decreased for 1 times (1 = 1), continue the correction
+2026-03-07 13:17:01 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-07 13:52:12 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-07 13:52:12 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.3 discrimination
+2026-03-07 13:52:14 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [7], scenario pass ratio: 0/20
+2026-03-07 13:52:14 | INFO     | [lemmings4] [TBcheck] self funccheck finished. Next Action: [reboot]
+2026-03-07 13:52:14 | INFO     | [lemmings4] 
+2026-03-07 13:52:44 | INFO     | [lemmings4] [TBgen] stage_0 ends (30.64s used)
+2026-03-07 13:53:16 | INFO     | [lemmings4] [TBgen] stage_1 ends (31.55s used)
+2026-03-07 13:54:11 | INFO     | [lemmings4] [TBgen] stage_2 ends (54.70s used)
+2026-03-07 13:55:07 | INFO     | [lemmings4] [TBgen] stage_3 ends (55.95s used)
+2026-03-07 13:58:06 | INFO     | [lemmings4] [TBgen] stage_4 ends (179.74s used)
+2026-03-07 13:58:06 | INFO     | [lemmings4] [TBgen] stage_checklist ends (0.00s used)
+2026-03-07 14:13:07 | ERROR    | [lemmings4] Error when running TBgen, iter: 10. Message: name 'time' is not defined | location: autoline/TB_autoline.py, func: run_stages_core, line: 356 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-07 14:13:07 | WARNING  | [lemmings4] ⚠️ Pipeline interrupted. Cooling down for 15s to avoid API Rate Limit... | location: autoline/TB_autoline.py, func: run_stages_core, line: 361 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-07 14:13:25 | INFO     | [lemmings4] [TBeval] Eval 1: Golden RTL checking begins
+2026-03-07 14:13:25 | POSITIVE | [lemmings4] [TBeval] Eval 1: Golden RTL checking passed!
+2026-03-07 14:13:25 | INFO     | [lemmings4] [TBeval] Eval 2: Golden TB checking on RTL mutants
+2026-03-07 14:13:25 | FAILED   | [lemmings4] [TBeval] Eval 2: Golden TB checking on RTL mutants finished (6/8)!
+2026-03-07 14:13:25 | INFO     | [lemmings4] 
+2026-03-07 14:13:25 | INFO     | 
+########## Analyze of Chatbench_RunInfo ##########
+
+#### pass numbers:
+Eval2 : 0
+Eval1 : 1
+Eval0 : 1
+total : 1 (Failed: 0)
+passed TB by autoline reboot action (from TB3_check): 0
+
+passed TB by functional corrector: 0
+
+#### CGA Coverage Info:
+Average Coverage : 0.00%
+(No coverage data found in JSON)
+
+#### tokens and cost:
+average prompt tokens: 586265
+average completion tokens: 192656
+total cost: 23.2847
+average cost: 23.2847
+
+#### time:
+average time: 12146.47s
+
+#### debug info table:
+FUNCTIONAL debug info table:
+(debugged here means functional debugging)
+         | un-func-debugged | func-debugged | total |
+failed   |                0 |             0 |     0 |
+Eval0    |                0 |             1 |     1 |
+Eval1    |                0 |             1 |     1 |
+Eval2    |                0 |             0 |     0 |
+
+#### Eval2 ratio:
+lemmings4: 6/8
+
+#### CGA Coverage Detail List:
+Task ID                   | Coverage  
+----------------------------------------
+lemmings4                 | 0.00%
+
+loose Eval2 pass metric applied: 0.8
+
+

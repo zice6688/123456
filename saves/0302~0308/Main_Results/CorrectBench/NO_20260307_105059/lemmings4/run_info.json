@@ -1,0 +1,139 @@
+{
+    "task_id": "lemmings4",
+    "task_number": 150,
+    "time": 12146.47,
+    "prompt_tokens": 586265,
+    "completion_tokens": 192656,
+    "token_cost": 23.284660000000002,
+    "ERROR(incomplete)": true,
+    "op_record": [
+        "gen",
+        "syncheck",
+        "funccheck",
+        "gen",
+        "syncheck",
+        "funccheck",
+        "gen",
+        "syncheck",
+        "funccheck",
+        "gen",
+        "syncheck",
+        "funccheck",
+        "gen",
+        "syncheck",
+        "funccheck",
+        "gen",
+        "syncheck",
+        "funccheck",
+        "gen",
+        "syncheck",
+        "funccheck",
+        "gen",
+        "syncheck",
+        "funccheck",
+        "gen",
+        "syncheck",
+        "funccheck",
+        "gen",
+        "eval"
+    ],
+    "reboot_times": 9,
+    "max_iter": 10,
+    "coverage": 0.0,
+    "circuit_type": "SEQ",
+    "checklist_worked": false,
+    "scenario_num": 20,
+    "Eval0_pass": true,
+    "Eval0_iv_pass": true,
+    "debug_iter_iv": 0,
+    "iv_runing_time": 0.05,
+    "Eval0_py_pass": true,
+    "debug_iter_py": 0,
+    "py_runing_time": 0.02,
+    "TB_corrected": true,
+    "TBcheck_oprecord": [
+        [
+            "discrim",
+            "correct",
+            "discrim",
+            "correct",
+            "discrim",
+            "correct",
+            "discrim"
+        ],
+        [
+            "discrim",
+            "correct",
+            "discrim",
+            "correct",
+            "discrim"
+        ],
+        [
+            "discrim",
+            "correct",
+            "discrim",
+            "correct",
+            "discrim"
+        ],
+        [
+            "discrim",
+            "correct",
+            "discrim",
+            "correct",
+            "discrim",
+            "correct",
+            "discrim"
+        ],
+        [
+            "discrim",
+            "correct",
+            "discrim",
+            "correct",
+            "discrim",
+            "correct",
+            "discrim"
+        ],
+        [
+            "discrim",
+            "correct",
+            "discrim",
+            "correct",
+            "discrim"
+        ],
+        [
+            "discrim",
+            "correct",
+            "discrim",
+            "correct",
+            "discrim",
+            "correct",
+            "discrim"
+        ],
+        [
+            "discrim",
+            "correct",
+            "discrim",
+            "correct",
+            "discrim",
+            "correct",
+            "discrim"
+        ],
+        [
+            "discrim",
+            "correct",
+            "discrim",
+            "correct",
+            "discrim",
+            "correct",
+            "discrim"
+        ]
+    ],
+    "rtl_num_newly_gen": 0,
+    "Eval1_pass": true,
+    "Eval2_pass": false,
+    "Eval2_ratio": "6/8",
+    "Eval2_failed_mutant_idxes": [
+        1,
+        5
+    ]
+}

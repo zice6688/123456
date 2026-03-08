@@ -1,0 +1,84 @@
+iverilog simulation failed!
+
+iverilog cmd 1:
+/usr/bin/iverilog -g2012 -o run.vvp lemmings4_tb.v lemmings4.v 
+iverilog cmd 1 output:
+
+iverilog cmd 1 error:
+lemmings4_tb.v:123: syntax error
+lemmings4_tb.v:123: error: Invalid module instantiation
+lemmings4_tb.v:125: syntax error
+lemmings4_tb.v:125: error: Invalid module item.
+lemmings4_tb.v:126: syntax error
+lemmings4_tb.v:126: error: Invalid module item.
+lemmings4_tb.v:129: syntax error
+lemmings4_tb.v:129: error: Invalid module instantiation
+lemmings4_tb.v:130: error: Invalid module instantiation
+lemmings4_tb.v:130: error: Invalid module instantiation
+lemmings4_tb.v:131: syntax error
+lemmings4_tb.v:131: error: Invalid module item.
+lemmings4_tb.v:132: syntax error
+lemmings4_tb.v:133: error: Invalid module item.
+lemmings4_tb.v:134: syntax error
+lemmings4_tb.v:134: error: Invalid module item.
+lemmings4_tb.v:135: syntax error
+lemmings4_tb.v:135: error: Invalid module item.
+lemmings4_tb.v:136: syntax error
+lemmings4_tb.v:136: error: Invalid module instantiation
+lemmings4_tb.v:138: syntax error
+lemmings4_tb.v:138: error: Invalid module item.
+lemmings4_tb.v:139: syntax error
+lemmings4_tb.v:139: error: Invalid module item.
+lemmings4_tb.v:140: syntax error
+lemmings4_tb.v:142: error: Invalid module item.
+lemmings4_tb.v:144: syntax error
+lemmings4_tb.v:144: error: Invalid module item.
+lemmings4_tb.v:145: syntax error
+lemmings4_tb.v:145: error: Invalid module item.
+lemmings4_tb.v:148: syntax error
+lemmings4_tb.v:148: error: Invalid module instantiation
+lemmings4_tb.v:149: error: Invalid module instantiation
+lemmings4_tb.v:150: syntax error
+lemmings4_tb.v:150: error: Invalid module item.
+lemmings4_tb.v:151: syntax error
+lemmings4_tb.v:152: error: Invalid module item.
+lemmings4_tb.v:153: syntax error
+lemmings4_tb.v:153: error: Invalid module item.
+lemmings4_tb.v:154: syntax error
+lemmings4_tb.v:154: error: Invalid module item.
+lemmings4_tb.v:155: syntax error
+lemmings4_tb.v:155: error: Invalid module instantiation
+lemmings4_tb.v:157: syntax error
+lemmings4_tb.v:157: error: Invalid module item.
+lemmings4_tb.v:158: syntax error
+lemmings4_tb.v:158: error: Invalid module item.
+lemmings4_tb.v:159: syntax error
+lemmings4_tb.v:161: error: Invalid module item.
+lemmings4_tb.v:163: syntax error
+lemmings4_tb.v:163: error: Invalid module item.
+lemmings4_tb.v:164: syntax error
+lemmings4_tb.v:164: error: Invalid module item.
+lemmings4_tb.v:167: syntax error
+lemmings4_tb.v:167: error: Invalid module instantiation
+lemmings4_tb.v:168: error: Invalid module instantiation
+lemmings4_tb.v:169: syntax error
+lemmings4_tb.v:169: error: Invalid module item.
+lemmings4_tb.v:170: syntax error
+lemmings4_tb.v:171: error: Invalid module item.
+lemmings4_tb.v:172: syntax error
+lemmings4_tb.v:172: error: Invalid module item.
+lemmings4_tb.v:173: syntax error
+lemmings4_tb.v:173: error: Invalid module item.
+lemmings4_tb.v:174: syntax error
+lemmings4_tb.v:174: error: Invalid module instantiation
+lemmings4_tb.v:176: syntax error
+lemmings4_tb.v:176: error: Invalid module item.
+lemmings4_tb.v:177: syntax error
+lemmings4_tb.v:177: error: Invalid module item.
+lemmings4_tb.v:178: syntax error
+lemmings4_tb.v:180: error: Invalid module item.
+lemmings4_tb.v:182: syntax error
+lemmings4_tb.v:182: error: Invalid module item.
+lemmings4_tb.v:187: syntax error
+lemmings4.v:12: error: Invalid module item.
+

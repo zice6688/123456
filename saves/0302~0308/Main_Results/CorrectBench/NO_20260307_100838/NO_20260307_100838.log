@@ -1,0 +1,288 @@
+
+---------------custom config--------------
+autoline: 
+    result_path: results
+    TBcheck: 
+        discrim_mode: col_70_wrong_row_25_correct
+    debug: 
+        max: 3
+    itermax: 10
+    probset: 
+        more_info_paths: ['data/HDLBits/HDLBits_data_RTL_4o_20.jsonl']
+        mutant_path: data/HDLBits/HDLBits_data_mutants.jsonl
+        only: ['lemmings4']
+        path: data/HDLBits/HDLBits_data.jsonl
+    promptscript: pychecker
+    save_compile: False
+    timeout: 300
+    update_desc: False
+gpt: 
+    model: qwen-max
+    rtlgen_model: qwen-max
+run: 
+    mode: autoline
+save: 
+    en: True
+    log: 
+        debug_en: False
+    pub: 
+        prefix: NO
+        subdir: Main_Results/CorrectBench
+------------------------------------------
+------config info (custom + default)------
+run: 
+    version: 2.0
+    author: Ruidi Qiu - Technical University of Munich
+    time: 20260307_100838
+    custom_path: config/custom.yaml
+    mode: autoline
+    hostname: localhost
+    pid: 405121
+    pyversion: 3.12.3 (main, Jan 22 2026, 20:57:42) [GCC 13.3.0]
+save: 
+    en: True
+    root: saves/0302~0308/Main_Results/CorrectBench/NO_20260307_100838/
+    pub: 
+        prefix: NO
+        dir: saves/0302~0308/
+        subdir: Main_Results/CorrectBench/
+    log: 
+        en: True
+        dir: logs/
+        notes: None
+        cfg_pmode: iwantall
+        debug_en: False
+        level: TRACE
+    message: 
+        en: True
+        dir: messages/
+        format: json
+    iverilog: 
+        en: True
+        subdir: ivcode_nodebug
+load: 
+    prompt: 
+        path: config/initial_prompts/prompt1.txt
+        pick_idx: []
+    stage_template: 
+        path: config/templates/stage_template0301.txt
+gpt: 
+    model: qwen-max
+    key_path: config/key_API.json
+    temperature: None
+    json_mode: False
+    chatgpt: 
+        start_form: chat
+        one_time_talk: False
+    rtlgen_model: qwen-max
+iverilog: 
+    dir: 
+    task_id: 
+autoline: 
+    result_path: results
+    probset: 
+        path: data/HDLBits/HDLBits_data.jsonl
+        mutant_path: data/HDLBits/HDLBits_data_mutants.jsonl
+        gptgenRTL_path: None
+        more_info_paths: ['data/HDLBits/HDLBits_data_RTL_4o_20.jsonl']
+        only: ['lemmings4']
+        exclude: []
+        exclude_json: None
+        filter: [{}]
+    checklist: 
+        max: 3
+    debug: 
+        max: 3
+        reboot: 1
+        py_rollback: 2
+    onlyrun: None
+    promptscript: pychecker
+    timeout: 300
+    TBcheck: 
+        rtl_num: 20
+        correct_max: 3
+        discrim_mode: col_70_wrong_row_25_correct
+        correct_mode: naive
+        rtl_compens_en: True
+        rtl_compens_max_iter: 3
+    itermax: 10
+    update_desc: False
+    save_compile: False
+    save_finalcodes: True
+    error_interruption: False
+_initialized: True
+------------------------------------------
+
+--------------default config--------------
+run: 
+    version: 2.0
+    author: Ruidi Qiu - Technical University of Munich
+    time: None
+    custom_path: None
+    mode: qwen-max
+save: 
+    en: True
+    root: None
+    pub: 
+        prefix: None
+        dir: saves/$weekrange$/
+        subdir: 
+    log: 
+        en: True
+        dir: logs/
+        notes: None
+        cfg_pmode: iwantall
+        debug_en: False
+        level: TRACE
+    message: 
+        en: True
+        dir: messages/
+        format: json
+    iverilog: 
+        en: True
+        subdir: ivcode_nodebug
+load: 
+    prompt: 
+        path: config/initial_prompts/prompt1.txt
+        pick_idx: []
+    stage_template: 
+        path: config/templates/stage_template0301.txt
+gpt: 
+    model: 4o
+    key_path: config/key_API.json
+    temperature: None
+    json_mode: False
+    chatgpt: 
+        start_form: chat
+        one_time_talk: False
+    rtlgen_model: None
+iverilog: 
+    dir: 
+    task_id: 
+autoline: 
+    result_path: results
+    probset: 
+        path: None
+        mutant_path: None
+        gptgenRTL_path: None
+        more_info_paths: []
+        only: ['lemmings4']
+        exclude: []
+        exclude_json: None
+        filter: [{}]
+    checklist: 
+        max: 3
+    debug: 
+        max: 5
+        reboot: 1
+        py_rollback: 2
+    onlyrun: None
+    promptscript: None
+    timeout: 300
+    TBcheck: 
+        rtl_num: 20
+        correct_max: 3
+        discrim_mode: col_full_wrong
+        correct_mode: naive
+        rtl_compens_en: True
+        rtl_compens_max_iter: 3
+    itermax: 10
+    update_desc: False
+    save_compile: True
+    save_finalcodes: True
+    error_interruption: False
+------------------------------------------
+2026-03-07 10:08:38 | INFO     | all configurations are loaded, starting the main process...
+2026-03-07 10:08:38 | INFO     | 
+2026-03-07 10:08:38 | INFO     | ######################### task 1/1 [lemmings4] #########################
+2026-03-07 10:09:47 | INFO     | [lemmings4] [TBgen] stage_0 ends (68.97s used)
+2026-03-07 10:10:29 | INFO     | [lemmings4] [TBgen] stage_1 ends (42.03s used)
+2026-03-07 10:11:16 | INFO     | [lemmings4] [TBgen] stage_2 ends (47.73s used)
+2026-03-07 10:12:39 | INFO     | [lemmings4] [TBgen] stage_3 ends (82.49s used)
+2026-03-07 10:15:06 | INFO     | [lemmings4] [TBgen] stage_4 ends (147.28s used)
+2026-03-07 10:15:06 | INFO     | [lemmings4] [TBgen] stage_checklist ends (0.00s used)
+2026-03-07 10:30:05 | ERROR    | [lemmings4] Error when running TBgen, iter: 1. Message: name 'time' is not defined | location: autoline/TB_autoline.py, func: run_stages_core, line: 356 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-07 10:30:05 | WARNING  | [lemmings4] ⚠️ Pipeline interrupted. Cooling down for 15s to avoid API Rate Limit... | location: autoline/TB_autoline.py, func: run_stages_core, line: 361 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-07 10:30:56 | INFO     | [lemmings4] [TBgen] stage_0 ends (33.02s used)
+2026-03-07 10:31:48 | INFO     | [lemmings4] [TBgen] stage_1 ends (51.70s used)
+2026-03-07 10:32:25 | INFO     | [lemmings4] [TBgen] stage_2 ends (37.05s used)
+2026-03-07 10:33:28 | INFO     | [lemmings4] [TBgen] stage_3 ends (62.77s used)
+2026-03-07 10:35:39 | INFO     | [lemmings4] [TBgen] stage_4 ends (131.55s used)
+2026-03-07 10:35:39 | INFO     | [lemmings4] [TBgen] stage_checklist ends (0.00s used)
+2026-03-07 10:39:32 | INFO     | [lemmings4] [TBgen] stage_4b ends (232.75s used)
+2026-03-07 10:40:23 | INFO     | [lemmings4] [TBgen] stage_5 ends (50.82s used)
+2026-03-07 10:40:23 | INFO     | [lemmings4] 
+2026-03-07 10:40:23 | INFO     | [lemmings4] [TBsim] iverilog compilation : passed!
+2026-03-07 10:40:23 | INFO     | [lemmings4] [TBsim] python simulation : passed!
+2026-03-07 10:40:23 | INFO     | [lemmings4] [TBsim] TBsim finished : True!
+2026-03-07 10:40:23 | INFO     | [lemmings4] 
+2026-03-07 10:40:23 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.0 discrimination
+2026-03-07 10:40:23 | INFO     | [lemmings4] [TBcheck] [discriminator] RTL(s) [3, 7] have syntax error during discrimination
+2026-03-07 10:40:24 | POSITIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB passed, wrong scenarios: [], scenario pass ratio: 0/11
+2026-03-07 10:40:24 | INFO     | [lemmings4] [TBcheck] Testbench passed the funccheck
+2026-03-07 10:40:24 | INFO     | [lemmings4] [TBcheck] self funccheck finished. Next Action: [pass]
+2026-03-07 10:40:24 | INFO     | [lemmings4] 
+2026-03-07 10:40:24 | INFO     | [lemmings4] [lemmings4] Starting Coverage-Guided Agent (CGA)...
+2026-03-07 10:40:24 | INFO     | [lemmings4] --- CGA Iter 0 (Baseline) ---
+2026-03-07 10:40:25 | INFO     | [lemmings4] Baseline Coverage: 92.86%
+2026-03-07 10:40:25 | INFO     | [lemmings4] --- CGA Iter 1 / 5 ---
+2026-03-07 10:40:25 | INFO     | [lemmings4] Asking LLM to fix missing logic (Current: 92.86%)...
+2026-03-07 10:40:55 | INFO     | [lemmings4] Coverage unchanged. Keeping previous.
+2026-03-07 10:40:55 | INFO     | [lemmings4] --- CGA Iter 2 / 5 ---
+2026-03-07 10:40:55 | INFO     | [lemmings4] Asking LLM to fix missing logic (Current: 92.86%)...
+2026-03-07 10:41:23 | INFO     | [lemmings4] Coverage unchanged. Keeping previous.
+2026-03-07 10:41:23 | INFO     | [lemmings4] --- CGA Iter 3 / 5 ---
+2026-03-07 10:41:23 | INFO     | [lemmings4] Asking LLM to fix missing logic (Current: 92.86%)...
+2026-03-07 10:42:05 | SUCCESS  | [lemmings4] Coverage Improved! +7.14% (92.86% -> 100.00%)
+2026-03-07 10:42:05 | SUCCESS  | [lemmings4] Target coverage reached!
+2026-03-07 10:42:05 | INFO     | [lemmings4] CGA Finished. Final Coverage: 100.00%
+2026-03-07 10:42:05 | INFO     | [lemmings4] Saved optimized TB to: saves/0302~0308/Main_Results/CorrectBench/NO_20260307_100838/lemmings4/final_TB.v
+2026-03-07 10:42:05 | INFO     | [lemmings4] [TBeval] Eval 1: Golden RTL checking begins
+2026-03-07 10:42:05 | FAILED   | [lemmings4] [TBeval] Eval 1: Golden RTL checking failed!
+2026-03-07 10:42:05 | INFO     | [lemmings4] [TBeval] [lemmings4] Eval 2/2b is skipped because Eval 1 failed
+2026-03-07 10:42:05 | INFO     | [lemmings4] 
+2026-03-07 10:42:05 | INFO     | 
+########## Analyze of Chatbench_RunInfo ##########
+
+#### pass numbers:
+Eval2 : 0
+Eval1 : 0
+Eval0 : 1
+total : 1 (Failed: 0)
+passed TB by autoline reboot action (from TB3_check): 0
+
+passed TB by functional corrector: 0
+
+#### CGA Coverage Info:
+Average Coverage : 100.00%
+Max Coverage     : 100.00%
+Min Coverage     : 100.00%
+
+#### tokens and cost:
+average prompt tokens: 25451
+average completion tokens: 17996
+total cost: 1.5888
+average cost: 1.5888
+
+#### time:
+average time: 2007.36s
+
+#### debug info table:
+FUNCTIONAL debug info table:
+(debugged here means functional debugging)
+         | un-func-debugged | func-debugged | total |
+failed   |                0 |             0 |     0 |
+Eval0    |                0 |             1 |     1 |
+Eval1    |                0 |             0 |     0 |
+Eval2    |                0 |             0 |     0 |
+
+#### Eval2 ratio:
+
+#### CGA Coverage Detail List:
+Task ID                   | Coverage  
+----------------------------------------
+lemmings4                 | 100.00%
+
+loose Eval2 pass metric applied: 0.8
+
+

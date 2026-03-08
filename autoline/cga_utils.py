@@ -192,6 +192,7 @@
 #                 scenario_block + r'\1\2',  # 场景 -> $fclose -> $finish
 #                 modified_tb, count=1
 #             )
+
 """
 Description :   Utils for CGA (CoverageParser & TBInjector)
                 - Features: Sticky Mode, Smart Noise Filtering (No assign/decls)
@@ -699,6 +700,9 @@ class CoverageParser:
         recording = False
         context_buffer = []
         CONTEXT_SIZE = 3
+        
+        # 收集缺失行用于 FSM 分析
+        missing_lines = []
 
         for i, line in enumerate(lines):
             line = line.strip()
@@ -747,6 +751,7 @@ class CoverageParser:
             if recording:
                 if is_definitely_covered:
                     missing_blocks.append(current_block)
+                    missing_lines.extend(current_block)
                     current_block = []
                     recording = False
                     if not is_hard_noise:
@@ -770,6 +775,7 @@ class CoverageParser:
 
         if recording and current_block:
             missing_blocks.append(current_block)
+            missing_lines.extend(current_block)
         if not missing_blocks:
             return None
 
@@ -779,6 +785,9 @@ class CoverageParser:
         reset_signal = self.validator._find_reset_signal()
         inputs_no_clk = [s for s in self.validator.dut_inputs if 'clk' not in s.lower()]
         example_signal = inputs_no_clk[0] if inputs_no_clk else (reset_signal if reset_signal != "reset" else "ena")
+        
+        # 分析 FSM 相关的缺失代码
+        fsm_analysis = self._analyze_fsm_missing(missing_lines)
 
         prompt = f"""
 [ROLE]
@@ -793,9 +802,22 @@ The following logic blocks in the DUT are NEVER executed during simulation:
             prompt += f"--- Missing Logic Block {idx+1} ---\n" + "\n".join(block) + "\n\n"
 
         prompt += self.validator.generate_constraint_prompt()
+        
+        # 添加 FSM 分析提示
+        if fsm_analysis:
+            prompt += f"""
+[FSM STATE TRANSITION ANALYSIS - CRITICAL]
+{fsm_analysis}
+
+IMPORTANT: FSM transitions have PRIORITY ORDER!
+- 'if' conditions are evaluated TOP to BOTTOM
+- The FIRST matching condition determines the next state
+- To trigger a branch like "else if (condition)", you MUST ensure all higher-priority conditions are FALSE
+- Read the missing code's context carefully: what conditions precede it?
+
+"""
 
         prompt += f"""
-
 [OUTPUT REQUIREMENTS - CRITICAL]
 1. Return ONLY Verilog test scenario code (NOT a task definition)
 2. Your code will be inserted INTO an existing `initial begin ... end` block
@@ -813,6 +835,13 @@ The following logic blocks in the DUT are NEVER executed during simulation:
 2. You CANNOT access internal signals (state, next_state, counters, etc.)
 3. You CANNOT use `force` or `assign` on internal signals
 4. To trigger a specific state: drive inputs and wait for the FSM to reach it naturally
+
+[STEP-BY-STEP APPROACH - REQUIRED]
+For each missing branch, think through:
+1. What STATE must the FSM be in? (Look at the case statement)
+2. What CONDITIONS must be true/false? (Check priority order!)
+3. How to reach that state from reset? (Trace state transitions)
+4. What inputs to apply and in what order?
 
 [POSITIVE EXAMPLE - CORRECT APPROACH]
 ```verilog
@@ -836,6 +865,17 @@ repeat(10) @(posedge clk);
 // WRONG: Using wrong signal name (e.g., 'reset' instead of '{reset_signal}')
 reset = 1;  // ERROR: Signal 'reset' does not exist! Use '{reset_signal}' instead!
 
+// WRONG: Not considering condition priority in FSM
+// If missing code is "else if (condition_b)", you must make condition_a FALSE first!
+// Example: if FSM has "if (!signal_a) ... else if (signal_b) ..."
+// Then signal_a must be 1 (FALSE) for the else-if branch to execute
+signal_a = 0;  // WRONG: This blocks the else-if branch!
+signal_b = 1;  // This will NOT trigger because signal_a=0 took priority
+
+// CORRECT: Analyze priority, set higher-priority conditions to FALSE
+signal_a = 1;  // Now the first condition (!signal_a) is FALSE
+signal_b = 1;  // Now this else-if branch can execute
+
 // WRONG: Trying to assign internal state
 state = IDLE;  // ERROR: Cannot modify internal signal!
 
@@ -858,16 +898,31 @@ repeat(5) @(posedge clk);  // Wait for FSM to reach expected state
 - ALWAYS use EXACT signal names from the ALLOWED INPUTS list above
 - Double-check every signal name before using it!
 
-[ANALYSIS HINT]
-Look at the missing logic blocks above:
-- If a branch `if (dig) next = DIGL` is never taken, you need to:
-  1. Get the FSM into the WL state (reset usually does this)
-  2. Assert `dig = 1` while in WL state
-  3. Wait enough cycles for the transition to occur
-
 Now write the test scenario code to cover the missing blocks:
 """
         return prompt
+    
+    def _analyze_fsm_missing(self, missing_lines: List[str]) -> str:
+        """分析 FSM 相关的缺失代码，生成通用提示"""
+        analysis = []
+        
+        # 检查是否涉及 FSM 状态转换
+        has_state_case = any('case' in line.lower() and 'state' in line.lower() for line in missing_lines)
+        has_else_if = any('else if' in line.lower() for line in missing_lines)
+        has_if_condition = any(re.search(r'\bif\s*\(', line) for line in missing_lines)
+        
+        if has_state_case or has_else_if:
+            analysis.append("- Missing code involves FSM state transitions or conditional branches")
+        
+        if has_else_if or has_if_condition:
+            analysis.append("- Conditional branches have PRIORITY ORDER (top to bottom)")
+            analysis.append("- 'else if' branches require ALL previous conditions to be FALSE")
+            analysis.append("- Analyze the missing code's context: what conditions block this branch?")
+        
+        if has_state_case:
+            analysis.append("- To trigger a state transition: first reach the source state, then drive inputs")
+        
+        return "\n".join(analysis) if analysis else ""
 
 
 # ============================================================================

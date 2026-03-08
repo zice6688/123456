@@ -1,0 +1,12 @@
+python compilation failed!
+
+###output:
+
+
+###error:
+  File "/home/zhang/CorrectBench/saves/0302~0308/Main_Results/CorrectBench/NO_20260307_105059/lemmings4/5_2_TBsim/debug_1/lemmings4_tb.py", line 100
+    else:
+         ^
+IndentationError: unindent does not match any outer indentation level
+
+
