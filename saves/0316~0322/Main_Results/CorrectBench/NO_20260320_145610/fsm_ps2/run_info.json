@@ -1,0 +1,50 @@
+{
+    "task_id": "fsm_ps2",
+    "task_number": 94,
+    "time": 535.72,
+    "prompt_tokens": 9670,
+    "completion_tokens": 7592,
+    "token_cost": 0.6489199999999999,
+    "ERROR(incomplete)": false,
+    "op_record": [
+        "gen",
+        "syncheck",
+        "funccheck",
+        "cga",
+        "eval"
+    ],
+    "reboot_times": 0,
+    "max_iter": 10,
+    "coverage": 0.0,
+    "circuit_type": "SEQ",
+    "checklist_worked": false,
+    "scenario_num": 10,
+    "Eval0_pass": true,
+    "Eval0_iv_pass": true,
+    "debug_iter_iv": 0,
+    "iv_runing_time": 0.04,
+    "Eval0_py_pass": true,
+    "debug_iter_py": 0,
+    "py_runing_time": 0.02,
+    "TB_corrected": false,
+    "TBcheck_oprecord": [
+        [
+            "discrim"
+        ]
+    ],
+    "rtl_num_newly_gen": 0,
+    "Eval1_pass": true,
+    "Eval2_pass": false,
+    "Eval2_ratio": "2/10",
+    "Eval2_failed_mutant_idxes": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+    ],
+    "full_pass": false
+}

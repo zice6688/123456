@@ -1,0 +1,360 @@
+
+---------------custom config--------------
+autoline: 
+    result_path: results
+    TBcheck: 
+        discrim_mode: col_70_wrong_row_25_correct
+    debug: 
+        max: 3
+    itermax: 10
+    probset: 
+        more_info_paths: ['data/HDLBits/HDLBits_data_RTL_4o_20.jsonl']
+        mutant_path: data/HDLBits/HDLBits_data_mutants.jsonl
+        only: ['lemmings4']
+        path: data/HDLBits/HDLBits_data.jsonl
+    promptscript: pychecker
+    save_compile: False
+    timeout: 300
+    update_desc: False
+gpt: 
+    model: qwen-max
+    rtlgen_model: qwen-max
+run: 
+    mode: autoline
+save: 
+    en: True
+    log: 
+        debug_en: False
+    pub: 
+        prefix: NO
+        subdir: Main_Results/CorrectBench
+------------------------------------------
+------config info (custom + default)------
+run: 
+    version: 2.0
+    author: Ruidi Qiu - Technical University of Munich
+    time: 20260313_105649
+    custom_path: config/custom.yaml
+    mode: autoline
+    hostname: localhost
+    pid: 146265
+    pyversion: 3.12.3 (main, Mar  3 2026, 12:15:18) [GCC 13.3.0]
+save: 
+    en: True
+    root: saves/0309~0315/Main_Results/CorrectBench/NO_20260313_105649/
+    pub: 
+        prefix: NO
+        dir: saves/0309~0315/
+        subdir: Main_Results/CorrectBench/
+    log: 
+        en: True
+        dir: logs/
+        notes: None
+        cfg_pmode: iwantall
+        debug_en: False
+        level: TRACE
+    message: 
+        en: True
+        dir: messages/
+        format: json
+    iverilog: 
+        en: True
+        subdir: ivcode_nodebug
+load: 
+    prompt: 
+        path: config/initial_prompts/prompt1.txt
+        pick_idx: []
+    stage_template: 
+        path: config/templates/stage_template0301.txt
+gpt: 
+    model: qwen-max
+    key_path: config/key_API.json
+    temperature: None
+    json_mode: False
+    chatgpt: 
+        start_form: chat
+        one_time_talk: False
+    rtlgen_model: qwen-max
+iverilog: 
+    dir: 
+    task_id: 
+autoline: 
+    result_path: results
+    probset: 
+        path: data/HDLBits/HDLBits_data.jsonl
+        mutant_path: data/HDLBits/HDLBits_data_mutants.jsonl
+        gptgenRTL_path: None
+        more_info_paths: ['data/HDLBits/HDLBits_data_RTL_4o_20.jsonl']
+        only: ['lemmings4']
+        exclude: []
+        exclude_json: None
+        filter: [{}]
+    checklist: 
+        max: 3
+    debug: 
+        max: 3
+        reboot: 1
+        py_rollback: 2
+    onlyrun: None
+    promptscript: pychecker
+    timeout: 300
+    TBcheck: 
+        rtl_num: 20
+        correct_max: 3
+        discrim_mode: col_70_wrong_row_25_correct
+        correct_mode: naive
+        rtl_compens_en: True
+        rtl_compens_max_iter: 3
+    itermax: 10
+    update_desc: False
+    save_compile: False
+    save_finalcodes: True
+    error_interruption: False
+_initialized: True
+------------------------------------------
+
+--------------default config--------------
+run: 
+    version: 2.0
+    author: Ruidi Qiu - Technical University of Munich
+    time: None
+    custom_path: None
+    mode: qwen-max
+save: 
+    en: True
+    root: None
+    pub: 
+        prefix: None
+        dir: saves/$weekrange$/
+        subdir: 
+    log: 
+        en: True
+        dir: logs/
+        notes: None
+        cfg_pmode: iwantall
+        debug_en: False
+        level: TRACE
+    message: 
+        en: True
+        dir: messages/
+        format: json
+    iverilog: 
+        en: True
+        subdir: ivcode_nodebug
+load: 
+    prompt: 
+        path: config/initial_prompts/prompt1.txt
+        pick_idx: []
+    stage_template: 
+        path: config/templates/stage_template0301.txt
+gpt: 
+    model: 4o
+    key_path: config/key_API.json
+    temperature: None
+    json_mode: False
+    chatgpt: 
+        start_form: chat
+        one_time_talk: False
+    rtlgen_model: None
+iverilog: 
+    dir: 
+    task_id: 
+autoline: 
+    result_path: results
+    probset: 
+        path: None
+        mutant_path: None
+        gptgenRTL_path: None
+        more_info_paths: []
+        only: ['lemmings4']
+        exclude: []
+        exclude_json: None
+        filter: [{}]
+    checklist: 
+        max: 3
+    debug: 
+        max: 5
+        reboot: 1
+        py_rollback: 2
+    onlyrun: None
+    promptscript: None
+    timeout: 300
+    TBcheck: 
+        rtl_num: 20
+        correct_max: 3
+        discrim_mode: col_full_wrong
+        correct_mode: naive
+        rtl_compens_en: True
+        rtl_compens_max_iter: 3
+    itermax: 10
+    update_desc: False
+    save_compile: True
+    save_finalcodes: True
+    error_interruption: False
+------------------------------------------
+2026-03-13 10:56:49 | INFO     | all configurations are loaded, starting the main process...
+2026-03-13 10:56:49 | INFO     | 
+2026-03-13 10:56:49 | INFO     | ######################### task 1/1 [lemmings4] #########################
+2026-03-13 10:57:29 | INFO     | [lemmings4] [TBgen] stage_0 ends (39.76s used)
+2026-03-13 10:58:13 | INFO     | [lemmings4] [TBgen] stage_1 ends (44.68s used)
+2026-03-13 10:58:53 | INFO     | [lemmings4] [TBgen] stage_2 ends (40.06s used)
+2026-03-13 11:00:19 | INFO     | [lemmings4] [TBgen] stage_3 ends (85.33s used)
+2026-03-13 11:03:54 | INFO     | [lemmings4] [TBgen] stage_4 ends (215.58s used)
+2026-03-13 11:03:54 | INFO     | [lemmings4] [TBgen] stage_checklist ends (0.00s used)
+2026-03-13 11:18:56 | ERROR    | [lemmings4] Error when running TBgen, iter: 1. Message: name 'time' is not defined | location: autoline/TB_autoline.py, func: run_stages_core, line: 356 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-13 11:18:56 | WARNING  | [lemmings4] ⚠️ Pipeline interrupted. Cooling down for 15s to avoid API Rate Limit... | location: autoline/TB_autoline.py, func: run_stages_core, line: 361 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-13 11:19:57 | INFO     | [lemmings4] [TBgen] stage_0 ends (43.64s used)
+2026-03-13 11:20:36 | INFO     | [lemmings4] [TBgen] stage_1 ends (39.07s used)
+2026-03-13 11:21:33 | INFO     | [lemmings4] [TBgen] stage_2 ends (56.82s used)
+2026-03-13 11:24:32 | INFO     | [lemmings4] [TBgen] stage_3 ends (178.86s used)
+2026-03-13 11:26:42 | INFO     | [lemmings4] [TBgen] stage_4 ends (130.09s used)
+2026-03-13 11:26:42 | INFO     | [lemmings4] [TBgen] stage_checklist ends (0.00s used)
+2026-03-13 11:41:43 | ERROR    | [lemmings4] Error when running TBgen, iter: 2. Message: name 'time' is not defined | location: autoline/TB_autoline.py, func: run_stages_core, line: 356 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-13 11:41:43 | WARNING  | [lemmings4] ⚠️ Pipeline interrupted. Cooling down for 15s to avoid API Rate Limit... | location: autoline/TB_autoline.py, func: run_stages_core, line: 361 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-13 11:42:47 | INFO     | [lemmings4] [TBgen] stage_0 ends (48.42s used)
+2026-03-13 11:43:22 | INFO     | [lemmings4] [TBgen] stage_1 ends (35.42s used)
+2026-03-13 11:43:55 | INFO     | [lemmings4] [TBgen] stage_2 ends (32.26s used)
+2026-03-13 11:45:01 | INFO     | [lemmings4] [TBgen] stage_3 ends (66.49s used)
+2026-03-13 11:46:38 | INFO     | [lemmings4] [TBgen] stage_4 ends (96.55s used)
+2026-03-13 11:46:38 | INFO     | [lemmings4] [TBgen] stage_checklist ends (0.00s used)
+2026-03-13 11:49:32 | INFO     | [lemmings4] [TBgen] stage_4b ends (173.90s used)
+2026-03-13 11:50:25 | INFO     | [lemmings4] [TBgen] stage_5 ends (53.83s used)
+2026-03-13 11:50:25 | INFO     | [lemmings4] 
+2026-03-13 11:50:25 | INFO     | [lemmings4] [TBsim] iverilog compilation : passed!
+2026-03-13 11:50:25 | INFO     | [lemmings4] [TBsim] python simulation : passed!
+2026-03-13 11:50:25 | INFO     | [lemmings4] [TBsim] TBsim finished : True!
+2026-03-13 11:50:25 | INFO     | [lemmings4] 
+2026-03-13 11:50:25 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.0 discrimination
+2026-03-13 11:50:26 | INFO     | [lemmings4] [TBcheck] [discriminator] RTL(s) [3, 7] have syntax error during discrimination
+2026-03-13 11:50:26 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [ 5  9 10], scenario pass ratio: 0/10
+2026-03-13 11:50:26 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-13 11:52:14 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-13 11:52:14 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.1 discrimination
+2026-03-13 11:52:15 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [ 5  9 10], scenario pass ratio: 0/10
+2026-03-13 11:52:15 | INFO     | [lemmings4] [TBcheck] wrong scenarios not decreased for 1 times (3 = 3), continue the correction
+2026-03-13 11:52:15 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-13 11:53:54 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-13 11:53:54 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.2 discrimination
+2026-03-13 11:53:55 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [ 5  9 10], scenario pass ratio: 0/10
+2026-03-13 11:53:55 | INFO     | [lemmings4] [TBcheck] wrong scenarios not decreased for 2 times (3 = 3), I give up, quiting the funccheck stage...
+2026-03-13 11:53:55 | INFO     | [lemmings4] [TBcheck] self funccheck finished. Next Action: [reboot]
+2026-03-13 11:53:55 | INFO     | [lemmings4] 
+2026-03-13 11:54:37 | INFO     | [lemmings4] [TBgen] stage_0 ends (42.54s used)
+2026-03-13 11:55:40 | INFO     | [lemmings4] [TBgen] stage_1 ends (62.24s used)
+2026-03-13 11:56:14 | INFO     | [lemmings4] [TBgen] stage_2 ends (34.19s used)
+2026-03-13 11:56:49 | INFO     | [lemmings4] [TBgen] stage_3 ends (35.20s used)
+2026-03-13 11:59:08 | INFO     | [lemmings4] [TBgen] stage_4 ends (138.62s used)
+2026-03-13 11:59:08 | INFO     | [lemmings4] [TBgen] stage_checklist ends (0.00s used)
+2026-03-13 12:14:09 | ERROR    | [lemmings4] Error when running TBgen, iter: 4. Message: name 'time' is not defined | location: autoline/TB_autoline.py, func: run_stages_core, line: 356 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-13 12:14:09 | WARNING  | [lemmings4] ⚠️ Pipeline interrupted. Cooling down for 15s to avoid API Rate Limit... | location: autoline/TB_autoline.py, func: run_stages_core, line: 361 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-13 12:14:54 | INFO     | [lemmings4] [TBgen] stage_0 ends (30.32s used)
+2026-03-13 12:16:08 | INFO     | [lemmings4] [TBgen] stage_1 ends (73.86s used)
+2026-03-13 12:16:59 | INFO     | [lemmings4] [TBgen] stage_2 ends (50.38s used)
+2026-03-13 12:17:43 | INFO     | [lemmings4] [TBgen] stage_3 ends (44.69s used)
+2026-03-13 12:19:59 | INFO     | [lemmings4] [TBgen] stage_4 ends (135.64s used)
+2026-03-13 12:19:59 | INFO     | [lemmings4] [TBgen] stage_checklist ends (0.00s used)
+2026-03-13 12:34:59 | ERROR    | [lemmings4] Error when running TBgen, iter: 5. Message: name 'time' is not defined | location: autoline/TB_autoline.py, func: run_stages_core, line: 356 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-13 12:34:59 | WARNING  | [lemmings4] ⚠️ Pipeline interrupted. Cooling down for 15s to avoid API Rate Limit... | location: autoline/TB_autoline.py, func: run_stages_core, line: 361 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-13 12:35:56 | INFO     | [lemmings4] [TBgen] stage_0 ends (38.66s used)
+2026-03-13 12:36:36 | INFO     | [lemmings4] [TBgen] stage_1 ends (40.29s used)
+2026-03-13 12:37:05 | INFO     | [lemmings4] [TBgen] stage_2 ends (29.23s used)
+2026-03-13 12:37:30 | INFO     | [lemmings4] [TBgen] stage_3 ends (24.58s used)
+2026-03-13 12:38:38 | INFO     | [lemmings4] [TBgen] stage_4 ends (68.24s used)
+2026-03-13 12:38:38 | INFO     | [lemmings4] [TBgen] stage_checklist ends (0.00s used)
+2026-03-13 12:41:43 | INFO     | [lemmings4] [TBgen] stage_4b ends (184.72s used)
+2026-03-13 12:42:38 | INFO     | [lemmings4] [TBgen] stage_5 ends (55.24s used)
+2026-03-13 12:42:38 | INFO     | [lemmings4] 
+2026-03-13 12:42:38 | INFO     | [lemmings4] [TBsim] iverilog compilation : passed!
+2026-03-13 12:42:38 | INFO     | [lemmings4] [TBsim] python simulation : passed!
+2026-03-13 12:42:38 | INFO     | [lemmings4] [TBsim] TBsim finished : True!
+2026-03-13 12:42:38 | INFO     | [lemmings4] 
+2026-03-13 12:42:38 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.0 discrimination
+2026-03-13 12:42:39 | INFO     | [lemmings4] [TBcheck] [discriminator] RTL(s) [3, 7] have syntax error during discrimination
+2026-03-13 12:42:39 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [1 2 3], scenario pass ratio: 4/13
+2026-03-13 12:42:39 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode begins
+2026-03-13 12:44:26 | INFO     | [lemmings4] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-13 12:44:26 | INFO     | [lemmings4] [TBcheck] [discriminator] Discriminating the testbench, NO.1 discrimination
+2026-03-13 12:44:26 | NEGATIVE | [lemmings4] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [1 2 3 4 5 6], scenario pass ratio: 4/13
+2026-03-13 12:44:26 | NEGATIVE | [lemmings4] [TBcheck] wrong scenarios increased (6 > 3), I give up, quiting the funccheck stage...
+2026-03-13 12:44:26 | INFO     | [lemmings4] [TBcheck] self funccheck finished. Next Action: [reboot]
+2026-03-13 12:44:26 | INFO     | [lemmings4] 
+2026-03-13 12:45:02 | INFO     | [lemmings4] [TBgen] stage_0 ends (35.85s used)
+2026-03-13 12:45:46 | INFO     | [lemmings4] [TBgen] stage_1 ends (44.67s used)
+2026-03-13 12:46:09 | INFO     | [lemmings4] [TBgen] stage_2 ends (22.53s used)
+2026-03-13 12:47:24 | INFO     | [lemmings4] [TBgen] stage_3 ends (74.65s used)
+2026-03-13 12:50:06 | INFO     | [lemmings4] [TBgen] stage_4 ends (162.73s used)
+2026-03-13 12:50:06 | INFO     | [lemmings4] [TBgen] stage_checklist ends (0.00s used)
+2026-03-13 13:05:06 | ERROR    | [lemmings4] Error when running TBgen, iter: 7. Message: name 'time' is not defined | location: autoline/TB_autoline.py, func: run_stages_core, line: 356 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-13 13:05:06 | WARNING  | [lemmings4] ⚠️ Pipeline interrupted. Cooling down for 15s to avoid API Rate Limit... | location: autoline/TB_autoline.py, func: run_stages_core, line: 361 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-13 13:07:06 | INFO     | [lemmings4] [TBgen] stage_0 ends (102.12s used)
+2026-03-13 13:08:15 | INFO     | [lemmings4] [TBgen] stage_1 ends (68.96s used)
+2026-03-13 13:09:13 | INFO     | [lemmings4] [TBgen] stage_2 ends (58.03s used)
+2026-03-13 13:10:42 | INFO     | [lemmings4] [TBgen] stage_3 ends (88.84s used)
+2026-03-13 13:14:32 | INFO     | [lemmings4] [TBgen] stage_4 ends (229.54s used)
+2026-03-13 13:14:32 | INFO     | [lemmings4] [TBgen] stage_checklist ends (0.00s used)
+2026-03-13 13:29:31 | ERROR    | [lemmings4] Error when running TBgen, iter: 8. Message: name 'time' is not defined | location: autoline/TB_autoline.py, func: run_stages_core, line: 356 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-13 13:29:31 | WARNING  | [lemmings4] ⚠️ Pipeline interrupted. Cooling down for 15s to avoid API Rate Limit... | location: autoline/TB_autoline.py, func: run_stages_core, line: 361 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-13 13:30:46 | INFO     | [lemmings4] [TBgen] stage_0 ends (59.02s used)
+2026-03-13 13:31:36 | INFO     | [lemmings4] [TBgen] stage_1 ends (50.08s used)
+2026-03-13 13:33:21 | INFO     | [lemmings4] [TBgen] stage_2 ends (105.10s used)
+2026-03-13 13:36:04 | INFO     | [lemmings4] [TBgen] stage_3 ends (162.96s used)
+2026-03-13 13:39:50 | INFO     | [lemmings4] [TBgen] stage_4 ends (226.02s used)
+2026-03-13 13:39:50 | INFO     | [lemmings4] [TBgen] stage_checklist ends (0.00s used)
+2026-03-13 13:54:50 | ERROR    | [lemmings4] Error when running TBgen, iter: 9. Message: name 'time' is not defined | location: autoline/TB_autoline.py, func: run_stages_core, line: 356 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-13 13:54:50 | WARNING  | [lemmings4] ⚠️ Pipeline interrupted. Cooling down for 15s to avoid API Rate Limit... | location: autoline/TB_autoline.py, func: run_stages_core, line: 361 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-13 13:56:31 | INFO     | [lemmings4] [TBgen] stage_0 ends (86.04s used)
+2026-03-13 13:57:44 | INFO     | [lemmings4] [TBgen] stage_1 ends (73.02s used)
+2026-03-13 13:58:59 | INFO     | [lemmings4] [TBgen] stage_2 ends (75.37s used)
+2026-03-13 13:59:56 | INFO     | [lemmings4] [TBgen] stage_3 ends (56.65s used)
+2026-03-13 14:03:19 | INFO     | [lemmings4] [TBgen] stage_4 ends (203.60s used)
+2026-03-13 14:03:19 | INFO     | [lemmings4] [TBgen] stage_checklist ends (0.00s used)
+2026-03-13 14:18:19 | ERROR    | [lemmings4] Error when running TBgen, iter: 10. Message: name 'time' is not defined | location: autoline/TB_autoline.py, func: run_stages_core, line: 356 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-13 14:18:19 | WARNING  | [lemmings4] ⚠️ Pipeline interrupted. Cooling down for 15s to avoid API Rate Limit... | location: autoline/TB_autoline.py, func: run_stages_core, line: 361 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-13 14:18:34 | INFO     | [lemmings4] [TBeval] Eval 1: Golden RTL checking begins
+2026-03-13 14:18:34 | FAILED   | [lemmings4] [TBeval] Eval 1: Golden RTL checking failed!
+2026-03-13 14:18:34 | INFO     | [lemmings4] [TBeval] [lemmings4] Eval 2/2b is skipped because Eval 1 failed
+2026-03-13 14:18:34 | INFO     | [lemmings4] 
+2026-03-13 14:18:34 | INFO     | 
+########## Analyze of Chatbench_RunInfo ##########
+
+#### pass numbers:
+Eval2 : 0
+Eval1 : 0
+Eval0 : 1
+total : 1 (Failed: 0)
+passed TB by autoline reboot action (from TB3_check): 0
+
+passed TB by functional corrector: 0
+
+#### CGA Coverage Info:
+Average Coverage : 0.00%
+(No coverage data found in JSON)
+
+#### tokens and cost:
+average prompt tokens: 135918
+average completion tokens: 80580
+total cost: 7.5532
+average cost: 7.5532
+
+#### time:
+average time: 12105.14s
+
+#### debug info table:
+FUNCTIONAL debug info table:
+(debugged here means functional debugging)
+         | un-func-debugged | func-debugged | total |
+failed   |                0 |             0 |     0 |
+Eval0    |                0 |             1 |     1 |
+Eval1    |                0 |             0 |     0 |
+Eval2    |                0 |             0 |     0 |
+
+#### Eval2 ratio:
+
+#### CGA Coverage Detail List:
+Task ID                   | Coverage  
+----------------------------------------
+lemmings4                 | 0.00%
+
+loose Eval2 pass metric applied: 0.8
+
+

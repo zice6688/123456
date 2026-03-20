@@ -66,7 +66,7 @@ autoline:
         mutant_path: ~ # used in TB_eval2; you must enter this path in custom.yaml to avoid unconscious use.
         gptgenRTL_path: ~ # used in TB_eval2b; you must enter this path in custom.yaml to avoid unconscious use.
         more_info_paths: [] # more info added to the probset; 
-        only: ['lemmings4'] # only import data in the list by task_id;
+        only: ['fsm_ps2'] # only import data in the list by task_id;
         exclude: [] # excludes data in the list by task_id;
         exclude_json: ~ # excludes data in the json file by task_id;
         filter: [{}] # only imports data containing key-value pairs; example: {"circuit_type": "CMB"} means only import data with "circuit_type" = "CMB"; x

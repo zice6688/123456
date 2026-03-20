@@ -1,0 +1,153 @@
+############################## conversation begin ##############################
+########## system ##########
+You are the strongest AI in the world. You alraedy have the knowledge of verilog, python and hardware designing. Do not save words by discarding information. I will tip you 200$ if you can fullfill the tasks I give you.
+
+########## user ##########
+
+1. background: Your task is to verify the functional correctness of a verilog RTL module code (we call it as "DUT", device under test). This module is a sequential circuit. Our plan is to first export the signals (input and output) of the DUT under test scenarios. Then, we will use a python script to check the correctness of DUT.
+2. You are in stage 5. In this stage, we already exported the signals of DUT. The signals are like below: (the signal names are real, but the values are just for example, clock signals are not included, each vector represents a new clock cycle)
+[{'check_en': False, 'scenario': 1, 'in': 1, 'reset': 1, 'done': 1}, {'check_en': False, 'scenario': 1, 'in': 1, 'reset': 1, 'done': 1}, {'check_en': True, 'scenario': 1, 'in': 1, 'reset': 1, 'done': 1}]
+Here's the explanation of some special signals in signal vectors: 
+- "scenario": The "scenario" is not DUT's signal but to tell you the current scenario index. 
+- "check_en": The "check_en" signal is not from the DUT. "Check_en" is a bool value to tell you this is the time to check the output of DUT. It is related to the class method "check" (we will explain it later). After checking the output, a new scenario will start.
+3. Your current task is: write a python class "GoldenDUT". This python class can represent the golden DUT (the ideal one). In your "GoldenDUT", you should do the following things:
+- 3.1. write a method "def __init__(self)". Set the inner states/values of the golden DUT. These values have suffix "_reg". The initial value of these inner values is "x", but later will be digits. The "__init__" method has no input parameters except "self".
+- 3.2. write a method "def load(self, signal_vector)". This method is to load the important input signals and the inner values of "GoldenDUT" shall change according to the input signals. There is no clock signal in the input signal vector, every time the "load" method is called, it means a new clock cycle. The initial values "x" should be changed according to the input signals. This method has no return value.
+- 3.3. write a method "def check(self, signal_vector)". This method is to determine the expected output values and compare them with output signals from DUT. It should return True or False only. If return false, please print the error message. Hint: you can use code like "print(f"Scenario: {signal_vector['scenario']}, expected: a={a_reg}, observed a={a_observed}")" to print, suppose "a" is the output signal's name.
+- 3.4. write other methods you need, they can be called by "load" or "check".
+- 3.5. the input of "load" and "check" is the signal vector. The signal vector is a dictionary, the key is the signal name, the value is the signal value.
+4. Other information:
+- You can use binary (like 0x1101), hexadecimal (like 0x1a) or normal number format in python.
+- if the bit width of one variable is limited, use bit mask to assure the correctness of the value.
+- you can import numpy, math, scipy or other python libraries to help you write the python class.
+5. You have the information below to help you check the correctness of DUT:
+
+DUT circuit problem description:
+The PS/2 mouse protocol sends messages that are three bytes long. However, within a continuous byte stream, it's not obvious where messages start and end. The only indication is that the first byte of each three byte message always has in[3]=1 (but in[3] of the other two bytes may be 1 or 0 depending on data). We want a finite state machine that will search for message boundaries when given an input byte stream. The algorithm we'll use is to discard bytes until we see one with in[3]=1. We then assume that this is byte 1 of a message, and signal the receipt of a message once all 3 bytes have been received (done). The FSM should signal done in the cycle immediately after the third byte of each message was successfully received. Reset should be active high synchronous.
+The header of DUT (note the input and output signals):
+module top_module (
+	input clk,
+	input [7:0] in,
+	input reset,
+	output done
+);
+
+Here is the basic rules in python for the module. It was generated in previous stage. You can use it as a reference, but you should write your own python script. This is just for your better understanding. You can use them or not in your python class
+import numpy as np
+
+def is_start_of_message(byte):
+    # Check if the 4th bit (in[3]) of the byte is 1
+    return (byte & 0b00001000) == 0b00001000
+
+def fsm_rules(input_stream, reset):
+    state = 'IDLE'
+    count = 0
+    done = False
+    expected_done = []
+
+    for i, byte in enumerate(input_stream):
+        if reset[i]:
+            state = 'IDLE'
+            count = 0
+            done = False
+        else:
+            if state == 'IDLE':
+                if is_start_of_message(byte):
+                    state = 'COUNTING'
+                    count = 1
+                    done = False
+            elif state == 'COUNTING':
+                count += 1
+                if count == 3:
+                    state = 'DONE'
+                    done = True
+                    expected_done.append(True)
+                else:
+                    expected_done.append(False)
+            elif state == 'DONE':
+                if is_start_of_message(byte):
+                    state = 'COUNTING'
+                    count = 1
+                    done = False
+                else:
+                    state = 'IDLE'
+                    count = 0
+                    done = False
+                    expected_done.append(False)
+
+    return expected_done
+
+# Example usage
+input_stream = [0b00000000, 0b00010000, 0b00000000, 0b00000000]  # Example input stream
+reset = [False, False, False, False]  # Example reset signal
+expected_done = fsm_rules(input_stream, reset)
+print(expected_done)
+
+
+
+[IMPORTANT]
+I will repeat the important information: 
+3. Your current task is: write a python class "GoldenDUT". This python class can represent the golden DUT (the ideal one). In your "GoldenDUT", you should do the following things:
+- 3.1. write a method "def __init__(self)". Set the inner states/values of the golden DUT. These values have suffix "_reg". The initial value of these inner values should be digits. You can set the initial values according to information or just "0"s. The "__init__" method has no input parameters except "self".
+- 3.2. write a method "def load(self, signal_vector)". This method is to load the important input signals and the inner values of "GoldenDUT" shall change according to the input signals. There is no clock signal in the input signal vector, every time the "load" method is called, it means a new clock cycle. The initial values "x" should be changed according to the input signals. This method has no return value.
+- 3.3. write a method "def check(self, signal_vector)". This method is to determine the expected output values and compare them with output signals from DUT. It should return True or False only. If return false, please print the error message. Hint: you can use code like "print(f"Scenario: {signal_vector['scenario']}, expected: a={a_reg}, observed a={a_observed}")" to print, suppose "a" is the output signal's name.  
+- 3.4. write other methods you need, they can be called by "load" or "check".
+- 3.5. the input of "load" and "check" is the signal vector. The signal vector is a dictionary, the key is the signal name, the value is the signal value.
+4. Other information:
+- You can use binary (like 0x1101), hexadecimal (like 0x1a) or normal number format in python.
+- if the bit width of one variable is limited, use bit mask to assure the correctness of the value.
+- you can import numpy, math, scipy or other python libraries to help you write the python class.
+
+please only reply the python codes of the python class. no other words.
+
+
+
+########## assistant ##########
+```python
+class GoldenDUT:
+    def __init__(self):
+        self.state_reg = 'IDLE'
+        self.count_reg = 0
+        self.done_reg = False
+
+    def load(self, signal_vector):
+        in_signal = signal_vector['in']
+        reset_signal = signal_vector['reset']
+
+        if reset_signal:
+            self.state_reg = 'IDLE'
+            self.count_reg = 0
+            self.done_reg = False
+        else:
+            if self.state_reg == 'IDLE':
+                if (in_signal & 0b00001000) == 0b00001000:
+                    self.state_reg = 'COUNTING'
+                    self.count_reg = 1
+                    self.done_reg = False
+            elif self.state_reg == 'COUNTING':
+                self.count_reg += 1
+                if self.count_reg == 3:
+                    self.state_reg = 'DONE'
+                    self.done_reg = True
+                else:
+                    self.done_reg = False
+            elif self.state_reg == 'DONE':
+                if (in_signal & 0b00001000) == 0b00001000:
+                    self.state_reg = 'COUNTING'
+                    self.count_reg = 1
+                    self.done_reg = False
+                else:
+                    self.state_reg = 'IDLE'
+                    self.count_reg = 0
+                    self.done_reg = False
+
+    def check(self, signal_vector):
+        done_observed = signal_vector['done']
+        expected_done = self.done_reg
+
+        if expected_done != done_observed:
+            print(f"Scenario: {signal_vector['scenario']}, expected: done={expected_done}, observed: done={done_observed}")
+            return False
+        return True
+```
+

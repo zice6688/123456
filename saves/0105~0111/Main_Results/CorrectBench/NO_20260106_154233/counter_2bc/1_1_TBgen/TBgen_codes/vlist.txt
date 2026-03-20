@@ -1,2 +1,0 @@
-counter_2bc.v
-counter_2bc_tb.v

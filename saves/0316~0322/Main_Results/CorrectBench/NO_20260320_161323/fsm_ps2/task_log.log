@@ -1,0 +1,36 @@
+2026-03-20 16:13:37 | INFO     | [fsm_ps2] [TBgen] stage_0 ends (13.57s used)
+2026-03-20 16:14:14 | INFO     | [fsm_ps2] [TBgen] stage_1 ends (36.98s used)
+2026-03-20 16:14:48 | INFO     | [fsm_ps2] [TBgen] stage_2 ends (34.02s used)
+2026-03-20 16:15:36 | INFO     | [fsm_ps2] [TBgen] stage_3 ends (48.77s used)
+2026-03-20 16:16:53 | INFO     | [fsm_ps2] [TBgen] stage_4 ends (76.74s used)
+2026-03-20 16:16:53 | INFO     | [fsm_ps2] [TBgen] stage_checklist ends (0.00s used)
+2026-03-20 16:20:01 | INFO     | [fsm_ps2] [TBgen] stage_4b ends (188.24s used)
+2026-03-20 16:20:14 | INFO     | [fsm_ps2] [TBgen] stage_5 ends (12.30s used)
+2026-03-20 16:20:14 | INFO     | [fsm_ps2] 
+2026-03-20 16:20:14 | INFO     | [fsm_ps2] [TBsim] iverilog compilation : passed!
+2026-03-20 16:20:14 | INFO     | [fsm_ps2] [TBsim] python simulation : passed!
+2026-03-20 16:20:14 | INFO     | [fsm_ps2] [TBsim] TBsim finished : True!
+2026-03-20 16:20:14 | INFO     | [fsm_ps2] 
+2026-03-20 16:20:14 | INFO     | [fsm_ps2] [TBcheck] [discriminator] Discriminating the testbench, NO.0 discrimination
+2026-03-20 16:20:14 | POSITIVE | [fsm_ps2] [TBcheck] [discriminator] TB_discriminating finished, TB passed, wrong scenarios: [], scenario pass ratio: 5/5
+2026-03-20 16:20:14 | INFO     | [fsm_ps2] [TBcheck] Testbench passed the funccheck
+2026-03-20 16:20:14 | INFO     | [fsm_ps2] [TBcheck] self funccheck finished. Next Action: [pass]
+2026-03-20 16:20:14 | INFO     | [fsm_ps2] 
+2026-03-20 16:20:14 | INFO     | [fsm_ps2] [fsm_ps2] Starting Coverage-Guided Agent (CGA)...
+2026-03-20 16:20:14 | INFO     | [fsm_ps2] [fsm_ps2] Running Semantic Analysis (Layer 0)...
+2026-03-20 16:20:14 | INFO     | [fsm_ps2]   FSM detected: state (4 states)
+2026-03-20 16:20:14 | INFO     | [fsm_ps2]   Total function points identified: 2
+2026-03-20 16:20:14 | INFO     | [fsm_ps2]   Energy allocator initialized: 2 targets
+2026-03-20 16:20:14 | INFO     | [fsm_ps2]   Diversity injector initialized with history file: saves/0316~0322/Main_Results/CorrectBench/NO_20260320_161323/fsm_ps2/5_CGA/test_history.json
+2026-03-20 16:20:14 | INFO     | [fsm_ps2]   Quality evaluator initialized
+2026-03-20 16:20:14 | INFO     | [fsm_ps2] --- CGA Iter 0 (Baseline) ---
+2026-03-20 16:20:16 | INFO     | [fsm_ps2] Baseline Coverage: 77.78%
+2026-03-20 16:20:16 | INFO     | [fsm_ps2] --- CGA Iter 1 / 5 ---
+2026-03-20 16:20:16 | INFO     | [fsm_ps2] Target: FSM_state
+2026-03-20 16:20:16 | INFO     | [fsm_ps2] Asking LLM to fix missing logic (Current: 77.78%)...
+2026-03-20 16:21:19 | ERROR    | [fsm_ps2] CGA Stage Failed: name 'initial_pattern' is not defined. Fallback to original TB. | location: autoline/TB_autoline.py, func: run_stages_core, line: 389 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-20 16:21:19 | INFO     | [fsm_ps2] [TBeval] Eval 1: Golden RTL checking begins
+2026-03-20 16:21:19 | POSITIVE | [fsm_ps2] [TBeval] Eval 1: Golden RTL checking passed!
+2026-03-20 16:21:19 | INFO     | [fsm_ps2] [TBeval] Eval 2: Golden TB checking on RTL mutants
+2026-03-20 16:21:20 | FAILED   | [fsm_ps2] [TBeval] Eval 2: Golden TB checking on RTL mutants finished (3/10)!
+2026-03-20 16:21:20 | INFO     | [fsm_ps2] 

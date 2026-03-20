@@ -1,0 +1,16 @@
+iverilog simulation passed!
+
+iverilog cmd 1:
+/usr/bin/iverilog -g2012 -o run.vvp driver.v DUT.v 
+iverilog cmd 1 output:
+
+iverilog cmd 1 error:
+DUT.v:27: sorry: constant selects in always_* processes are not currently supported (all bits will be included).
+
+iverilog cmd 2:
+/usr/bin/vvp run.vvp
+iverilog cmd 2 output:
+driver.v:146: $finish called at 910000 (1ps)
+
+iverilog cmd 2 error:
+

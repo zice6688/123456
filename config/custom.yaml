@@ -8,11 +8,10 @@ autoline:
   probset:
     more_info_paths: ['data/HDLBits/HDLBits_data_RTL_4o_20.jsonl']
     mutant_path: data/HDLBits/HDLBits_data_mutants.jsonl
-    only: ['lemmings4']
+    only: ['fsm_ps2']
     path: data/HDLBits/HDLBits_data.jsonl
   promptscript: pychecker
   save_compile: false
-  
   timeout: 300
   update_desc: false
 gpt:

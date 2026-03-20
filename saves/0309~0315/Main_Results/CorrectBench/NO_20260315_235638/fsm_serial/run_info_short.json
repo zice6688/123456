@@ -1,0 +1,8 @@
+{
+    "task_id": "fsm_serial",
+    "eval_progress": "Eval1 - failed",
+    "TB_corrected": false,
+    "reboot_times": 5,
+    "time": 7304.28,
+    "cost": 5.339479999999999
+}

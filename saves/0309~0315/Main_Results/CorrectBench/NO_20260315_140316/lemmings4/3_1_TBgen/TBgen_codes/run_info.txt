@@ -1,0 +1,42 @@
+iverilog simulation failed!
+
+iverilog cmd 1:
+/usr/bin/iverilog -g2012 -o run.vvp lemmings4_tb.v lemmings4.v 
+iverilog cmd 1 output:
+
+iverilog cmd 1 error:
+lemmings4_tb.v:49: syntax error
+lemmings4_tb.v:49: error: Malformed statement
+lemmings4_tb.v:50: syntax error
+lemmings4_tb.v:50: Syntax in assignment statement l-value.
+lemmings4_tb.v:60: syntax error
+lemmings4_tb.v:60: Syntax in assignment statement l-value.
+lemmings4_tb.v:70: syntax error
+lemmings4_tb.v:70: Syntax in assignment statement l-value.
+lemmings4_tb.v:78: syntax error
+lemmings4_tb.v:78: Syntax in assignment statement l-value.
+lemmings4_tb.v:86: syntax error
+lemmings4_tb.v:86: Syntax in assignment statement l-value.
+lemmings4_tb.v:94: syntax error
+lemmings4_tb.v:94: Syntax in assignment statement l-value.
+lemmings4_tb.v:102: syntax error
+lemmings4_tb.v:102: Syntax in assignment statement l-value.
+lemmings4_tb.v:110: syntax error
+lemmings4_tb.v:110: Syntax in assignment statement l-value.
+lemmings4_tb.v:118: syntax error
+lemmings4_tb.v:118: Syntax in assignment statement l-value.
+lemmings4_tb.v:126: syntax error
+lemmings4_tb.v:126: Syntax in assignment statement l-value.
+lemmings4_tb.v:136: syntax error
+lemmings4_tb.v:136: Syntax in assignment statement l-value.
+lemmings4_tb.v:146: syntax error
+lemmings4_tb.v:146: Syntax in assignment statement l-value.
+lemmings4_tb.v:156: syntax error
+lemmings4_tb.v:156: Syntax in assignment statement l-value.
+lemmings4_tb.v:166: syntax error
+lemmings4_tb.v:166: Syntax in assignment statement l-value.
+lemmings4_tb.v:176: syntax error
+lemmings4.v:12: error: Malformed statement
+lemmings4.v:15: syntax error
+I give up.
+

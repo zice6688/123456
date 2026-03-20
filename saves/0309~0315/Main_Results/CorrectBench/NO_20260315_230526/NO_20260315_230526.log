@@ -1,0 +1,217 @@
+
+---------------custom config--------------
+autoline: 
+    result_path: results
+    TBcheck: 
+        discrim_mode: col_70_wrong_row_25_correct
+    debug: 
+        max: 3
+    itermax: 10
+    probset: 
+        more_info_paths: ['data/HDLBits/HDLBits_data_RTL_4o_20.jsonl']
+        mutant_path: data/HDLBits/HDLBits_data_mutants.jsonl
+        only: ['fsm_serial']
+        path: data/HDLBits/HDLBits_data.jsonl
+    promptscript: pychecker
+    save_compile: False
+    timeout: 300
+    update_desc: False
+gpt: 
+    model: qwen-max
+    rtlgen_model: qwen-max
+run: 
+    mode: autoline
+save: 
+    en: True
+    log: 
+        debug_en: False
+    pub: 
+        prefix: NO
+        subdir: Main_Results/CorrectBench
+------------------------------------------
+------config info (custom + default)------
+run: 
+    version: 2.0
+    author: Ruidi Qiu - Technical University of Munich
+    time: 20260315_230526
+    custom_path: config/custom.yaml
+    mode: autoline
+    hostname: localhost
+    pid: 3562
+    pyversion: 3.12.3 (main, Mar  3 2026, 12:15:18) [GCC 13.3.0]
+save: 
+    en: True
+    root: saves/0309~0315/Main_Results/CorrectBench/NO_20260315_230526/
+    pub: 
+        prefix: NO
+        dir: saves/0309~0315/
+        subdir: Main_Results/CorrectBench/
+    log: 
+        en: True
+        dir: logs/
+        notes: None
+        cfg_pmode: iwantall
+        debug_en: False
+        level: TRACE
+    message: 
+        en: True
+        dir: messages/
+        format: json
+    iverilog: 
+        en: True
+        subdir: ivcode_nodebug
+load: 
+    prompt: 
+        path: config/initial_prompts/prompt1.txt
+        pick_idx: []
+    stage_template: 
+        path: config/templates/stage_template0301.txt
+gpt: 
+    model: qwen-max
+    key_path: config/key_API.json
+    temperature: None
+    json_mode: False
+    chatgpt: 
+        start_form: chat
+        one_time_talk: False
+    rtlgen_model: qwen-max
+iverilog: 
+    dir: 
+    task_id: 
+autoline: 
+    result_path: results
+    probset: 
+        path: data/HDLBits/HDLBits_data.jsonl
+        mutant_path: data/HDLBits/HDLBits_data_mutants.jsonl
+        gptgenRTL_path: None
+        more_info_paths: ['data/HDLBits/HDLBits_data_RTL_4o_20.jsonl']
+        only: ['fsm_serial']
+        exclude: []
+        exclude_json: None
+        filter: [{}]
+    checklist: 
+        max: 3
+    debug: 
+        max: 3
+        reboot: 1
+        py_rollback: 2
+    onlyrun: None
+    promptscript: pychecker
+    timeout: 300
+    TBcheck: 
+        rtl_num: 20
+        correct_max: 3
+        discrim_mode: col_70_wrong_row_25_correct
+        correct_mode: naive
+        rtl_compens_en: True
+        rtl_compens_max_iter: 3
+    itermax: 10
+    update_desc: False
+    save_compile: False
+    save_finalcodes: True
+    error_interruption: False
+_initialized: True
+------------------------------------------
+
+--------------default config--------------
+run: 
+    version: 2.0
+    author: Ruidi Qiu - Technical University of Munich
+    time: None
+    custom_path: None
+    mode: qwen-max
+save: 
+    en: True
+    root: None
+    pub: 
+        prefix: None
+        dir: saves/$weekrange$/
+        subdir: 
+    log: 
+        en: True
+        dir: logs/
+        notes: None
+        cfg_pmode: iwantall
+        debug_en: False
+        level: TRACE
+    message: 
+        en: True
+        dir: messages/
+        format: json
+    iverilog: 
+        en: True
+        subdir: ivcode_nodebug
+load: 
+    prompt: 
+        path: config/initial_prompts/prompt1.txt
+        pick_idx: []
+    stage_template: 
+        path: config/templates/stage_template0301.txt
+gpt: 
+    model: 4o
+    key_path: config/key_API.json
+    temperature: None
+    json_mode: False
+    chatgpt: 
+        start_form: chat
+        one_time_talk: False
+    rtlgen_model: None
+iverilog: 
+    dir: 
+    task_id: 
+autoline: 
+    result_path: results
+    probset: 
+        path: None
+        mutant_path: None
+        gptgenRTL_path: None
+        more_info_paths: []
+        only: ['fsm_serial']
+        exclude: []
+        exclude_json: None
+        filter: [{}]
+    checklist: 
+        max: 3
+    debug: 
+        max: 5
+        reboot: 1
+        py_rollback: 2
+    onlyrun: None
+    promptscript: None
+    timeout: 300
+    TBcheck: 
+        rtl_num: 20
+        correct_max: 3
+        discrim_mode: col_full_wrong
+        correct_mode: naive
+        rtl_compens_en: True
+        rtl_compens_max_iter: 3
+    itermax: 10
+    update_desc: False
+    save_compile: True
+    save_finalcodes: True
+    error_interruption: False
+------------------------------------------
+2026-03-15 23:05:26 | INFO     | all configurations are loaded, starting the main process...
+2026-03-15 23:05:26 | INFO     | 
+2026-03-15 23:05:26 | INFO     | ######################### task 1/1 [fsm_serial] #########################
+2026-03-15 23:05:58 | INFO     | [fsm_serial] [TBgen] stage_0 ends (31.97s used)
+2026-03-15 23:06:40 | INFO     | [fsm_serial] [TBgen] stage_1 ends (42.26s used)
+2026-03-15 23:07:39 | INFO     | [fsm_serial] [TBgen] stage_2 ends (59.04s used)
+2026-03-15 23:13:10 | INFO     | [fsm_serial] [TBgen] stage_3 ends (330.78s used)
+2026-03-15 23:28:10 | ERROR    | [fsm_serial] Error when running TBgen, iter: 1. Message: name 'time' is not defined | location: autoline/TB_autoline.py, func: run_stages_core, line: 356 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-15 23:28:10 | WARNING  | [fsm_serial] ⚠️ Pipeline interrupted. Cooling down for 15s to avoid API Rate Limit... | location: autoline/TB_autoline.py, func: run_stages_core, line: 361 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-15 23:28:44 | INFO     | [fsm_serial] [TBgen] stage_0 ends (16.17s used)
+2026-03-15 23:29:29 | INFO     | [fsm_serial] [TBgen] stage_1 ends (44.85s used)
+2026-03-15 23:30:21 | INFO     | [fsm_serial] [TBgen] stage_2 ends (52.10s used)
+2026-03-15 23:31:40 | INFO     | [fsm_serial] [TBgen] stage_3 ends (78.54s used)
+2026-03-15 23:33:20 | INFO     | [fsm_serial] [TBgen] stage_4 ends (100.80s used)
+2026-03-15 23:33:20 | INFO     | [fsm_serial] [TBgen] stage_checklist ends (0.00s used)
+2026-03-15 23:48:21 | ERROR    | [fsm_serial] Error when running TBgen, iter: 2. Message: name 'time' is not defined | location: autoline/TB_autoline.py, func: run_stages_core, line: 356 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-15 23:48:21 | WARNING  | [fsm_serial] ⚠️ Pipeline interrupted. Cooling down for 15s to avoid API Rate Limit... | location: autoline/TB_autoline.py, func: run_stages_core, line: 361 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-15 23:49:09 | INFO     | [fsm_serial] [TBgen] stage_0 ends (29.35s used)
+2026-03-15 23:49:34 | INFO     | [fsm_serial] [TBgen] stage_1 ends (25.27s used)
+2026-03-15 23:50:10 | INFO     | [fsm_serial] [TBgen] stage_2 ends (36.15s used)
+2026-03-15 23:50:45 | INFO     | [fsm_serial] [TBgen] stage_3 ends (34.96s used)
+2026-03-15 23:52:04 | INFO     | [fsm_serial] [TBgen] stage_4 ends (78.97s used)
+2026-03-15 23:52:04 | INFO     | [fsm_serial] [TBgen] stage_checklist ends (0.00s used)

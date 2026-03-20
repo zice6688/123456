@@ -15,12 +15,14 @@ import re
 import requests
 import json
 import httpx
+import time
 # import Image
 import openai
 import os
 from datetime import datetime, timedelta, timezone
 from config.config import GPT_MODELS
 from http import HTTPStatus
+
 
 __all__ = ["llm_call", "gpt_call", "claude_call", "run_like_a_chatgpt"]
 
@@ -165,12 +167,31 @@ def gpt_call(input_messages, model, api_key_path, system_message=None, temperatu
         if message["role"] == "system":
             has_sysmessage = True
             break
+    # if not has_sysmessage:
+    #     sys_content = system_message if system_message is not None else "You are a helpful assistant."
+    #     messages = [{"role": "system", "content": sys_content}]
+    # else:
+    #     messages = []
+    # messages.extend(input_messages)
     if not has_sysmessage:
         sys_content = system_message if system_message is not None else "You are a helpful assistant."
+        # [修复] 确保 sys_content 是字符串
+        if not isinstance(sys_content, str):
+            print(f" [Warning] system_message is not string, got type: {type(sys_content)}")
+            sys_content = str(sys_content)
         messages = [{"role": "system", "content": sys_content}]
     else:
         messages = []
     messages.extend(input_messages)
+    
+    # [新增] 验证消息格式
+    for i, msg in enumerate(messages):
+        if not isinstance(msg.get("content"), str):
+            print(f" [Error] messages[{i}]['content'] is not string!")
+            print(f"   Type: {type(msg.get('content'))}")
+            print(f"   Value: {msg.get('content')}")
+            # 修复：转换为字符串
+            messages[i]["content"] = str(msg.get("content"))
 
     # 2. 参数准备 (保持原逻辑)
     more_completion_kwargs = {}
@@ -219,7 +240,7 @@ def gpt_call(input_messages, model, api_key_path, system_message=None, temperatu
     )
 
     # 4. 调用循环
-    MAX_RETRIES = 3
+    MAX_RETRIES = 5
     answer = ""
     system_fingerprint = ""
     usage = {}
@@ -246,19 +267,29 @@ def gpt_call(input_messages, model, api_key_path, system_message=None, temperatu
             
             # 调试打印，确认成功
             if answer:
-                print(f"✅ [LLM] Success. Time: {time_used}s. Length: {len(answer)}")
+                print(f" [LLM] Success. Time: {time_used}s. Length: {len(answer)}")
             
             break # 成功则跳出
 
         except httpx.ConnectTimeout:
-            print(f"⏰ [Timeout] Connection failed (>5min). Retrying {attempt+1}/{MAX_RETRIES}...")
+            print(f"[Timeout] Connection failed (>5min). Retrying {attempt+1}/{MAX_RETRIES}...")
             time.sleep(5)
         except httpx.ReadTimeout:
-            print(f"⏳ [Timeout] Generation too slow (>30min). Retrying {attempt+1}/{MAX_RETRIES}...")
+            print(f" [Timeout] Generation too slow (>30min). Retrying {attempt+1}/{MAX_RETRIES}...")
             time.sleep(5)
+        # except Exception as e:
+        #     print(f" [Error] Attempt {attempt+1} failed: {e}")
+        #     time.sleep(5)
         except Exception as e:
-            print(f"⚠️ [Error] Attempt {attempt+1} failed: {e}")
-            time.sleep(5)
+            error_msg = str(e)
+            if 'RequestTimeOut' in error_msg or '500' in error_msg:
+                wait_time = 15 * (attempt + 1)  # ✅ 服务端超时特殊处理
+                print(f"🔄 [Server Timeout] API server busy. Retrying...")
+                time.sleep(wait_time)
+            else:
+                wait_time = 5 * (attempt + 1)  # ✅ 指数退避
+                print(f"⚠️ [Error] Attempt {attempt+1} failed: {e}")
+                time.sleep(wait_time)
 
     # 5. 返回结果 (保持你的原格式)
     if answer:

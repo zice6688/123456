@@ -1,0 +1,6 @@
+{
+    "task_id": "fsm_serial",
+    "stage": "TBeval",
+    "pass": false,
+    "coverage": 100.0
+}

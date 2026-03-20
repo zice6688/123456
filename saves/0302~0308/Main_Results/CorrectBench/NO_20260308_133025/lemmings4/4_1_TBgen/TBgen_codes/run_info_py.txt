@@ -1,0 +1,170 @@
+python compilation failed!
+
+###output:
+Scenario: 1, expected: walk_left=1, walk_right=0, aaah=0, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '1', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 1, expected: walk_left=1, walk_right=0, aaah=0, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '1', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 1, expected: walk_left=1, walk_right=0, aaah=0, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '1', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 1, expected: walk_left=1, walk_right=0, aaah=0, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '1', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 1, expected: walk_left=1, walk_right=0, aaah=0, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '1', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 1, expected: walk_left=1, walk_right=0, aaah=0, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '1', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 1, expected: walk_left=1, walk_right=0, aaah=0, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '1', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 1, expected: walk_left=1, walk_right=0, aaah=0, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '1', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 1, expected: walk_left=1, walk_right=0, aaah=0, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '1', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 1, expected: walk_left=1, walk_right=0, aaah=0, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '1', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'areset': 0, 'bump_left': 1, 'bump_right': 0, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'areset': 0, 'bump_left': 1, 'bump_right': 0, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'areset': 0, 'bump_left': 1, 'bump_right': 0, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'areset': 0, 'bump_left': 1, 'bump_right': 0, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'areset': 0, 'bump_left': 1, 'bump_right': 0, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'areset': 0, 'bump_left': 1, 'bump_right': 0, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'areset': 0, 'bump_left': 1, 'bump_right': 0, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'areset': 0, 'bump_left': 1, 'bump_right': 0, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'areset': 0, 'bump_left': 1, 'bump_right': 0, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '2', 'clk': 1, 'areset': 0, 'bump_left': 1, 'bump_right': 0, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 1, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 1, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 1, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 1, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 1, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 1, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 1, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 1, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 1, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '3', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 1, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'areset': 0, 'bump_left': 1, 'bump_right': 1, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'areset': 0, 'bump_left': 1, 'bump_right': 1, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'areset': 0, 'bump_left': 1, 'bump_right': 1, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'areset': 0, 'bump_left': 1, 'bump_right': 1, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'areset': 0, 'bump_left': 1, 'bump_right': 1, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'areset': 0, 'bump_left': 1, 'bump_right': 1, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'areset': 0, 'bump_left': 1, 'bump_right': 1, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'areset': 0, 'bump_left': 1, 'bump_right': 1, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'areset': 0, 'bump_left': 1, 'bump_right': 1, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '4', 'clk': 1, 'areset': 0, 'bump_left': 1, 'bump_right': 1, 'ground': 1, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 5, expected: walk_left=0, walk_right=0, aaah=1, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 0, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 5, expected: walk_left=0, walk_right=0, aaah=1, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 0, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 5, expected: walk_left=0, walk_right=0, aaah=1, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 0, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 5, expected: walk_left=0, walk_right=0, aaah=1, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 0, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 5, expected: walk_left=0, walk_right=0, aaah=1, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 0, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 5, expected: walk_left=0, walk_right=0, aaah=1, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 0, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 5, expected: walk_left=0, walk_right=0, aaah=1, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 0, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 5, expected: walk_left=0, walk_right=0, aaah=1, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 0, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 5, expected: walk_left=0, walk_right=0, aaah=1, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 0, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 5, expected: walk_left=0, walk_right=0, aaah=1, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '5', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 0, 'dig': 0, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 1, 'dig': 1, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 6, expected: walk_left=0, walk_right=0, aaah=0, digging=1
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 1, 'dig': 1, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 6, expected: walk_left=0, walk_right=0, aaah=0, digging=1
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 1, 'dig': 1, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 6, expected: walk_left=0, walk_right=0, aaah=0, digging=1
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 1, 'dig': 1, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 6, expected: walk_left=0, walk_right=0, aaah=0, digging=1
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 1, 'dig': 1, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 6, expected: walk_left=0, walk_right=0, aaah=0, digging=1
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 1, 'dig': 1, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 6, expected: walk_left=0, walk_right=0, aaah=0, digging=1
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 1, 'dig': 1, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 6, expected: walk_left=0, walk_right=0, aaah=0, digging=1
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 1, 'dig': 1, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 6, expected: walk_left=0, walk_right=0, aaah=0, digging=1
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 1, 'dig': 1, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 6, expected: walk_left=0, walk_right=0, aaah=0, digging=1
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 1, 'dig': 1, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 6, expected: walk_left=0, walk_right=0, aaah=1, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 0, 'dig': 1, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 6, expected: walk_left=0, walk_right=0, aaah=1, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 0, 'dig': 1, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 6, expected: walk_left=0, walk_right=0, aaah=1, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 0, 'dig': 1, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 6, expected: walk_left=0, walk_right=0, aaah=1, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 0, 'dig': 1, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 6, expected: walk_left=0, walk_right=0, aaah=1, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 0, 'dig': 1, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 6, expected: walk_left=0, walk_right=0, aaah=1, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 0, 'dig': 1, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 6, expected: walk_left=0, walk_right=0, aaah=1, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 0, 'dig': 1, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 6, expected: walk_left=0, walk_right=0, aaah=1, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 0, 'dig': 1, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 6, expected: walk_left=0, walk_right=0, aaah=1, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 0, 'dig': 1, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Scenario: 6, expected: walk_left=0, walk_right=0, aaah=1, digging=0
+Observed: walk_left=0, walk_right=0, aaah=0, digging=0
+Failed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 0, 'dig': 1, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+Passed; vector: {'check_en': True, 'scenario': '6', 'clk': 1, 'areset': 0, 'bump_left': 0, 'bump_right': 0, 'ground': 1, 'dig': 1, 'walk_left': 0, 'walk_right': 0, 'aaah': 0, 'digging': 0}
+
+
+###error:
+Traceback (most recent call last):
+  File "/home/zhang/CorrectBench/saves/0302~0308/Main_Results/CorrectBench/NO_20260308_133025/lemmings4/4_1_TBgen/TBgen_codes/lemmings4_tb.py", line 168, in <module>
+    tb_pass = check_dut(vectors_in)
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/saves/0302~0308/Main_Results/CorrectBench/NO_20260308_133025/lemmings4/4_1_TBgen/TBgen_codes/lemmings4_tb.py", line 132, in check_dut
+    golden_dut.load(vector)
+  File "/home/zhang/CorrectBench/saves/0302~0308/Main_Results/CorrectBench/NO_20260308_133025/lemmings4/4_1_TBgen/TBgen_codes/lemmings4_tb.py", line 28, in load
+    self.current_state_reg, self.walk_left_reg, self.walk_right_reg, self.aaah_reg, self.digging_reg, self.fall_counter_reg = self.lemming_fsm_rules(
+                                                                                                                              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhang/CorrectBench/saves/0302~0308/Main_Results/CorrectBench/NO_20260308_133025/lemmings4/4_1_TBgen/TBgen_codes/lemmings4_tb.py", line 111, in lemming_fsm_rules
+    return next_state, walk_left, walk_right, aaah, digging, fall_counter
+           ^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'next_state' where it is not associated with a value
+
+

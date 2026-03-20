@@ -1,0 +1,83 @@
+{
+    "task_id": "lemmings4",
+    "task_number": 150,
+    "time": 5668.2,
+    "prompt_tokens": 236725,
+    "completion_tokens": 90328,
+    "token_cost": 10.154179999999998,
+    "ERROR(incomplete)": false,
+    "op_record": [
+        "gen",
+        "syncheck",
+        "funccheck",
+        "gen",
+        "syncheck",
+        "funccheck",
+        "gen",
+        "syncheck",
+        "gen",
+        "syncheck",
+        "funccheck",
+        "gen",
+        "syncheck",
+        "funccheck",
+        "cga",
+        "eval"
+    ],
+    "reboot_times": 4,
+    "max_iter": 10,
+    "coverage": 92.85714285714286,
+    "circuit_type": "SEQ",
+    "checklist_worked": false,
+    "scenario_num": 12,
+    "Eval0_pass": true,
+    "Eval0_iv_pass": true,
+    "debug_iter_iv": 0,
+    "iv_runing_time": 0.03,
+    "Eval0_py_pass": true,
+    "debug_iter_py": 0,
+    "py_runing_time": 0.02,
+    "TB_corrected": true,
+    "TBcheck_oprecord": [
+        [
+            "discrim",
+            "correct",
+            "discrim",
+            "correct",
+            "discrim"
+        ],
+        [
+            "discrim",
+            "correct",
+            "discrim",
+            "correct",
+            "discrim"
+        ],
+        [
+            "discrim",
+            "correct",
+            "discrim",
+            "correct",
+            "discrim"
+        ],
+        [
+            "discrim",
+            "correct",
+            "discrim",
+            "correct",
+            "discrim"
+        ]
+    ],
+    "rtl_num_newly_gen": 0,
+    "Eval1_pass": true,
+    "Eval2_pass": false,
+    "Eval2_ratio": "3/8",
+    "Eval2_failed_mutant_idxes": [
+        1,
+        4,
+        5,
+        7,
+        8
+    ],
+    "full_pass": false
+}

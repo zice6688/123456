@@ -1,0 +1,17 @@
+iverilog simulation failed!
+
+iverilog cmd 1:
+/usr/bin/iverilog -g2012 -o run.vvp driver.v DUT.v 
+iverilog cmd 1 output:
+
+iverilog cmd 1 error:
+DUT.v:60: error: This assignment requires an explicit cast.
+DUT.v:60: error: This assignment requires an explicit cast.
+DUT.v:60: error: This assignment requires an explicit cast.
+DUT.v:60: error: This assignment requires an explicit cast.
+DUT.v:60: error: This assignment requires an explicit cast.
+DUT.v:60: error: This assignment requires an explicit cast.
+DUT.v:60: error: This assignment requires an explicit cast.
+DUT.v:60: error: This assignment requires an explicit cast.
+8 error(s) during elaboration.
+

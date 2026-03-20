@@ -291,20 +291,99 @@ def verilator_run_coverage(run_dir, dut_file="DUT.v", tb_file="driver.v", top_mo
         score = _quick_calc_score(target_file)
         return True, score, target_file
 
+# def _quick_calc_score(filepath):
+#     try:
+#         with open(filepath, 'r') as f:
+#             lines = f.readlines()
+#         total = 0
+#         covered = 0
+#         for line in lines:
+#             if line.startswith('%') or line.strip().startswith('#'):
+#                 total += 1
+#                 if not (line.startswith('%000000') or line.strip().startswith('#')):
+#                     covered += 1
+#         return (covered / total * 100.0) if total > 0 else 0.0
+#     except Exception:
+#         return 0.0
+
 def _quick_calc_score(filepath):
+    """
+    计算 Verilator 覆盖率文件的覆盖率分数
+    
+    支持的格式：
+    - %NNNNNN: 行覆盖计数（%000000 表示未执行）
+    - ~NNNNNN: 分支/条件覆盖计数
+    -  NNNNNN: 空格开头+数字（某些 Verilator 版本）
+    - ^NNNNNN: 未覆盖分支标记
+    """
+    import re
+    
     try:
-        with open(filepath, 'r') as f:
+        with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
             lines = f.readlines()
+        
+        # 匹配各种覆盖率标记格式
+        pct_pattern = re.compile(r'^%(\d+)\s+')   # %NNNNNN code
+        tilde_pattern = re.compile(r'^~(\d+)\s+') # ~NNNNNN code
+        caret_pattern = re.compile(r'^\^(\d+)\s+') # ^NNNNNN code
+        plain_pattern = re.compile(r'^\s*(\d+)\s+') # "NNNNNN" or " NNNNNN"
+        
+        # 过滤声明语句（不计入覆盖率）
+        decl_pattern = re.compile(r'^\s*(input|output|inout|wire|reg|logic|parameter|localparam|assign)\b')
+        
         total = 0
         covered = 0
+        
         for line in lines:
-            if line.startswith('%') or line.strip().startswith('#'):
-                total += 1
-                if not (line.startswith('%000000') or line.strip().startswith('#')):
-                    covered += 1
+            line_stripped = line.strip()
+            if not line_stripped:
+                continue
+            
+            count = -1
+            is_covered = False
+            
+            # 尝试匹配各种格式
+            match_pct = pct_pattern.match(line_stripped)
+            match_tilde = tilde_pattern.match(line_stripped)
+            match_caret = caret_pattern.match(line_stripped)
+            match_plain = plain_pattern.match(line_stripped)
+            
+            if match_pct:
+                count = int(match_pct.group(1))
+                # 获取代码部分用于过滤
+                code_part = line_stripped[7:].strip() if len(line_stripped) > 7 else ""
+                if not decl_pattern.match(code_part):
+                    total += 1
+                    if count > 0:
+                        covered += 1
+            elif match_tilde:
+                count = int(match_tilde.group(1))
+                code_part = line_stripped[7:].strip() if len(line_stripped) > 7 else ""
+                if not decl_pattern.match(code_part):
+                    total += 1
+                    if count > 0:
+                        covered += 1
+            elif match_caret:
+                # ^ 表示未覆盖分支
+                code_part = line_stripped[7:].strip() if len(line_stripped) > 7 else ""
+                if not decl_pattern.match(code_part):
+                    total += 1
+                    # caret 表示未覆盖，不计入 covered
+            elif match_plain:
+                count = int(match_plain.group(1))
+                # 计算数字部分的长度
+                num_str = match_plain.group(1)
+                code_part = line_stripped[len(num_str):].strip()
+                if not decl_pattern.match(code_part):
+                    total += 1
+                    if count > 0:
+                        covered += 1
+        
         return (covered / total * 100.0) if total > 0 else 0.0
-    except Exception:
+    except Exception as e:
+        print(f"[DEBUG] _quick_calc_score error: {e}")
         return 0.0
+
 
 if __name__ == "__main__":
     try:

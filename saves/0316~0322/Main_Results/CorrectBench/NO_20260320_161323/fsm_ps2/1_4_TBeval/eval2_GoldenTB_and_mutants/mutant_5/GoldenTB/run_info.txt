@@ -1,0 +1,21 @@
+iverilog simulation passed!
+
+iverilog cmd 1:
+/usr/bin/iverilog -g2012 -o run.vvp fsm_ps2_tb.v fsm_ps2.v 
+iverilog cmd 1 output:
+
+iverilog cmd 1 error:
+
+iverilog cmd 2:
+/usr/bin/vvp run.vvp
+iverilog cmd 2 output:
+VCD info: dumpfile wave.vcd opened for output.
+fsm_ps2_tb.v:47: $finish called at 2001 (1ps)
+Hint: Output 'done' has 143 mismatches. First mismatch occurred at time 210.
+Hint: Total mismatched samples is 143 out of 400 samples
+
+Simulation finished at 2001 ps
+Mismatches: 143 in 400 samples
+
+iverilog cmd 2 error:
+

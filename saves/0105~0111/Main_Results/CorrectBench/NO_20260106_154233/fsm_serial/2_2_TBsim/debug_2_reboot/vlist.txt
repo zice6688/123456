@@ -1,2 +1,0 @@
-fsm_serial.v
-fsm_serial_tb.v

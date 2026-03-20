@@ -1,0 +1,20 @@
+[MODULE INFO]
+Module: top_module
+Inputs: clk, in, reset
+Outputs: done
+
+[FUNCTION POINTS - Ranked by Importance]
+1. FSM_state (fsm): importance=0.44
+2. Condition_1 (condition): importance=0.15
+
+[FSM DETAILS]
+State Variable: state
+States: BYTE1, BYTE2, BYTE3, DONE
+Transitions:
+
+[RECOMMENDED TEST SCENARIOS]
+1. FSM_state_state_transition: 测试 FSM_state 的所有状态转换（共 4 个状态，0 个转换） (priority=0.44)
+2. FSM_state_illegal_transition: 测试 FSM_state 的非法状态转换处理 (priority=0.44)
+3. FSM_state_state_loop: 测试 FSM_state 的状态循环场景 (priority=0.44)
+4. Condition_1_branch_path: 测试条件分支: reset (priority=0.15)
+5. Condition_1_boundary_condition: 测试条件边界: reset (priority=0.15)

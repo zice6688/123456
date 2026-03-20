@@ -1,0 +1,36 @@
+[MODULE INFO]
+Module: top_module
+Inputs: clk, areset, bump_left, bump_right, ground, dig
+Outputs: walk_left, walk_right, aaah, digging
+
+[FUNCTION POINTS - Ranked by Importance]
+1. FSM_state (fsm): importance=0.63
+2. Counter_fall_counter (counter): importance=0.50
+3. Condition_9 (condition): importance=0.21
+4. Condition_8 (condition): importance=0.20
+5. Condition_1 (condition): importance=0.15
+6. Condition_2 (condition): importance=0.15
+7. Condition_3 (condition): importance=0.15
+8. Condition_4 (condition): importance=0.15
+9. Condition_5 (condition): importance=0.15
+10. Condition_6 (condition): importance=0.15
+
+[FSM DETAILS]
+State Variable: state
+States: WL, WR, FALLL, FALLR, DIGL, DIGR, DEAD
+Transitions:
+  WL --[!ground]--> FALLL
+  WL --[dig]--> DIGL
+  WL --[bump_left]--> WR
+  WL --[default]--> WL
+  WR --[!ground]--> FALLR
+  WR --[dig]--> DIGR
+  WR --[bump_right]--> WL
+  WR --[default]--> WR
+
+[RECOMMENDED TEST SCENARIOS]
+1. FSM_state_state_transition: 测试 FSM_state 的所有状态转换（共 7 个状态，8 个转换） (priority=0.63)
+2. FSM_state_illegal_transition: 测试 FSM_state 的非法状态转换处理 (priority=0.63)
+3. FSM_state_state_loop: 测试 FSM_state 的状态循环场景 (priority=0.63)
+4. Counter_fall_counter_boundary_zero: 测试计数器 fall_counter 归零场景 (priority=0.50)
+5. Counter_fall_counter_boundary_max: 测试计数器 fall_counter 达到最大值 20 (priority=0.50)

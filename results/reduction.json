@@ -1,0 +1,6 @@
+{
+    "task_id": "reduction",
+    "stage": "TBeval",
+    "pass": false,
+    "coverage": 100.0
+}

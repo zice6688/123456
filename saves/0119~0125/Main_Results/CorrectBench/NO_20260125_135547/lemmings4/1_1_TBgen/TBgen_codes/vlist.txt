@@ -1,2 +1,0 @@
-lemmings4_tb.v
-lemmings4.v

@@ -1,0 +1,354 @@
+
+---------------custom config--------------
+autoline: 
+    result_path: results
+    TBcheck: 
+        discrim_mode: col_70_wrong_row_25_correct
+    debug: 
+        max: 3
+    itermax: 10
+    probset: 
+        more_info_paths: ['data/HDLBits/HDLBits_data_RTL_4o_20.jsonl']
+        mutant_path: data/HDLBits/HDLBits_data_mutants.jsonl
+        only: ['fsm_serial']
+        path: data/HDLBits/HDLBits_data.jsonl
+    promptscript: pychecker
+    save_compile: False
+    timeout: 300
+    update_desc: False
+gpt: 
+    model: qwen-max
+    rtlgen_model: qwen-max
+run: 
+    mode: autoline
+save: 
+    en: True
+    log: 
+        debug_en: False
+    pub: 
+        prefix: NO
+        subdir: Main_Results/CorrectBench
+------------------------------------------
+------config info (custom + default)------
+run: 
+    version: 2.0
+    author: Ruidi Qiu - Technical University of Munich
+    time: 20260315_235638
+    custom_path: config/custom.yaml
+    mode: autoline
+    hostname: localhost
+    pid: 12647
+    pyversion: 3.12.3 (main, Mar  3 2026, 12:15:18) [GCC 13.3.0]
+save: 
+    en: True
+    root: saves/0309~0315/Main_Results/CorrectBench/NO_20260315_235638/
+    pub: 
+        prefix: NO
+        dir: saves/0309~0315/
+        subdir: Main_Results/CorrectBench/
+    log: 
+        en: True
+        dir: logs/
+        notes: None
+        cfg_pmode: iwantall
+        debug_en: False
+        level: TRACE
+    message: 
+        en: True
+        dir: messages/
+        format: json
+    iverilog: 
+        en: True
+        subdir: ivcode_nodebug
+load: 
+    prompt: 
+        path: config/initial_prompts/prompt1.txt
+        pick_idx: []
+    stage_template: 
+        path: config/templates/stage_template0301.txt
+gpt: 
+    model: qwen-max
+    key_path: config/key_API.json
+    temperature: None
+    json_mode: False
+    chatgpt: 
+        start_form: chat
+        one_time_talk: False
+    rtlgen_model: qwen-max
+iverilog: 
+    dir: 
+    task_id: 
+autoline: 
+    result_path: results
+    probset: 
+        path: data/HDLBits/HDLBits_data.jsonl
+        mutant_path: data/HDLBits/HDLBits_data_mutants.jsonl
+        gptgenRTL_path: None
+        more_info_paths: ['data/HDLBits/HDLBits_data_RTL_4o_20.jsonl']
+        only: ['fsm_serial']
+        exclude: []
+        exclude_json: None
+        filter: [{}]
+    checklist: 
+        max: 3
+    debug: 
+        max: 3
+        reboot: 1
+        py_rollback: 2
+    onlyrun: None
+    promptscript: pychecker
+    timeout: 300
+    TBcheck: 
+        rtl_num: 20
+        correct_max: 3
+        discrim_mode: col_70_wrong_row_25_correct
+        correct_mode: naive
+        rtl_compens_en: True
+        rtl_compens_max_iter: 3
+    itermax: 10
+    update_desc: False
+    save_compile: False
+    save_finalcodes: True
+    error_interruption: False
+_initialized: True
+------------------------------------------
+
+--------------default config--------------
+run: 
+    version: 2.0
+    author: Ruidi Qiu - Technical University of Munich
+    time: None
+    custom_path: None
+    mode: qwen-max
+save: 
+    en: True
+    root: None
+    pub: 
+        prefix: None
+        dir: saves/$weekrange$/
+        subdir: 
+    log: 
+        en: True
+        dir: logs/
+        notes: None
+        cfg_pmode: iwantall
+        debug_en: False
+        level: TRACE
+    message: 
+        en: True
+        dir: messages/
+        format: json
+    iverilog: 
+        en: True
+        subdir: ivcode_nodebug
+load: 
+    prompt: 
+        path: config/initial_prompts/prompt1.txt
+        pick_idx: []
+    stage_template: 
+        path: config/templates/stage_template0301.txt
+gpt: 
+    model: 4o
+    key_path: config/key_API.json
+    temperature: None
+    json_mode: False
+    chatgpt: 
+        start_form: chat
+        one_time_talk: False
+    rtlgen_model: None
+iverilog: 
+    dir: 
+    task_id: 
+autoline: 
+    result_path: results
+    probset: 
+        path: None
+        mutant_path: None
+        gptgenRTL_path: None
+        more_info_paths: []
+        only: ['fsm_serial']
+        exclude: []
+        exclude_json: None
+        filter: [{}]
+    checklist: 
+        max: 3
+    debug: 
+        max: 5
+        reboot: 1
+        py_rollback: 2
+    onlyrun: None
+    promptscript: None
+    timeout: 300
+    TBcheck: 
+        rtl_num: 20
+        correct_max: 3
+        discrim_mode: col_full_wrong
+        correct_mode: naive
+        rtl_compens_en: True
+        rtl_compens_max_iter: 3
+    itermax: 10
+    update_desc: False
+    save_compile: True
+    save_finalcodes: True
+    error_interruption: False
+------------------------------------------
+2026-03-15 23:56:38 | INFO     | all configurations are loaded, starting the main process...
+2026-03-15 23:56:38 | INFO     | 
+2026-03-15 23:56:38 | INFO     | ######################### task 1/1 [fsm_serial] #########################
+2026-03-15 23:57:12 | INFO     | [fsm_serial] [TBgen] stage_0 ends (34.39s used)
+2026-03-15 23:57:54 | INFO     | [fsm_serial] [TBgen] stage_1 ends (41.86s used)
+2026-03-15 23:58:50 | INFO     | [fsm_serial] [TBgen] stage_2 ends (56.18s used)
+2026-03-15 23:59:17 | INFO     | [fsm_serial] [TBgen] stage_3 ends (26.96s used)
+2026-03-16 00:01:56 | INFO     | [fsm_serial] [TBgen] stage_4 ends (158.99s used)
+2026-03-16 00:01:56 | INFO     | [fsm_serial] [TBgen] stage_checklist ends (0.00s used)
+2026-03-16 00:16:53 | ERROR    | [fsm_serial] Error when running TBgen, iter: 1. Message: name 'time' is not defined | location: autoline/TB_autoline.py, func: run_stages_core, line: 356 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-16 00:16:53 | WARNING  | [fsm_serial] ⚠️ Pipeline interrupted. Cooling down for 15s to avoid API Rate Limit... | location: autoline/TB_autoline.py, func: run_stages_core, line: 361 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-16 00:17:38 | INFO     | [fsm_serial] [TBgen] stage_0 ends (25.72s used)
+2026-03-16 00:17:57 | INFO     | [fsm_serial] [TBgen] stage_1 ends (18.65s used)
+2026-03-16 00:18:41 | INFO     | [fsm_serial] [TBgen] stage_2 ends (44.61s used)
+2026-03-16 00:19:26 | INFO     | [fsm_serial] [TBgen] stage_3 ends (44.59s used)
+2026-03-16 00:21:00 | INFO     | [fsm_serial] [TBgen] stage_4 ends (94.33s used)
+2026-03-16 00:21:00 | INFO     | [fsm_serial] [TBgen] stage_checklist ends (0.00s used)
+2026-03-16 00:23:55 | INFO     | [fsm_serial] [TBgen] stage_4b ends (174.57s used)
+2026-03-16 00:24:46 | INFO     | [fsm_serial] [TBgen] stage_5 ends (51.45s used)
+2026-03-16 00:24:46 | INFO     | [fsm_serial] 
+2026-03-16 00:24:46 | INFO     | [fsm_serial] [TBsim] iverilog compilation : passed!
+2026-03-16 00:24:46 | INFO     | [fsm_serial] [TBsim] python simulation : passed!
+2026-03-16 00:24:46 | INFO     | [fsm_serial] [TBsim] TBsim finished : True!
+2026-03-16 00:24:46 | INFO     | [fsm_serial] 
+2026-03-16 00:24:46 | INFO     | [fsm_serial] [TBcheck] [discriminator] Discriminating the testbench, NO.0 discrimination
+2026-03-16 00:24:47 | INFO     | [fsm_serial] [TBcheck] [discriminator] RTL(s) [9, 15] have syntax error during discrimination
+2026-03-16 00:24:47 | NEGATIVE | [fsm_serial] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [ 2  3  4  5  6  7  8  9 10], scenario pass ratio: 1/10
+2026-03-16 00:24:47 | INFO     | [fsm_serial] [TBcheck] [corrector] naive corrector mode begins
+2026-03-16 00:26:15 | INFO     | [fsm_serial] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-16 00:26:15 | INFO     | [fsm_serial] [TBcheck] [discriminator] Discriminating the testbench, NO.1 discrimination
+2026-03-16 00:26:15 | NEGATIVE | [fsm_serial] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [ 2  3  4  5  6  7  8  9 10], scenario pass ratio: 1/10
+2026-03-16 00:26:15 | INFO     | [fsm_serial] [TBcheck] wrong scenarios not decreased for 1 times (9 = 9), continue the correction
+2026-03-16 00:26:15 | INFO     | [fsm_serial] [TBcheck] [corrector] naive corrector mode begins
+2026-03-16 00:27:52 | INFO     | [fsm_serial] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-16 00:27:52 | INFO     | [fsm_serial] [TBcheck] [discriminator] Discriminating the testbench, NO.2 discrimination
+2026-03-16 00:27:53 | NEGATIVE | [fsm_serial] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [ 5  6  7  9 10], scenario pass ratio: 2/10
+2026-03-16 00:27:53 | INFO     | [fsm_serial] [TBcheck] [corrector] naive corrector mode begins
+2026-03-16 00:29:51 | INFO     | [fsm_serial] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-16 00:29:51 | INFO     | [fsm_serial] [TBcheck] [discriminator] Discriminating the testbench, NO.3 discrimination
+2026-03-16 00:29:54 | NEGATIVE | [fsm_serial] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [ 5  6  7  9 10], scenario pass ratio: 2/10
+2026-03-16 00:29:54 | INFO     | [fsm_serial] [TBcheck] self funccheck finished. Next Action: [reboot]
+2026-03-16 00:29:54 | INFO     | [fsm_serial] 
+2026-03-16 00:30:31 | INFO     | [fsm_serial] [TBgen] stage_0 ends (36.62s used)
+2026-03-16 00:31:10 | INFO     | [fsm_serial] [TBgen] stage_1 ends (39.09s used)
+2026-03-16 00:32:19 | INFO     | [fsm_serial] [TBgen] stage_2 ends (68.44s used)
+2026-03-16 00:33:10 | INFO     | [fsm_serial] [TBgen] stage_3 ends (51.42s used)
+2026-03-16 00:34:48 | INFO     | [fsm_serial] [TBgen] stage_4 ends (97.86s used)
+2026-03-16 00:34:48 | INFO     | [fsm_serial] [TBgen] stage_checklist ends (0.00s used)
+2026-03-16 00:49:08 | INFO     | [fsm_serial] [TBgen] stage_4b ends (860.50s used)
+2026-03-16 00:49:43 | INFO     | [fsm_serial] [TBgen] stage_5 ends (34.33s used)
+2026-03-16 00:49:43 | INFO     | [fsm_serial] 
+2026-03-16 00:49:43 | INFO     | [fsm_serial] [TBsim] iverilog compilation : passed!
+2026-03-16 00:49:43 | INFO     | [fsm_serial] [TBsim] python simulation : passed!
+2026-03-16 00:49:43 | INFO     | [fsm_serial] [TBsim] TBsim finished : True!
+2026-03-16 00:49:43 | INFO     | [fsm_serial] 
+2026-03-16 00:49:43 | INFO     | [fsm_serial] [TBcheck] [discriminator] Discriminating the testbench, NO.0 discrimination
+2026-03-16 00:49:43 | INFO     | [fsm_serial] [TBcheck] [discriminator] RTL(s) [9, 15] have syntax error during discrimination
+2026-03-16 00:49:43 | NEGATIVE | [fsm_serial] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [3], scenario pass ratio: 2/8
+2026-03-16 00:49:43 | INFO     | [fsm_serial] [TBcheck] [corrector] naive corrector mode begins
+2026-03-16 00:51:10 | INFO     | [fsm_serial] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-16 00:51:10 | INFO     | [fsm_serial] [TBcheck] [discriminator] Discriminating the testbench, NO.1 discrimination
+2026-03-16 00:51:10 | NEGATIVE | [fsm_serial] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [3], scenario pass ratio: 2/8
+2026-03-16 00:51:10 | INFO     | [fsm_serial] [TBcheck] wrong scenarios not decreased for 1 times (1 = 1), continue the correction
+2026-03-16 00:51:10 | INFO     | [fsm_serial] [TBcheck] [corrector] naive corrector mode begins
+2026-03-16 00:52:48 | INFO     | [fsm_serial] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-16 00:52:48 | INFO     | [fsm_serial] [TBcheck] [discriminator] Discriminating the testbench, NO.2 discrimination
+2026-03-16 00:52:48 | NEGATIVE | [fsm_serial] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [3], scenario pass ratio: 2/8
+2026-03-16 00:52:48 | INFO     | [fsm_serial] [TBcheck] wrong scenarios not decreased for 2 times (1 = 1), I give up, quiting the funccheck stage...
+2026-03-16 00:52:48 | INFO     | [fsm_serial] [TBcheck] self funccheck finished. Next Action: [reboot]
+2026-03-16 00:52:48 | INFO     | [fsm_serial] 
+2026-03-16 00:53:24 | INFO     | [fsm_serial] [TBgen] stage_0 ends (36.28s used)
+2026-03-16 00:54:01 | INFO     | [fsm_serial] [TBgen] stage_1 ends (36.85s used)
+2026-03-16 00:54:48 | INFO     | [fsm_serial] [TBgen] stage_2 ends (46.82s used)
+2026-03-16 01:05:35 | INFO     | [fsm_serial] [TBgen] stage_3 ends (646.71s used)
+2026-03-16 01:12:23 | INFO     | [fsm_serial] [TBgen] stage_4 ends (408.73s used)
+2026-03-16 01:12:23 | INFO     | [fsm_serial] [TBgen] stage_checklist ends (0.00s used)
+2026-03-16 01:27:25 | ERROR    | [fsm_serial] Error when running TBgen, iter: 4. Message: name 'time' is not defined | location: autoline/TB_autoline.py, func: run_stages_core, line: 356 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-16 01:27:25 | WARNING  | [fsm_serial] ⚠️ Pipeline interrupted. Cooling down for 15s to avoid API Rate Limit... | location: autoline/TB_autoline.py, func: run_stages_core, line: 361 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-16 01:28:27 | INFO     | [fsm_serial] [TBgen] stage_0 ends (47.42s used)
+2026-03-16 01:28:55 | INFO     | [fsm_serial] [TBgen] stage_1 ends (28.11s used)
+2026-03-16 01:29:27 | INFO     | [fsm_serial] [TBgen] stage_2 ends (31.51s used)
+2026-03-16 01:44:28 | ERROR    | [fsm_serial] Error when running TBgen, iter: 5. Message: name 'time' is not defined | location: autoline/TB_autoline.py, func: run_stages_core, line: 356 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-16 01:44:28 | WARNING  | [fsm_serial] ⚠️ Pipeline interrupted. Cooling down for 15s to avoid API Rate Limit... | location: autoline/TB_autoline.py, func: run_stages_core, line: 361 | caller: location: autoline/TB_autoline.py, func: run_stages, line: 312
+2026-03-16 01:45:10 | INFO     | [fsm_serial] [TBgen] stage_0 ends (26.66s used)
+2026-03-16 01:45:28 | INFO     | [fsm_serial] [TBgen] stage_1 ends (18.11s used)
+2026-03-16 01:46:02 | INFO     | [fsm_serial] [TBgen] stage_2 ends (34.70s used)
+2026-03-16 01:46:44 | INFO     | [fsm_serial] [TBgen] stage_3 ends (41.27s used)
+2026-03-16 01:52:58 | INFO     | [fsm_serial] [TBgen] stage_4 ends (374.34s used)
+2026-03-16 01:52:58 | INFO     | [fsm_serial] [TBgen] stage_checklist ends (0.00s used)
+2026-03-16 01:57:58 | INFO     | [fsm_serial] [TBgen] stage_4b ends (299.88s used)
+2026-03-16 01:58:20 | INFO     | [fsm_serial] [TBgen] stage_5 ends (21.71s used)
+2026-03-16 01:58:20 | INFO     | [fsm_serial] 
+2026-03-16 01:58:20 | INFO     | [fsm_serial] [TBsim] iverilog compilation : passed!
+2026-03-16 01:58:20 | INFO     | [fsm_serial] [TBsim] python simulation : passed!
+2026-03-16 01:58:20 | INFO     | [fsm_serial] [TBsim] TBsim finished : True!
+2026-03-16 01:58:20 | INFO     | [fsm_serial] 
+2026-03-16 01:58:20 | INFO     | [fsm_serial] [TBcheck] [discriminator] Discriminating the testbench, NO.0 discrimination
+2026-03-16 01:58:20 | INFO     | [fsm_serial] [TBcheck] [discriminator] RTL(s) [9, 15] have syntax error during discrimination
+2026-03-16 01:58:20 | POSITIVE | [fsm_serial] [TBcheck] [discriminator] TB_discriminating finished, TB passed, wrong scenarios: [], scenario pass ratio: 1/5
+2026-03-16 01:58:20 | INFO     | [fsm_serial] [TBcheck] Testbench passed the funccheck
+2026-03-16 01:58:20 | INFO     | [fsm_serial] [TBcheck] self funccheck finished. Next Action: [pass]
+2026-03-16 01:58:20 | INFO     | [fsm_serial] 
+2026-03-16 01:58:20 | INFO     | [fsm_serial] [fsm_serial] Starting Coverage-Guided Agent (CGA)...
+2026-03-16 01:58:20 | INFO     | [fsm_serial] [fsm_serial] Running Semantic Analysis (Layer 0)...
+2026-03-16 01:58:20 | INFO     | [fsm_serial]   FSM detected: state (12 states)
+2026-03-16 01:58:20 | INFO     | [fsm_serial]   Total function points identified: 2
+2026-03-16 01:58:20 | INFO     | [fsm_serial]   Energy allocator initialized: 2 targets
+2026-03-16 01:58:20 | INFO     | [fsm_serial] --- CGA Iter 0 (Baseline) ---
+2026-03-16 01:58:22 | INFO     | [fsm_serial] Baseline Coverage: 100.00%
+2026-03-16 01:58:22 | SUCCESS  | [fsm_serial] Target reached at baseline!
+2026-03-16 01:58:22 | INFO     | [fsm_serial] Saved optimized TB to: saves/0309~0315/Main_Results/CorrectBench/NO_20260315_235638/fsm_serial/final_TB.v
+2026-03-16 01:58:22 | INFO     | [fsm_serial] [TBeval] Eval 1: Golden RTL checking begins
+2026-03-16 01:58:22 | FAILED   | [fsm_serial] [TBeval] Eval 1: Golden RTL checking failed!
+2026-03-16 01:58:22 | INFO     | [fsm_serial] [TBeval] [fsm_serial] Eval 2/2b is skipped because Eval 1 failed
+2026-03-16 01:58:22 | INFO     | [fsm_serial] 
+2026-03-16 01:58:22 | INFO     | 
+########## Analyze of Chatbench_RunInfo ##########
+
+#### pass numbers:
+Eval2 : 0
+Eval1 : 0
+Eval0 : 1
+total : 1 (Failed: 0)
+passed TB by autoline reboot action (from TB3_check): 0
+
+passed TB by functional corrector: 0
+
+#### CGA Coverage Info:
+Average Coverage : 100.00%
+Max Coverage     : 100.00%
+Min Coverage     : 100.00%
+
+#### tokens and cost:
+average prompt tokens: 117784
+average completion tokens: 49730
+total cost: 5.3395
+average cost: 5.3395
+
+#### time:
+average time: 7304.28s
+
+#### debug info table:
+FUNCTIONAL debug info table:
+(debugged here means functional debugging)
+         | un-func-debugged | func-debugged | total |
+failed   |                0 |             0 |     0 |
+Eval0    |                0 |             1 |     1 |
+Eval1    |                0 |             0 |     0 |
+Eval2    |                0 |             0 |     0 |
+
+#### Eval2 ratio:
+
+#### CGA Coverage Detail List:
+Task ID                   | Coverage  
+----------------------------------------
+fsm_serial                | 100.00%
+
+loose Eval2 pass metric applied: 0.8
+
+

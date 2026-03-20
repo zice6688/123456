@@ -1,0 +1,65 @@
+[
+    {
+        "task_id": "fsm_serial",
+        "task_number": 147,
+        "time": 7304.28,
+        "prompt_tokens": 117784,
+        "completion_tokens": 49730,
+        "token_cost": 5.339479999999999,
+        "ERROR(incomplete)": false,
+        "op_record": [
+            "gen",
+            "gen",
+            "syncheck",
+            "funccheck",
+            "gen",
+            "syncheck",
+            "funccheck",
+            "gen",
+            "gen",
+            "gen",
+            "syncheck",
+            "funccheck",
+            "cga",
+            "eval"
+        ],
+        "reboot_times": 5,
+        "max_iter": 10,
+        "coverage": 100.0,
+        "circuit_type": "SEQ",
+        "checklist_worked": false,
+        "scenario_num": 5,
+        "Eval0_pass": true,
+        "Eval0_iv_pass": true,
+        "debug_iter_iv": 0,
+        "iv_runing_time": 0.01,
+        "Eval0_py_pass": true,
+        "debug_iter_py": 0,
+        "py_runing_time": 0.01,
+        "TB_corrected": false,
+        "TBcheck_oprecord": [
+            [
+                "discrim",
+                "correct",
+                "discrim",
+                "correct",
+                "discrim",
+                "correct",
+                "discrim"
+            ],
+            [
+                "discrim",
+                "correct",
+                "discrim",
+                "correct",
+                "discrim"
+            ],
+            [
+                "discrim"
+            ]
+        ],
+        "rtl_num_newly_gen": 0,
+        "Eval1_pass": false,
+        "full_pass": false
+    }
+]

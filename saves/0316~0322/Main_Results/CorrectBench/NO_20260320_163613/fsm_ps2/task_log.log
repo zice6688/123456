@@ -1,0 +1,55 @@
+2026-03-20 16:36:28 | INFO     | [fsm_ps2] [TBgen] stage_0 ends (15.33s used)
+2026-03-20 16:37:02 | INFO     | [fsm_ps2] [TBgen] stage_1 ends (33.84s used)
+2026-03-20 16:37:46 | INFO     | [fsm_ps2] [TBgen] stage_2 ends (44.58s used)
+2026-03-20 16:38:41 | INFO     | [fsm_ps2] [TBgen] stage_3 ends (54.74s used)
+2026-03-20 16:39:55 | INFO     | [fsm_ps2] [TBgen] stage_4 ends (73.73s used)
+2026-03-20 16:39:55 | INFO     | [fsm_ps2] [TBgen] stage_checklist ends (0.00s used)
+2026-03-20 16:44:51 | INFO     | [fsm_ps2] [TBgen] stage_4b ends (296.36s used)
+2026-03-20 16:45:27 | INFO     | [fsm_ps2] [TBgen] stage_5 ends (35.92s used)
+2026-03-20 16:45:27 | INFO     | [fsm_ps2] 
+2026-03-20 16:45:27 | INFO     | [fsm_ps2] [TBsim] iverilog compilation : passed!
+2026-03-20 16:45:27 | INFO     | [fsm_ps2] [TBsim] python simulation : passed!
+2026-03-20 16:45:27 | INFO     | [fsm_ps2] [TBsim] TBsim finished : True!
+2026-03-20 16:45:27 | INFO     | [fsm_ps2] 
+2026-03-20 16:45:27 | INFO     | [fsm_ps2] [TBcheck] [discriminator] Discriminating the testbench, NO.0 discrimination
+2026-03-20 16:45:28 | NEGATIVE | [fsm_ps2] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [3 4 6], scenario pass ratio: 0/6
+2026-03-20 16:45:28 | INFO     | [fsm_ps2] [TBcheck] [corrector] naive corrector mode begins
+2026-03-20 16:47:01 | INFO     | [fsm_ps2] [TBcheck] [corrector] naive corrector mode ends; conversation and codes saved
+2026-03-20 16:47:01 | INFO     | [fsm_ps2] [TBcheck] [discriminator] Discriminating the testbench, NO.1 discrimination
+2026-03-20 16:47:01 | NEGATIVE | [fsm_ps2] [TBcheck] [discriminator] TB_discriminating finished, TB failed, wrong scenarios: [2 3 4 5 6], scenario pass ratio: 0/6
+2026-03-20 16:47:01 | NEGATIVE | [fsm_ps2] [TBcheck] wrong scenarios increased (5 > 3), I give up, quiting the funccheck stage...
+2026-03-20 16:47:01 | INFO     | [fsm_ps2] [TBcheck] self funccheck finished. Next Action: [reboot]
+2026-03-20 16:47:01 | INFO     | [fsm_ps2] 
+2026-03-20 16:47:18 | INFO     | [fsm_ps2] [TBgen] stage_0 ends (16.50s used)
+2026-03-20 16:47:53 | INFO     | [fsm_ps2] [TBgen] stage_1 ends (35.79s used)
+2026-03-20 16:48:41 | INFO     | [fsm_ps2] [TBgen] stage_2 ends (47.56s used)
+2026-03-20 16:49:17 | INFO     | [fsm_ps2] [TBgen] stage_3 ends (35.60s used)
+2026-03-20 16:50:42 | INFO     | [fsm_ps2] [TBgen] stage_4 ends (85.45s used)
+2026-03-20 16:50:42 | INFO     | [fsm_ps2] [TBgen] stage_checklist ends (0.00s used)
+2026-03-20 16:53:23 | INFO     | [fsm_ps2] [TBgen] stage_4b ends (160.58s used)
+2026-03-20 16:53:42 | INFO     | [fsm_ps2] [TBgen] stage_5 ends (19.49s used)
+2026-03-20 16:53:42 | INFO     | [fsm_ps2] 
+2026-03-20 16:53:42 | INFO     | [fsm_ps2] [TBsim] iverilog compilation : passed!
+2026-03-20 16:53:42 | INFO     | [fsm_ps2] [TBsim] python simulation : passed!
+2026-03-20 16:53:42 | INFO     | [fsm_ps2] [TBsim] TBsim finished : True!
+2026-03-20 16:53:42 | INFO     | [fsm_ps2] 
+2026-03-20 16:53:42 | INFO     | [fsm_ps2] [TBcheck] [discriminator] Discriminating the testbench, NO.0 discrimination
+2026-03-20 16:53:43 | POSITIVE | [fsm_ps2] [TBcheck] [discriminator] TB_discriminating finished, TB passed, wrong scenarios: [], scenario pass ratio: 0/5
+2026-03-20 16:53:43 | INFO     | [fsm_ps2] [TBcheck] Testbench passed the funccheck
+2026-03-20 16:53:43 | INFO     | [fsm_ps2] [TBcheck] self funccheck finished. Next Action: [pass]
+2026-03-20 16:53:43 | INFO     | [fsm_ps2] 
+2026-03-20 16:53:43 | INFO     | [fsm_ps2] [fsm_ps2] Starting Coverage-Guided Agent (CGA)...
+2026-03-20 16:53:43 | INFO     | [fsm_ps2] [fsm_ps2] Running Semantic Analysis (Layer 0)...
+2026-03-20 16:53:43 | INFO     | [fsm_ps2]   FSM detected: state (4 states)
+2026-03-20 16:53:43 | INFO     | [fsm_ps2]   Total function points identified: 2
+2026-03-20 16:53:43 | INFO     | [fsm_ps2]   Energy allocator initialized: 2 targets
+2026-03-20 16:53:43 | INFO     | [fsm_ps2]   Diversity injector initialized with history file: saves/0316~0322/Main_Results/CorrectBench/NO_20260320_163613/fsm_ps2/5_CGA/test_history.json
+2026-03-20 16:53:43 | INFO     | [fsm_ps2]   Quality evaluator initialized
+2026-03-20 16:53:43 | INFO     | [fsm_ps2] --- CGA Iter 0 (Baseline) ---
+2026-03-20 16:53:44 | INFO     | [fsm_ps2] Baseline Coverage: 100.00%
+2026-03-20 16:53:44 | SUCCESS  | [fsm_ps2] Target reached at baseline!
+2026-03-20 16:53:44 | INFO     | [fsm_ps2] Saved optimized TB to: saves/0316~0322/Main_Results/CorrectBench/NO_20260320_163613/fsm_ps2/final_TB.v
+2026-03-20 16:53:44 | INFO     | [fsm_ps2] [TBeval] Eval 1: Golden RTL checking begins
+2026-03-20 16:53:44 | FAILED   | [fsm_ps2] [TBeval] Eval 1: Golden RTL checking failed!
+2026-03-20 16:53:44 | INFO     | [fsm_ps2] [TBeval] [fsm_ps2] Eval 2/2b is skipped because Eval 1 failed
+2026-03-20 16:53:44 | INFO     | [fsm_ps2] 

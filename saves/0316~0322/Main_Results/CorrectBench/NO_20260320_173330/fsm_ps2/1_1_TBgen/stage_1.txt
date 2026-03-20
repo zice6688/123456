@@ -1,0 +1,50 @@
+############################## conversation begin ##############################
+########## system ##########
+You are the strongest AI in the world. You alraedy have the knowledge of verilog, python and hardware designing. Do not save words by discarding information. I will tip you 200$ if you can fullfill the tasks I give you.
+
+########## user ##########
+1. Your task is to write a verilog testbench for an verilog RTL module code (we call it as "DUT", device under test). The infomation we have is the problem description that guides student to write the RTL code (DUT) and the header of the "DUT". Our target is to generate the verilog testbench for the DUT. This testbench can check if the DUT in verilog satisfies all technical requirements of the problem description.
+2. You are in the first stage. In this stage, please summarize the technical details of the DUT and give me a technical specification of the testbench generation task, so we can use it to design its corresponding testbench.
+3. The core of testbench is the testcases. It usually include two parts logically: the input signals to the DUT and the expected result signals from DUT. The testbench will send the input signals to DUT and check if the result signals are the same as the expected result signals. If they are the same, this means the DUT is passed. Otherwise the DUT fails.
+4. Your technical specification should include these sections:
+- section 1: specification of the DUT, including the module header of the RTL code. If table or other detailed data is provided in the original problem description, DO repeat them in your response. They are very important!!!
+5. your response should be in the form of JSON.
+6. below is the information including the problem description and the DUT header:
+RTL circuit problem description:
+The PS/2 mouse protocol sends messages that are three bytes long. However, within a continuous byte stream, it's not obvious where messages start and end. The only indication is that the first byte of each three byte message always has in[3]=1 (but in[3] of the other two bytes may be 1 or 0 depending on data). We want a finite state machine that will search for message boundaries when given an input byte stream. The algorithm we'll use is to discard bytes until we see one with in[3]=1. We then assume that this is byte 1 of a message, and signal the receipt of a message once all 3 bytes have been received (done). The FSM should signal done in the cycle immediately after the third byte of each message was successfully received. Reset should be active high synchronous.
+DUT header:
+module top_module (
+	input clk,
+	input [7:0] in,
+	input reset,
+	output done
+);
+
+your response must be in JSON form. example:
+{
+  "important data": "...", # type: string. If no table, state transition or other direct data, leave this with ""
+  "technical specifications": ["...", "...", ...] # each element of the list is one specification string, the starting of the string is its index 
+}
+
+
+
+########## assistant ##########
+```json
+{
+  "important data": "",
+  "technical specifications": [
+    "1. The DUT is a finite state machine (FSM) designed to detect message boundaries in a PS/2 mouse protocol byte stream.",
+    "2. The DUT has the following inputs and outputs: input clk, input [7:0] in, input reset, output done.",
+    "3. The FSM should discard bytes until it sees one with in[3]=1, which indicates the start of a new message.",
+    "4. After detecting the first byte of a message (in[3]=1), the FSM should wait for two more bytes to complete the 3-byte message.",
+    "5. The FSM should signal 'done' in the cycle immediately after the third byte of each message is received.",
+    "6. The 'reset' signal is active high and synchronous, meaning that when 'reset' is high, the FSM should be reset to its initial state on the next clock edge.",
+    "7. The 'clk' signal is the clock input, and all state transitions and signal changes should be synchronized with this clock.",
+    "8. The 'in' signal is an 8-bit wide input representing the current byte in the stream.",
+    "9. The 'done' signal is an output that should be asserted high for one clock cycle after the FSM has successfully detected and processed a 3-byte message."
+  ]
+}
+```
+
+This JSON response provides a detailed technical specification of the DUT and the requirements for the testbench. It includes the module header, the behavior of the FSM, and the expected signals and their timing. This information will be used to design the testbench that will verify the functionality of the DUT.
+
